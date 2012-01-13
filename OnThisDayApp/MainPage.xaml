@@ -37,11 +37,6 @@
                 <Grid/>
             </controls:PivotItem>
 
-            <!--Pivot events-->
-            <controls:PivotItem Header="holidays">
-                <Grid/>
-            </controls:PivotItem>
-
             <!--Pivot births-->
             <controls:PivotItem Header="deaths">
                 <Grid/>

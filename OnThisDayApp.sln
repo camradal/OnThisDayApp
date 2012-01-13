@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnThisDayApp", "OnThisDayApp\OnThisDayApp.csproj", "{B8407259-59BC-4F3E-A444-0EDBA151999C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPPhone.7.1", "HAPPhone.7.1\HAPPhone.7.1.csproj", "{3DA565DD-55B2-422B-B2AB-64E35F926E93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B8407259-59BC-4F3E-A444-0EDBA151999C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8407259-59BC-4F3E-A444-0EDBA151999C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8407259-59BC-4F3E-A444-0EDBA151999C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3DA565DD-55B2-422B-B2AB-64E35F926E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA565DD-55B2-422B-B2AB-64E35F926E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA565DD-55B2-422B-B2AB-64E35F926E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA565DD-55B2-422B-B2AB-64E35F926E93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

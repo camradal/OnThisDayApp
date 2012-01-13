@@ -12,27 +12,39 @@ using System.Diagnostics;
 using OnThisDayApp.Model;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace OnThisDayApp.Parsers
 {
-    public class PageParser
+    public sealed class PageParser
     {
-        private static Regex extractor = new Regex(@"(<li.+?(?<Year>[\d]{1,4}).+? [–-] (?<Description>.*?(<b>.+href=""(?<Link>.*?)"".+</b>).+)</li>)+");
-        private static Regex htmlTags = new Regex(@"<.*?>");
-
         public List<Event> ExtractOnThisDayFromTextHtml(string html)
         {
-            List<Event> events = new List<Event>();
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+            var otd = htmlDoc.GetElementbyId("mp-otd");
+            var entries = otd.Descendants("li");
 
-            MatchCollection matches = extractor.Matches(html);
-            foreach (Match match in matches)
+            List<Event> events = new List<Event>();
+            foreach (var entry in entries)
             {
+                var yearLink = entry.Descendants("a").First();
+                var description = entry.InnerText;
+                var firstLink = entry.Descendants("b").First().Descendants("a").First();
                 Event newEvent = new Event();
-                newEvent.Year = int.Parse(match.Groups["Year"].Value);
-                newEvent.Description = htmlTags.Replace(match.Groups["Description"].Value, string.Empty);
-                newEvent.Link = match.Groups["Link"].Value;
+                newEvent.Year = int.Parse(yearLink.InnerText);
+                newEvent.Description = description;
+                newEvent.Link = firstLink.Attributes["href"].Value;
                 events.Add(newEvent);
             }
+
+
+                //Event newEvent = new Event();
+                //newEvent.Year = int.Parse(match.Groups["Year"].Value);
+                //newEvent.Description = htmlTags.Replace(match.Groups["Description"].Value, string.Empty);
+                //newEvent.Link = match.Groups["Link"].Value;
+                //events.Add(newEvent);
 
             return events;
         }
