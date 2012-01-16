@@ -1,6 +1,6 @@
 ﻿using OnThisDayApp.Resources;
 
-namespace OnThisDayApp
+namespace Utilities
 {
     /// <summary>
     /// Localized resource provider

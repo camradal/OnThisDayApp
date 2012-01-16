@@ -3,7 +3,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace OnThisDayApp
+namespace Utilities
 {
     public class GlobalLoading : INotifyPropertyChanged
     {

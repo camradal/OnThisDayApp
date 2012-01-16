@@ -74,7 +74,6 @@
     <Compile Include="Model\Day.cs" />
     <Compile Include="Model\Event.cs" />
     <Compile Include="Parsers\PageParser.cs" />
-    <Compile Include="Utility\GlobalLoading.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -84,7 +83,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\StringProvider.cs" />
+    <Compile Include="Utilities\GlobalLoading.cs" />
+    <Compile Include="Utilities\StringProvider.cs" />
     <Compile Include="ViewModel\DayViewModel.cs" />
     <Compile Include="ViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

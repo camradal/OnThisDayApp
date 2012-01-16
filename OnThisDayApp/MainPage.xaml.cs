@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using OnThisDayApp.ViewModel;
+using Microsoft.Phone.Tasks;
 
 namespace OnThisDayApp
 {
@@ -55,6 +56,25 @@ namespace OnThisDayApp
             {
                 NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
             });
+        }
+
+        private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // if selected index is -1 (no selection) do nothing
+            if (MainListBox.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            // navigate to the new page
+
+            WebBrowserTask task = new WebBrowserTask();
+            task.Uri = new Uri(@"http://en.wikipedia.org" + ((EventViewModel)MainListBox.SelectedItem).Link);
+            task.Show();
+            //NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
+
+            // reset selected index to -1 (no selection)
+            MainListBox.SelectedIndex = -1;
         }
     }
 }

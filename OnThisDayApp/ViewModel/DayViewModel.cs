@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using OnThisDayApp.DataAccess;
 using OnThisDayApp.Model;
 using System.Collections.ObjectModel;
+using Utilities;
 
 namespace OnThisDayApp.ViewModel
 {

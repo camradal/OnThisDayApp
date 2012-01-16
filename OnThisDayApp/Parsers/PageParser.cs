@@ -29,14 +29,26 @@ namespace OnThisDayApp.Parsers
             List<Event> events = new List<Event>();
             foreach (var entry in entries)
             {
-                var yearLink = entry.Descendants("a").First();
-                var description = entry.InnerText;
-                var firstLink = entry.Descendants("b").First().Descendants("a").First();
-                Event newEvent = new Event();
-                newEvent.Year = int.Parse(yearLink.InnerText);
-                newEvent.Description = description;
-                newEvent.Link = firstLink.Attributes["href"].Value;
-                events.Add(newEvent);
+                try
+                {
+                    var yearLink = entry.Descendants("a").First();
+                    var description = entry.InnerText;
+                    int firstSpace = description.IndexOf(' ');
+                    int secondSpace = description.IndexOf(' ', firstSpace + 1);
+                    description = description.Substring(secondSpace + 1);
+                    description = HttpUtility.HtmlDecode(description);
+                    var firstLink = entry.Descendants("b").First().Descendants("a").First();
+                    Event newEvent = new Event();
+                    newEvent.Year = int.Parse(yearLink.InnerText);
+                    newEvent.Description = description;
+                    newEvent.Link = firstLink.Attributes["href"].Value;
+                    events.Add(newEvent);
+                }
+                catch
+                {
+                    // TODO
+                    // failed to add 1 event, skip for now
+                }
             }
 
 
