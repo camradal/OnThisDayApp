@@ -69,7 +69,7 @@ namespace OnThisDayApp
             // navigate to the new page
 
             WebBrowserTask task = new WebBrowserTask();
-            task.Uri = new Uri(@"http://en.wikipedia.org" + ((EventViewModel)MainListBox.SelectedItem).Link);
+            task.Uri = new Uri(@"http://en.wikipedia.org" + ((EntryViewModel)MainListBox.SelectedItem).Link);
             task.Show();
             //NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
 

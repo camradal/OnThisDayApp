@@ -8,15 +8,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using OnThisDayApp.Model;
+using OnThisDayApp.Models;
 
 namespace OnThisDayApp.ViewModel
 {
-    public class EventViewModel : ViewModelBase
+    public class EntryViewModel : ViewModelBase
     {
-        private Event newEvent;
+        private Entry newEvent;
 
-        public EventViewModel(Event newEvent)
+        public EntryViewModel(Entry newEvent)
         {
             this.newEvent = newEvent;
         }

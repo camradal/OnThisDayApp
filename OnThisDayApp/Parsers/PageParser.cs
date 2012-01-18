@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Diagnostics;
-using OnThisDayApp.Model;
+using OnThisDayApp.Models;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
@@ -19,14 +19,14 @@ namespace OnThisDayApp.Parsers
 {
     public sealed class PageParser
     {
-        public List<Event> ExtractOnThisDayFromTextHtml(string html)
+        public List<Entry> ExtractOnThisDayFromTextHtml(string html)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
             var otd = htmlDoc.GetElementbyId("mp-otd");
             var entries = otd.Descendants("li");
 
-            List<Event> events = new List<Event>();
+            List<Entry> events = new List<Entry>();
             foreach (var entry in entries)
             {
                 try
@@ -38,7 +38,7 @@ namespace OnThisDayApp.Parsers
                     description = description.Substring(secondSpace + 1);
                     description = HttpUtility.HtmlDecode(description);
                     var firstLink = entry.Descendants("b").First().Descendants("a").First();
-                    Event newEvent = new Event();
+                    Entry newEvent = new Entry();
                     newEvent.Year = int.Parse(yearLink.InnerText);
                     newEvent.Description = description;
                     newEvent.Link = firstLink.Attributes["href"].Value;

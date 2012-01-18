@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace OnThisDayApp.Model
+namespace OnThisDayApp.Models
 {
-    public sealed class Event
+    public sealed class Entry
     {
         public int Year { get; set; }
         public string Description { get; set; }

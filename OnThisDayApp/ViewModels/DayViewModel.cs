@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using OnThisDayApp.DataAccess;
-using OnThisDayApp.Model;
+using OnThisDayApp.Models;
 using System.Collections.ObjectModel;
 using Utilities;
 
@@ -21,11 +21,11 @@ namespace OnThisDayApp.ViewModel
 
         public bool IsDataLoaded { get; set; }
 
-        public ObservableCollection<EventViewModel> Events { get; private set; }
+        public ObservableCollection<EntryViewModel> Entries { get; private set; }
 
         public DayViewModel()
         {
-            Events = new ObservableCollection<EventViewModel>();
+            Entries = new ObservableCollection<EntryViewModel>();
             pageLoader.Loaded += new EventHandler<PageLoadedEventArgs>(pageLoader_Loaded);
         }
 
@@ -40,9 +40,9 @@ namespace OnThisDayApp.ViewModel
             // update needs to happen on main thread
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                foreach (Event newEvent in e.Events)
+                foreach (Entry newEvent in e.Events)
                 {
-                    Events.Add(new EventViewModel(newEvent));
+                    Entries.Add(new EntryViewModel(newEvent));
                 }
 
                 GlobalLoading.Instance.IsLoading = false;

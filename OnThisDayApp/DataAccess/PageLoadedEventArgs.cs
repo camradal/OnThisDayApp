@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using OnThisDayApp.Model;
+using OnThisDayApp.Models;
 
 namespace OnThisDayApp.DataAccess
 {
     public sealed class PageLoadedEventArgs : EventArgs
     {
-        public List<Event> Events { get; private set; }
+        public List<Entry> Events { get; private set; }
 
-        public PageLoadedEventArgs(List<Event> events)
+        public PageLoadedEventArgs(List<Entry> entries)
         {
-            this.Events = events;
+            this.Events = entries;
         }
     }
 }

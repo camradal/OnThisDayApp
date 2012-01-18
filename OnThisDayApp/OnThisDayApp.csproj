@@ -71,8 +71,10 @@
     </Compile>
     <Compile Include="DataAccess\PageLoadedEventArgs.cs" />
     <Compile Include="DataAccess\PageLoader.cs" />
-    <Compile Include="Model\Day.cs" />
-    <Compile Include="Model\Event.cs" />
+    <Compile Include="Models\Day.cs" />
+    <Compile Include="Models\Entry.cs" />
+    <Compile Include="ViewModels\DayViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="Parsers\PageParser.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -85,9 +87,7 @@
     </Compile>
     <Compile Include="Utilities\GlobalLoading.cs" />
     <Compile Include="Utilities\StringProvider.cs" />
-    <Compile Include="ViewModel\DayViewModel.cs" />
-    <Compile Include="ViewModel\EventViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -131,6 +131,7 @@
       <Name>HAPPhone.7.1</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
