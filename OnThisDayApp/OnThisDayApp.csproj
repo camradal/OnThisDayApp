@@ -25,6 +25,8 @@
     <SilverlightAppEntry>OnThisDayApp.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\OnThisDayApp\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +50,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AgFx">
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
+    </Reference>
+    <Reference Include="AgFx.Controls">
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -71,10 +83,8 @@
     </Compile>
     <Compile Include="DataAccess\PageLoadedEventArgs.cs" />
     <Compile Include="DataAccess\PageLoader.cs" />
-    <Compile Include="Models\Day.cs" />
-    <Compile Include="Models\Entry.cs" />
+    <Compile Include="ViewModels\DayLoadContext.cs" />
     <Compile Include="ViewModels\DayViewModel.cs" />
-    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="Parsers\PageParser.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -87,7 +97,7 @@
     </Compile>
     <Compile Include="Utilities\GlobalLoading.cs" />
     <Compile Include="Utilities\StringProvider.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\EntryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -108,6 +118,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
@@ -125,12 +138,6 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HAPPhone.7.1\HAPPhone.7.1.csproj">
-      <Project>{3DA565DD-55B2-422B-B2AB-64E35F926E93}</Project>
-      <Name>HAPPhone.7.1</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
@@ -142,4 +149,5 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

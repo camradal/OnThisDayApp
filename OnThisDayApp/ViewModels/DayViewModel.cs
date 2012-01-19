@@ -1,52 +1,43 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using OnThisDayApp.DataAccess;
-using OnThisDayApp.Models;
-using System.Collections.ObjectModel;
-using Utilities;
+﻿using System.Collections.ObjectModel;
+using AgFx;
 
-namespace OnThisDayApp.ViewModel
+namespace OnThisDayApp.ViewModels
 {
-    public class DayViewModel : ViewModelBase
+    [CachePolicy(CachePolicy.Forever)]
+    public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
-        private PageLoader pageLoader = new PageLoader();
+        private readonly BatchObservableCollection<EntryViewModel> highlights = new BatchObservableCollection<EntryViewModel>();
 
-        public bool IsDataLoaded { get; set; }
+        public ObservableCollection<EntryViewModel> Highlights
+        {
+            get
+            {
+                return highlights;
+            }
+            set
+            {
+                if (highlights != null)
+                {
+                    highlights.Clear();
 
-        public ObservableCollection<EntryViewModel> Entries { get; private set; }
+                    if (value != null)
+                    {
+                        foreach (var item in value)
+                        {
+                            highlights.Add(item);
+                        }
+                    }
+                }
+                RaisePropertyChanged("Highlights");
+            }
+        }
 
         public DayViewModel()
         {
-            Entries = new ObservableCollection<EntryViewModel>();
-            pageLoader.Loaded += new EventHandler<PageLoadedEventArgs>(pageLoader_Loaded);
         }
 
-        public void LoadData()
+        public DayViewModel(string day) : base(new DayLoadContext(day))
         {
-            pageLoader.LoadAsync();
-            GlobalLoading.Instance.IsLoading = true;
-        }
-
-        void pageLoader_Loaded(object sender, PageLoadedEventArgs e)
-        {
-            // update needs to happen on main thread
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                foreach (Entry newEvent in e.Events)
-                {
-                    Entries.Add(new EntryViewModel(newEvent));
-                }
-
-                GlobalLoading.Instance.IsLoading = false;
-            });
         }
     }
 }

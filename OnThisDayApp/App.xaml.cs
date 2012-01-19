@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+﻿using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Utilities;
+using System.Diagnostics;
+using System.IO;
+using System;
+using System.Threading;
 
 namespace OnThisDayApp
 {
@@ -76,12 +71,16 @@ namespace OnThisDayApp
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            PrintReport();
+            DataManager.Current.Flush();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            PrintReport();
+            DataManager.Current.Flush();
         }
 
         // Code to execute if a navigation fails
@@ -103,6 +102,32 @@ namespace OnThisDayApp
                 System.Diagnostics.Debugger.Break();
             }
         }
+
+        #region Data manager statistics
+        
+        [Conditional("DEBUG")]
+        private static void PrintReport()
+        {
+            using (StringWriter writer = new StringWriter())
+            {
+                DataManager.Current.GetStatisticsReport(writer, false);
+
+                writer.Flush();
+
+                string output = writer.ToString();
+                int time = 0;
+
+                foreach (string ln in output.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    time += 5;
+                    Debug.WriteLine(ln);
+                }
+
+                Thread.Sleep(time);
+            }
+        }
+
+        #endregion
 
         #region Phone application initialization
 

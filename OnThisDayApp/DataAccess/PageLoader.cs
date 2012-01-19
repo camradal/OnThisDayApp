@@ -1,56 +1,38 @@
 ﻿using System;
 using System.IO;
-using System.Net;
+using AgFx;
 using OnThisDayApp.Parsers;
+using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.DataAccess
 {
-    public sealed class PageLoader
+    public sealed class PageLoader : IDataLoader<DayLoadContext>
     {
-        private readonly Uri sourceUri = new Uri(@"http://en.wikipedia.org/wiki/Main_Page", UriKind.Absolute);
+        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Main_Page/{0}";
+        private readonly PageParser parser = new PageParser();
 
-        public event EventHandler<PageLoadedEventArgs> Loaded;
-
-        /// <summary>
-        /// Loads page asynchronously, result will returned in Loaded event
-        /// </summary>
-        public void LoadAsync()
+        public LoadRequest GetLoadRequest(DayLoadContext loadContext, Type objectType)
         {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(sourceUri);
-                request.BeginGetResponse(new AsyncCallback(ReadWebRequestCallback), request);
-            }
-            catch
-            {
-                // handle failure to submit request
-            }
+            string uri = string.Format(sourceUriFormat, loadContext.Day);
+            return new WebLoadRequest(loadContext, new Uri(uri));
         }
 
-        private void ReadWebRequestCallback(IAsyncResult callbackResult)
+        /// <summary>
+        /// Executes once LoadRequest has executed. Will also happen when deserializing cached data
+        /// </remarks>
+        public object Deserialize(DayLoadContext lc, Type objectType, Stream stream)
         {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)callbackResult.AsyncState;
-                using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(callbackResult))
-                using (StreamReader httpWebStreamReader = new StreamReader(response.GetResponseStream()))
-                {
-                    string html = httpWebStreamReader.ReadToEnd();
+            var entries = parser.ExtractEntriesFromHtml(stream);
+            var vm = new DayViewModel(lc.Day);
 
-                    PageParser parser = new PageParser();
-                    var events = parser.ExtractOnThisDayFromTextHtml(html);
-
-                    // this is async operation, raise event that page has been loaded
-                    if (html != null)
-                    {
-                        Loaded(this, new PageLoadedEventArgs(events));
-                    }
-                }
-            }
-            catch
+            // push in the weather periods
+            foreach (var wp in entries)
             {
-                // handle failure to read response
+                vm.Highlights.Add(wp);
             }
+
+            return vm;
+
         }
     }
 }

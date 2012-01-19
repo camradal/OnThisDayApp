@@ -1,36 +1,32 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using OnThisDayApp.Models;
+﻿using AgFx;
+using OnThisDayApp.ViewModels;
 
-namespace OnThisDayApp.ViewModel
+namespace OnThisDayApp.ViewModels
 {
-    public class EntryViewModel : ViewModelBase
+    public sealed class EntryViewModel : ModelItemBase<DayLoadContext>
     {
-        private Entry newEvent;
+        private int year;
+        private string description;
+        private string link;
 
-        public EntryViewModel(Entry newEvent)
+        public EntryViewModel()
         {
-            this.newEvent = newEvent;
+        }
+
+        public EntryViewModel(string day) : base(new DayLoadContext(day))
+        {
         }
 
         public int Year
         {
             get
             {
-                return newEvent.Year;
+                return year;
             }
             set
             {
-                newEvent.Year = value;
-                base.NotifyPropertyChanged("Year");
+                year = value;
+                RaisePropertyChanged("Year");
             }
         }
 
@@ -38,12 +34,12 @@ namespace OnThisDayApp.ViewModel
         {
             get
             {
-                return newEvent.Description;
+                return description;
             }
             set
             {
-                newEvent.Description = value;
-                base.NotifyPropertyChanged("Description");
+                description = value;
+                RaisePropertyChanged("Description");
             }
         }
 
@@ -51,12 +47,12 @@ namespace OnThisDayApp.ViewModel
         {
             get
             {
-                return newEvent.Link;
+                return link;
             }
             set
             {
-                newEvent.Link = value;
-                base.NotifyPropertyChanged("Link");
+                link = value;
+                RaisePropertyChanged("Link");
             }
         }
     }

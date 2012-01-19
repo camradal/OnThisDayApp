@@ -9,24 +9,25 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Diagnostics;
-using OnThisDayApp.Models;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Linq;
+using System.IO;
+using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.Parsers
 {
     public sealed class PageParser
     {
-        public List<Entry> ExtractOnThisDayFromTextHtml(string html)
+        public List<EntryViewModel> ExtractEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
+            htmlDoc.Load(stream);
             var otd = htmlDoc.GetElementbyId("mp-otd");
             var entries = otd.Descendants("li");
 
-            List<Entry> events = new List<Entry>();
+            List<EntryViewModel> events = new List<EntryViewModel>();
             foreach (var entry in entries)
             {
                 try
@@ -38,7 +39,7 @@ namespace OnThisDayApp.Parsers
                     description = description.Substring(secondSpace + 1);
                     description = HttpUtility.HtmlDecode(description);
                     var firstLink = entry.Descendants("b").First().Descendants("a").First();
-                    Entry newEvent = new Entry();
+                    EntryViewModel newEvent = new EntryViewModel();
                     newEvent.Year = int.Parse(yearLink.InnerText);
                     newEvent.Description = description;
                     newEvent.Link = firstLink.Attributes["href"].Value;

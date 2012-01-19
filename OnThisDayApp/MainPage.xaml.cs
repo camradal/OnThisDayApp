@@ -10,43 +10,30 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using OnThisDayApp.ViewModel;
+using OnThisDayApp.ViewModels;
 using Microsoft.Phone.Tasks;
+using AgFx;
 
 namespace OnThisDayApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private DayViewModel viewModel;
-
-        public DayViewModel ViewModel
-        {
-            get
-            {
-                if (viewModel == null)
-                {
-                    viewModel = new DayViewModel();
-                }
-                return viewModel;
-            }
-        }
-
-        // Constructor
         public MainPage()
         {
             InitializeComponent();
 
-            // initialize view model after the page is loaded
-            DataContext = ViewModel;
-            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
-        }
+            // load a new ViewModel based on the date
+            // this will either fetch from disk or from internet
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (!ViewModel.IsDataLoaded)
-            {
-                ViewModel.LoadData();
-            }
+            string date = "January 18";
+            this.DataContext = DataManager.Current.Load<DayViewModel>(
+                date,
+                (vm) => {},
+                (ex) =>
+                {
+                    MessageBox.Show("Failed to get data for " + date);
+                }
+             );
         }
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +56,7 @@ namespace OnThisDayApp
             // navigate to the new page
 
             WebBrowserTask task = new WebBrowserTask();
-            task.Uri = new Uri(@"http://en.wikipedia.org" + ((EntryViewModel)MainListBox.SelectedItem).Link);
+            //task.Uri = new Uri(@"http://en.wikipedia.org" + ((Entry)MainListBox.SelectedItem).Link);
             task.Show();
             //NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
 
