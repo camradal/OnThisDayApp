@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System;
 using System.Threading;
+using System.Windows.Media;
 
 namespace OnThisDayApp
 {
@@ -71,7 +72,7 @@ namespace OnThisDayApp
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            PrintReport();
+            //PrintReport();
             DataManager.Current.Flush();
         }
 
@@ -79,7 +80,7 @@ namespace OnThisDayApp
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            PrintReport();
+            //PrintReport();
             DataManager.Current.Flush();
         }
 
@@ -142,7 +143,10 @@ namespace OnThisDayApp
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame()
+            {
+                Background = new SolidColorBrush(Colors.Transparent)
+            };
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures

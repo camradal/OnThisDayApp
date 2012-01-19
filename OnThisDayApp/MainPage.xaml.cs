@@ -45,23 +45,24 @@ namespace OnThisDayApp
             });
         }
 
-        private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listBox = (ListBox)sender;
+
             // if selected index is -1 (no selection) do nothing
-            if (MainListBox.SelectedIndex == -1)
+            if (listBox.SelectedIndex == -1)
             {
                 return;
             }
 
             // navigate to the new page
-
-            WebBrowserTask task = new WebBrowserTask();
-            //task.Uri = new Uri(@"http://en.wikipedia.org" + ((Entry)MainListBox.SelectedItem).Link);
-            task.Show();
-            //NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
+            var selectedItem = (EntryViewModel)listBox.SelectedItem;
+            string encodedUri = HttpUtility.HtmlEncode(selectedItem.Link);
+            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+            NavigationService.Navigate(uri);
 
             // reset selected index to -1 (no selection)
-            MainListBox.SelectedIndex = -1;
+            listBox.SelectedIndex = -1;
         }
     }
 }

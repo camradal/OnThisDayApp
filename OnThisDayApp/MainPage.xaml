@@ -13,7 +13,8 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    Style="{StaticResource TransitionPageStyle}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -21,7 +22,7 @@
         <controls:Pivot Title="ON THIS DAY">
             <!--Pivot highlights-->
             <controls:PivotItem Header="highlights">
-                <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
@@ -35,7 +36,7 @@
 
             <!--Pivot holidays-->
             <controls:PivotItem Header="holidays">
-                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
@@ -49,7 +50,7 @@
 
             <!--Pivot events-->
             <controls:PivotItem Header="events">
-                <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
@@ -63,7 +64,7 @@
 
             <!--Pivot births-->
             <controls:PivotItem Header="deaths">
-                <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
@@ -77,7 +78,7 @@
 
             <!--Pivot deaths-->
             <controls:PivotItem Header="births">
-                <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">

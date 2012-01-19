@@ -12,6 +12,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/CustomTheme.xaml"/>
+                <ResourceDictionary Source="Resources/Transitions.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <utilities:StringProvider x:Key="Strings" />
         </ResourceDictionary>

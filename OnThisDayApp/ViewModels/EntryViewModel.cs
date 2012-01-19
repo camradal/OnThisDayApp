@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace OnThisDayApp.ViewModels
 {
+    [CachePolicy(CachePolicy.Forever)]
     public sealed class EntryViewModel : ModelItemBase<DayLoadContext>
     {
         private int year;
