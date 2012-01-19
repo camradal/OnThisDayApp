@@ -6,7 +6,7 @@ using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.DataAccess
 {
-    public sealed class PageLoader : IDataLoader<DayLoadContext>
+    public sealed class PageLoaderEvents : IDataLoader<DayLoadContext>
     {
         private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Main_Page/";
         private readonly PageParser parser = new PageParser();

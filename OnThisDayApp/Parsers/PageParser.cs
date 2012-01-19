@@ -20,7 +20,7 @@ namespace OnThisDayApp.Parsers
 {
     public sealed class PageParser
     {
-        public List<EntryViewModel> ExtractEntriesFromHtml(Stream stream)
+        public List<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
@@ -60,6 +60,14 @@ namespace OnThisDayApp.Parsers
                 //events.Add(newEvent);
 
             return events;
+        }
+
+        public List<EntryViewModel> ExtractEventEntriesFromHtml(Stream stream)
+        {
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.Load(stream);
+
+            return null;
         }
     }
 }

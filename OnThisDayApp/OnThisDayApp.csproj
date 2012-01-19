@@ -81,6 +81,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\PageLoaderEvents.cs" />
     <Compile Include="DataAccess\PageLoadedEventArgs.cs" />
     <Compile Include="DataAccess\PageLoader.cs" />
     <Compile Include="ViewModels\DayLoadContext.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Utilities\GlobalLoading.cs" />
     <Compile Include="Utilities\StringProvider.cs" />
     <Compile Include="ViewModels\EntryViewModel.cs" />
+    <Compile Include="ViewModels\EventsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -1,13 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using AgFx;
+using OnThisDayApp.DataAccess;
 
 namespace OnThisDayApp.ViewModels
 {
+    /// <summary>
+    /// Primary view model used for binding to the view
+    /// </summary>
     [CachePolicy(CachePolicy.Forever)]
+    [DataLoader(typeof(PageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
         private readonly BatchObservableCollection<EntryViewModel> highlights = new BatchObservableCollection<EntryViewModel>();
-
+        
         public ObservableCollection<EntryViewModel> Highlights
         {
             get
@@ -29,6 +34,14 @@ namespace OnThisDayApp.ViewModels
                     }
                 }
                 RaisePropertyChanged("Highlights");
+            }
+        }
+
+        public EventsViewModel Events
+        {
+            get
+            {
+                return DataManager.Current.Load<EventsViewModel>(LoadContext.Day);
             }
         }
 
