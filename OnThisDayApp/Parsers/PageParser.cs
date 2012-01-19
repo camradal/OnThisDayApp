@@ -81,12 +81,26 @@ namespace OnThisDayApp.Parsers
             return newEvent;
         }
 
-        public List<EntryViewModel> ExtractEventEntriesFromHtml(Stream stream)
+        public Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
-            var otd = htmlDoc.GetElementbyId("Events");
+            List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
+            List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
+            List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
+
+            Dictionary<string, List<EntryViewModel>> result = new Dictionary<string, List<EntryViewModel>>();
+            result.Add("Events", events);
+            result.Add("Births", births);
+            result.Add("Deaths", deaths);
+
+            return result;
+        }
+
+        private static List<EntryViewModel> ExtractById(HtmlDocument htmlDoc, string id)
+        {
+            var otd = htmlDoc.GetElementbyId(id);
             var list = otd.ParentNode.NextSibling.NextSibling;
             var entries = list.Descendants("li");
 
@@ -104,7 +118,6 @@ namespace OnThisDayApp.Parsers
                     // failed to add 1 event, skip for now
                 }
             }
-
             return events;
         }
     }

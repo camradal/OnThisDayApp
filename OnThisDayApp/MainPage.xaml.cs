@@ -25,7 +25,7 @@ namespace OnThisDayApp
             // load a new ViewModel based on the date
             // this will either fetch from disk or from internet
 
-            string date = "January 18";
+            string date = "January_19";
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 date,
                 (vm) => {},

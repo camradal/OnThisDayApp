@@ -8,13 +8,13 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class PageLoaderEvents : IDataLoader<DayLoadContext>
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/January_18";
+        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/{0}";
         private readonly PageParser parser = new PageParser();
 
         public LoadRequest GetLoadRequest(DayLoadContext loadContext, Type objectType)
         {
             string uri = string.Format(sourceUriFormat, loadContext.Day);
-            return new WebLoadRequest(loadContext, new Uri(sourceUriFormat));
+            return new WebLoadRequest(loadContext, new Uri(uri, UriKind.Absolute));
         }
 
         /// <summary>
@@ -25,10 +25,19 @@ namespace OnThisDayApp.DataAccess
             var entries = parser.ExtractEventEntriesFromHtml(stream);
             var vm = new EventsViewModel(lc.Day);
 
-            // push in the weather periods
-            foreach (var wp in entries)
+            foreach (var wp in entries["Events"])
             {
-                vm.Holidays.Add(wp);
+                vm.Events.Add(wp);
+            }
+
+            foreach (var wp in entries["Births"])
+            {
+                vm.Births.Add(wp);
+            }
+
+            foreach (var wp in entries["Deaths"])
+            {
+                vm.Deaths.Add(wp);
             }
 
             return vm;
