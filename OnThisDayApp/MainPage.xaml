@@ -34,7 +34,16 @@
 
             <!--Pivot holidays-->
             <controls:PivotItem Header="holidays">
-                <Grid/>
+                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="MainListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </controls:PivotItem>
 
             <!--Pivot births-->

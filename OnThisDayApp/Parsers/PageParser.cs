@@ -32,17 +32,7 @@ namespace OnThisDayApp.Parsers
             {
                 try
                 {
-                    var yearLink = entry.Descendants("a").First();
-                    var description = entry.InnerText;
-                    int firstSpace = description.IndexOf(' ');
-                    int secondSpace = description.IndexOf(' ', firstSpace + 1);
-                    description = description.Substring(secondSpace + 1);
-                    description = HttpUtility.HtmlDecode(description);
-                    var firstLink = entry.Descendants("b").First().Descendants("a").First();
-                    EntryViewModel newEvent = new EntryViewModel();
-                    newEvent.Year = int.Parse(yearLink.InnerText);
-                    newEvent.Description = description;
-                    newEvent.Link = firstLink.Attributes["href"].Value;
+                    EntryViewModel newEvent = ExtractEntryFromNode(entry);
                     events.Add(newEvent);
                 }
                 catch
@@ -62,12 +52,60 @@ namespace OnThisDayApp.Parsers
             return events;
         }
 
+        private static EntryViewModel ExtractEntryFromNode(HtmlNode entry)
+        {
+            EntryViewModel newEvent = new EntryViewModel();
+
+            var yearLink = entry.Descendants("a").First();
+            var description = entry.InnerText;
+            int firstSpace = description.IndexOf(' ');
+            int secondSpace = description.IndexOf(' ', firstSpace + 1);
+            description = description.Substring(secondSpace + 1);
+            description = HttpUtility.HtmlDecode(description);
+
+            HtmlNode firstLink;
+
+            var firstBoldItem = entry.Descendants("b").FirstOrDefault();
+            if (firstBoldItem != null)
+            {
+                firstLink = firstBoldItem.Descendants("a").First();
+            }
+            else
+            {
+                firstLink = entry.Descendants("a").First();
+            }
+
+            newEvent.Year = int.Parse(yearLink.InnerText);
+            newEvent.Description = description;
+            newEvent.Link = firstLink.Attributes["href"].Value;
+            return newEvent;
+        }
+
         public List<EntryViewModel> ExtractEventEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
-            return null;
+            var otd = htmlDoc.GetElementbyId("Events");
+            var list = otd.ParentNode.NextSibling.NextSibling;
+            var entries = list.Descendants("li");
+
+            List<EntryViewModel> events = new List<EntryViewModel>();
+            foreach (var entry in entries)
+            {
+                try
+                {
+                    EntryViewModel newEvent = ExtractEntryFromNode(entry);
+                    events.Add(newEvent);
+                }
+                catch
+                {
+                    // TODO
+                    // failed to add 1 event, skip for now
+                }
+            }
+
+            return events;
         }
     }
 }

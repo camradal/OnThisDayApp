@@ -8,7 +8,7 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class PageLoaderEvents : IDataLoader<DayLoadContext>
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Main_Page/";
+        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/January_18";
         private readonly PageParser parser = new PageParser();
 
         public LoadRequest GetLoadRequest(DayLoadContext loadContext, Type objectType)
@@ -22,13 +22,13 @@ namespace OnThisDayApp.DataAccess
         /// </remarks>
         public object Deserialize(DayLoadContext lc, Type objectType, Stream stream)
         {
-            var entries = parser.ExtractHighlightEntriesFromHtml(stream);
-            var vm = new DayViewModel(lc.Day);
+            var entries = parser.ExtractEventEntriesFromHtml(stream);
+            var vm = new EventsViewModel(lc.Day);
 
             // push in the weather periods
             foreach (var wp in entries)
             {
-                vm.Highlights.Add(wp);
+                vm.Holidays.Add(wp);
             }
 
             return vm;
