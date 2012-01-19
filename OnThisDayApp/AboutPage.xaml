@@ -15,9 +15,8 @@
     Style="{StaticResource TransitionPageStyle}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -28,51 +27,42 @@
             <TextBlock x:Name="PageTitle" Text="{Binding Resources.PageTitleAbout, Source={StaticResource Strings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Canvas Height="173" Width="173" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,0,0,0" Background="{StaticResource PhoneAccentBrush}">
-                <Image Name="imageLogo" Stretch="Fill"  Source="/Images/Application_Icon_173.png" />
-            </Canvas>
-            <StackPanel Margin="197,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.AppTitle}" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="0"/>
-                <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.Author}" Style="{StaticResource PhoneTextNormalStyle}" Margin="2,0,0,0"/>
-                <HyperlinkButton HorizontalAlignment="Left" NavigateUri="{Binding Source={StaticResource Strings}, Path=Resources.Website}" Content="{Binding Source={StaticResource Strings}, Path=Resources.Website}" TargetName="_new" VerticalAlignment="Top" Margin="-10,0,0,0" FontSize="20" />
-            </StackPanel>
-        </Grid>
-        <Grid x:Name="ContentPanel2" Grid.Row="2" Margin="12">
-            <StackPanel Margin="0,0,0,12">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                    <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Version}" />
-                    <TextBlock Style="{StaticResource PhoneTextNormalStyle}" x:Name="versionText" />
+        <ListBox Grid.Row="1" Margin="12,0,12,12">
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Canvas Margin="12,0,12,12" Height="173" Width="173" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{StaticResource PhoneAccentBrush}">
+                        <Image Name="imageLogo" Stretch="Fill"  Source="/Images/Application_Icon_173.png" />
+                    </Canvas>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.AppTitle}" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="0"/>
+                        <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.Author}" Style="{StaticResource PhoneTextNormalStyle}" Margin="2,0,0,0"/>
+                        <HyperlinkButton HorizontalAlignment="Left" NavigateUri="{Binding Source={StaticResource Strings}, Path=Resources.Website}" Content="{Binding Source={StaticResource Strings}, Path=Resources.Website}" TargetName="_new" VerticalAlignment="Top" Margin="-10,0,0,0" FontSize="20" />
+                    </StackPanel>
                 </StackPanel>
-                <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Description}" TextWrapping="Wrap" />
-                <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Disclaimer}" TextWrapping="Wrap" Margin="12,12,12,0" />
-                <HyperlinkButton x:Name="feedbackButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="feedbackButton_Click">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Feedback}" TextWrapping="Wrap"/>
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonFeedback}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Version}" />
+                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" x:Name="versionText" />
                     </StackPanel>
-                </HyperlinkButton>
-                <HyperlinkButton x:Name="rateButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="rateButton_Click">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Rate}" TextWrapping="Wrap"/>
-                        <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonRate}" Foreground="{StaticResource PhoneAccentBrush}"/>
-                    </StackPanel>
-                </HyperlinkButton>
-            </StackPanel>
-        </Grid>
+                    <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Description}" TextWrapping="Wrap" />
+                    <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Disclaimer}" TextWrapping="Wrap" Margin="12,12,12,0" />
+                    <HyperlinkButton x:Name="feedbackButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="feedbackButton_Click">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Feedback}" TextWrapping="Wrap"/>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonFeedback}" Foreground="{StaticResource PhoneAccentBrush}"/>
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton x:Name="rateButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="rateButton_Click">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Rate}" TextWrapping="Wrap"/>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonRate}" Foreground="{StaticResource PhoneAccentBrush}"/>
+                        </StackPanel>
+                    </HyperlinkButton>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
     </Grid>
- 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
 
 </phone:PhoneApplicationPage>
