@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using OnThisDayApp.ViewModels;
-using Microsoft.Phone.Tasks;
 using AgFx;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Controls.Primitives;
+using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp
 {
@@ -25,7 +19,7 @@ namespace OnThisDayApp
             // load a new ViewModel based on the date
             // this will either fetch from disk or from internet
 
-            string date = "January_19";
+            string date = DateTime.Now.ToString("MMMM_d", CultureInfo.InvariantCulture); ;
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 date,
                 (vm) => {},
@@ -36,14 +30,7 @@ namespace OnThisDayApp
              );
         }
 
-        private void AboutMenuItem_Click(object sender, EventArgs e)
-        {
-            // use dispatcher to prevent jumping elements on the screen
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
-            });
-        }
+        #region ListBox Handlers
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -64,5 +51,42 @@ namespace OnThisDayApp
             // reset selected index to -1 (no selection)
             listBox.SelectedIndex = -1;
         }
+
+        #endregion
+
+        #region Application Bar Handlers
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
+            });
+        }
+
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
+            });
+        }
+
+        #endregion
+
+        #region Navigation handlers
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            var page = e.Content as IDateTimePickerPage;
+            if (page != null)
+            {
+                page.Value = DateTime.Now;
+            }
+        }
+
+        #endregion
     }
 }

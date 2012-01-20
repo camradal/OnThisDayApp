@@ -121,7 +121,7 @@
     <value>On This Day...</value>
   </data>
   <data name="AppTitleCapitalized" xml:space="preserve">
-    <value>ON THIS DAY</value>
+    <value>ON THIS DAY...</value>
   </data>
   <data name="Author" xml:space="preserve">
     <value>by Dapper Panda</value>
@@ -145,7 +145,7 @@
     <value>Internet connection is not available</value>
   </data>
   <data name="Feedback" xml:space="preserve">
-    <value>We would love to hear your comments about Dish Reader. Send us your thoughts</value>
+    <value>We would love to hear your comments about On This Day... Send us your thoughts</value>
   </data>
   <data name="FeedbackOn" xml:space="preserve">
     <value>Feedback for On This Day...</value>

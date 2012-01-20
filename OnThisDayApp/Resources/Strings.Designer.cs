@@ -70,7 +70,7 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ON THIS DAY.
+        ///   Looks up a localized string similar to ON THIS DAY....
         /// </summary>
         public static string AppTitleCapitalized {
             get {
@@ -142,7 +142,7 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We would love to hear your comments about Dish Reader. Send us your thoughts.
+        ///   Looks up a localized string similar to We would love to hear your comments about On This Day... Send us your thoughts.
         /// </summary>
         public static string Feedback {
             get {
