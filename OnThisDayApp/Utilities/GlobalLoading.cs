@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using AgFx;
 
 namespace Utilities
 {
@@ -64,6 +65,9 @@ namespace Utilities
 
         public void Initialize(PhoneApplicationFrame frame)
         {
+            // using AgFx
+            DataManager.Current.PropertyChanged += OnDataManagerPropertyChanged;
+
             indicator = new ProgressIndicator();
             frame.Navigated += OnRootFrameNavigated;
         }
@@ -83,6 +87,8 @@ namespace Utilities
         {
             if ("IsLoading" == e.PropertyName)
             {
+                // using AgFx
+                IsDataManagerLoading = DataManager.Current.IsLoading;
                 NotifyValueChanged();
             }
         }

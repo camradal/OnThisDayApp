@@ -7,6 +7,7 @@ using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using OnThisDayApp.ViewModels;
+using OnThisDayApp.Resources;
 
 namespace OnThisDayApp
 {
@@ -62,6 +63,9 @@ namespace OnThisDayApp
                 {
                     MessageBox.Show("Failed to get data for " + CurrentDate);
                 });
+
+            MainPivot.Title = string.Format(
+                CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
         }
 
         #region ListBox Handlers
