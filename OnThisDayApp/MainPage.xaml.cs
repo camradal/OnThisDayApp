@@ -12,22 +12,56 @@ namespace OnThisDayApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        /// <summary>
+        /// Reference to datetime picker page, so we can get the value from it
+        /// </summary>
+        private IDateTimePickerPage page;
+        private DateTime currentDate = DateTime.Now;
+
+        #region Properties
+
+        /// <summary>
+        /// Date displayed in UI
+        /// </summary>
+        public string CurrentDate
+        {
+            get
+            {
+                return currentDate.ToString("MMMM d", CultureInfo.CurrentCulture);
+            }
+        }
+
+        /// <summary>
+        /// Date passed as a primary key for wiki
+        /// </summary>
+        private string CurrentDateForWiki
+        {
+            get
+            {
+                return currentDate.ToString("MMMM_d", CultureInfo.InvariantCulture);
+            }
+        }
+
+        #endregion
+
         public MainPage()
         {
             InitializeComponent();
+            LoadData();
+        }
 
-            // load a new ViewModel based on the date
-            // this will either fetch from disk or from internet
-
-            string date = DateTime.Now.ToString("MMMM_d", CultureInfo.InvariantCulture); ;
+        /// <summary>
+        /// Load either from the cache on internet
+        /// </summary>
+        private void LoadData()
+        {
             this.DataContext = DataManager.Current.Load<DayViewModel>(
-                date,
-                (vm) => {},
+                CurrentDateForWiki,
+                (vm) => { },
                 (ex) =>
                 {
-                    MessageBox.Show("Failed to get data for " + date);
-                }
-             );
+                    MessageBox.Show("Failed to get data for " + CurrentDate);
+                });
         }
 
         #region ListBox Handlers
@@ -78,13 +112,27 @@ namespace OnThisDayApp
 
         #region Navigation handlers
 
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (page != null && page.Value.HasValue)
+            {
+                currentDate = page.Value.Value;
+                page = null;
+                LoadData();
+            }
+
+            base.OnNavigatedTo(e);
+        }
+
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            var page = e.Content as IDateTimePickerPage;
+            page = e.Content as IDateTimePickerPage;
             if (page != null)
             {
                 page.Value = DateTime.Now;
             }
+
+            base.OnNavigatedTo(e);
         }
 
         #endregion
