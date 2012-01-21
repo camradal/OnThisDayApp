@@ -20,12 +20,12 @@ namespace OnThisDayApp.DataAccess
         /// <summary>
         /// Executes once LoadRequest has executed. Will also happen when deserializing cached data
         /// </remarks>
-        public object Deserialize(DayLoadContext lc, Type objectType, Stream stream)
+        public object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
             var entries = parser.ExtractHighlightEntriesFromHtml(stream);
-            var vm = new DayViewModel(lc.Day);
+            var vm = new DayViewModel(loadContext.Day);
 
-            // push in the weather periods
+            // push in the values
             foreach (var wp in entries)
             {
                 vm.Highlights.Add(wp);

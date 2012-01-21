@@ -6,8 +6,8 @@ using System.Windows.Controls;
 using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
-using OnThisDayApp.ViewModels;
 using OnThisDayApp.Resources;
+using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp
 {

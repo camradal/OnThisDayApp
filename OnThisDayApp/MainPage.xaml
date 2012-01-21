@@ -34,7 +34,7 @@
             </controls:PivotItem>
 
             <!--Pivot holidays-->
-            <controls:PivotItem Header="holidays">
+            <controls:PivotItem Header="holidays" Visibility="Collapsed">
                 <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -48,7 +48,7 @@
             </controls:PivotItem>
 
             <!--Pivot events-->
-            <controls:PivotItem Header="events">
+            <controls:PivotItem Header="events" Visibility="Collapsed">
                 <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -62,7 +62,7 @@
             </controls:PivotItem>
 
             <!--Pivot births-->
-            <controls:PivotItem Header="deaths">
+            <controls:PivotItem Header="deaths" Visibility="Collapsed">
                 <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -76,7 +76,7 @@
             </controls:PivotItem>
 
             <!--Pivot deaths-->
-            <controls:PivotItem Header="births">
+            <controls:PivotItem Header="births" Visibility="Collapsed">
                 <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -95,7 +95,6 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/icons/appbar.calendar.png" Text="Button 1" Click="ApplicationBarIconButton_Click" />
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>
