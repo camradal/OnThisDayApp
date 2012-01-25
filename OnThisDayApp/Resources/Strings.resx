@@ -168,4 +168,7 @@
   <data name="Website" xml:space="preserve">
     <value>www.dapperpanda.com</value>
   </data>
+  <data name="WebsiteWithHttp" xml:space="preserve">
+    <value>http://www.dapperpanda.com</value>
+  </data>
 </root>

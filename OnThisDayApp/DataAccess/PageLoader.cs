@@ -8,13 +8,13 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class PageLoader : IDataLoader<DayLoadContext>
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Main_Page/";
+        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Wikipedia:Selected_anniversaries/{0}";
         private readonly PageParser parser = new PageParser();
 
         public LoadRequest GetLoadRequest(DayLoadContext loadContext, Type objectType)
         {
             string uri = string.Format(sourceUriFormat, loadContext.Day);
-            return new WebLoadRequest(loadContext, new Uri(sourceUriFormat));
+            return new WebLoadRequest(loadContext, new Uri(uri, UriKind.Absolute));
         }
 
         /// <summary>

@@ -212,5 +212,14 @@ namespace OnThisDayApp.Resources {
                 return ResourceManager.GetString("Website", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://www.dapperpanda.com.
+        /// </summary>
+        public static string WebsiteWithHttp {
+            get {
+                return ResourceManager.GetString("WebsiteWithHttp", resourceCulture);
+            }
+        }
     }
 }

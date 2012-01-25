@@ -36,7 +36,7 @@
                     <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                         <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.AppTitle}" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="0"/>
                         <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.Author}" Style="{StaticResource PhoneTextNormalStyle}" Margin="2,0,0,0"/>
-                        <HyperlinkButton HorizontalAlignment="Left" NavigateUri="{Binding Source={StaticResource Strings}, Path=Resources.Website}" Content="{Binding Source={StaticResource Strings}, Path=Resources.Website}" TargetName="_new" VerticalAlignment="Top" Margin="-10,0,0,0" FontSize="20" />
+                        <HyperlinkButton HorizontalAlignment="Left" NavigateUri="{Binding Source={StaticResource Strings}, Path=Resources.WebsiteWithHttp}" Content="{Binding Source={StaticResource Strings}, Path=Resources.Website}" TargetName="_new" VerticalAlignment="Top" Margin="-10,0,0,0" FontSize="20" />
                     </StackPanel>
                 </StackPanel>
             </ListBoxItem>

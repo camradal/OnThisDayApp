@@ -24,11 +24,10 @@ namespace OnThisDayApp.Parsers
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
-            var otd = htmlDoc.GetElementbyId("mp-otd");
-            var entries = otd.Descendants("li");
+            var list = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
 
             List<EntryViewModel> events = new List<EntryViewModel>();
-            foreach (var entry in entries)
+            foreach (var entry in list.Descendants("li"))
             {
                 try
                 {
