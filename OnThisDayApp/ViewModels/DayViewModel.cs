@@ -8,17 +8,23 @@ namespace OnThisDayApp.ViewModels
     /// Primary view model used for binding to the view
     /// </summary>
     [CachePolicy(CachePolicy.Forever)]
-    [DataLoader(typeof(PageLoader))]
+    [DataLoader(typeof (PageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<EntryViewModel> highlights = new BatchObservableCollection<EntryViewModel>();
-        
+        private readonly BatchObservableCollection<EntryViewModel> highlights =
+            new BatchObservableCollection<EntryViewModel>();
+
+        public DayViewModel()
+        {
+        }
+
+        public DayViewModel(string day) : base(new DayLoadContext(day))
+        {
+        }
+
         public ObservableCollection<EntryViewModel> Highlights
         {
-            get
-            {
-                return highlights;
-            }
+            get { return highlights; }
             set
             {
                 if (highlights != null)
@@ -27,7 +33,7 @@ namespace OnThisDayApp.ViewModels
 
                     if (value != null)
                     {
-                        foreach (var item in value)
+                        foreach (EntryViewModel item in value)
                         {
                             highlights.Add(item);
                         }
@@ -39,18 +45,7 @@ namespace OnThisDayApp.ViewModels
 
         public EventsViewModel Events
         {
-            get
-            {
-                return DataManager.Current.Load<EventsViewModel>(LoadContext.Day);
-            }
-        }
-
-        public DayViewModel()
-        {
-        }
-
-        public DayViewModel(string day) : base(new DayLoadContext(day))
-        {
+            get { return DataManager.Current.Load<EventsViewModel>(LoadContext.Day); }
         }
     }
 }

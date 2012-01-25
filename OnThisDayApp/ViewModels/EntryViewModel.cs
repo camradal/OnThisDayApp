@@ -1,25 +1,21 @@
-﻿using AgFx;
-using OnThisDayApp.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AgFx;
 
 namespace OnThisDayApp.ViewModels
 {
     [CachePolicy(CachePolicy.Forever)]
     public sealed class EntryViewModel : ModelItemBase<DayLoadContext>
     {
-        private int year;
         private string description;
         private string link;
         private List<string> links;
+        private string year;
 
         #region Properties
 
-        public int Year
+        public string Year
         {
-            get
-            {
-                return year;
-            }
+            get { return year; }
             set
             {
                 year = value;
@@ -29,10 +25,7 @@ namespace OnThisDayApp.ViewModels
 
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get { return description; }
             set
             {
                 description = value;
@@ -42,10 +35,7 @@ namespace OnThisDayApp.ViewModels
 
         public string Link
         {
-            get
-            {
-                return link;
-            }
+            get { return link; }
             set
             {
                 link = value;
@@ -55,10 +45,7 @@ namespace OnThisDayApp.ViewModels
 
         public List<string> Links
         {
-            get
-            {
-                return links;
-            }
+            get { return links; }
             set
             {
                 links = value;
@@ -68,6 +55,8 @@ namespace OnThisDayApp.ViewModels
 
         #endregion
 
+        #region Constructors
+
         public EntryViewModel()
         {
         }
@@ -75,5 +64,7 @@ namespace OnThisDayApp.ViewModels
         public EntryViewModel(string day) : base(new DayLoadContext(day))
         {
         }
+
+        #endregion
     }
 }

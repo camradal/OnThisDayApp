@@ -19,25 +19,30 @@ namespace OnThisDayApp.DataAccess
 
         /// <summary>
         /// Executes once LoadRequest has executed. Will also happen when deserializing cached data
-        /// </remarks>
+        /// </summary>
         public object Deserialize(DayLoadContext lc, Type objectType, Stream stream)
         {
             var entries = parser.ExtractEventEntriesFromHtml(stream);
             var vm = new EventsViewModel(lc.Day);
 
-            foreach (var wp in entries["Events"])
+            foreach (var entry in entries["Events"])
             {
-                vm.Events.Add(wp);
+                vm.Events.Add(entry);
             }
 
-            foreach (var wp in entries["Births"])
+            foreach (var entry in entries["Births"])
             {
-                vm.Births.Add(wp);
+                vm.Births.Add(entry);
             }
 
-            foreach (var wp in entries["Deaths"])
+            foreach (var entry in entries["Deaths"])
             {
-                vm.Deaths.Add(wp);
+                vm.Deaths.Add(entry);
+            }
+
+            foreach (var entry in entries["Holidays"])
+            {
+                vm.Holidays.Add(entry);
             }
 
             return vm;

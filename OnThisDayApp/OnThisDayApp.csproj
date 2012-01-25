@@ -86,7 +86,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\PageLoaderEvents.cs" />
-    <Compile Include="DataAccess\PageLoadedEventArgs.cs" />
     <Compile Include="DataAccess\PageLoader.cs" />
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
