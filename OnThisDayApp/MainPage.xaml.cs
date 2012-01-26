@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Linq;
@@ -146,21 +147,24 @@ namespace OnThisDayApp
 
         private void mainMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            // extremely hacky - hopefully fix at some point
-            var menu = (ContextMenu)sender;
-            var model = (DayViewModel)this.DataContext;
-            var entry = model.Highlights.Single(viewModel => viewModel.Year == (string)menu.Tag);
+            ContextMenu menu = (ContextMenu)sender;
 
-            foreach (MenuItem item in entry.Links.Select(link => new MenuItem {Header = link.Key, Tag = link.Value}))
+            if (menu.ItemContainerGenerator == null)
+                return;
+
+            EntryViewModel model = (EntryViewModel)menu.DataContext;
+            Dictionary<string, string> links = model.Links;
+
+            foreach (KeyValuePair<string, string> link in links)
             {
-                item.Click += (obj, args) =>
+                MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
+                string url = link.Value;
+                container.Click += (obj, args) =>
                 {
-                    MenuItem menuItem = (MenuItem)obj;
-                    string encodedUri = HttpUtility.HtmlEncode((string)menuItem.Tag);
+                    string encodedUri = HttpUtility.HtmlEncode(url);
                     Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
                     NavigationService.Navigate(uri);
                 };
-                menu.Items.Add(item);
             }
         }
 
