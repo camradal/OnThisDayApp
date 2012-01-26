@@ -27,13 +27,17 @@
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" Tag="{Binding Year}" Loaded="mainMenu_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>
-                            </StackPanel>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -44,9 +48,12 @@
                 <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" MinWidth="100"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -57,10 +64,14 @@
                 <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -71,10 +82,14 @@
                 <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -85,10 +100,14 @@
                 <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

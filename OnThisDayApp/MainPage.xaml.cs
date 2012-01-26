@@ -142,8 +142,11 @@ namespace OnThisDayApp
 
         #endregion
 
+        #region Context Menu
+
         private void mainMenu_Loaded(object sender, RoutedEventArgs e)
         {
+            // extremely hacky - hopefully fix at some point
             var menu = (ContextMenu)sender;
             var model = (DayViewModel)this.DataContext;
             var entry = model.Highlights.Single(viewModel => viewModel.Year == (string)menu.Tag);
@@ -160,5 +163,7 @@ namespace OnThisDayApp
                 menu.Items.Add(item);
             }
         }
+
+        #endregion
     }
 }
