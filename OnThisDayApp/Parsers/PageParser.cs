@@ -67,7 +67,15 @@ namespace OnThisDayApp.Parsers
             newEvent.Year = yearLink.InnerText;
             newEvent.Description = description;
             newEvent.Link = firstLink.Attributes["href"].Value;
+            newEvent.Links = ExtractAllLinksFromHtmlNode(entry);
             return newEvent;
+        }
+
+        private static Dictionary<string, string> ExtractAllLinksFromHtmlNode(HtmlNode entry)
+        {
+            return entry.Descendants("a").Select(
+                item => new {text = item.InnerText, url = item.Attributes["href"].Value}).ToDictionary(
+                    pair => pair.text, pair => pair.url);
         }
 
         private static EntryViewModel ExtractHolidayFromNode(HtmlNode entry)

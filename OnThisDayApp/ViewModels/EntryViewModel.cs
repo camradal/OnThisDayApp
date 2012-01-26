@@ -8,7 +8,7 @@ namespace OnThisDayApp.ViewModels
     {
         private string description;
         private string link;
-        private List<string> links;
+        private Dictionary<string, string> links;
         private string year;
 
         #region Properties
@@ -43,7 +43,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public List<string> Links
+        public Dictionary<string, string> Links
         {
             get { return links; }
             set

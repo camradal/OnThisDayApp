@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using AgFx;
-using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
+using Microsoft.Phone.Controls;
 
 namespace OnThisDayApp
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage
     {
         /// <summary>
         /// Reference to datetime picker page, so we can get the value from it
@@ -58,8 +59,8 @@ namespace OnThisDayApp
         {
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
-                (vm) => { },
-                (ex) =>
+                vm => { },
+                ex =>
                 {
                     MessageBox.Show("Failed to get data for " + CurrentDate);
                 });
@@ -140,5 +141,24 @@ namespace OnThisDayApp
         }
 
         #endregion
+
+        private void mainMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+            var menu = (ContextMenu)sender;
+            var model = (DayViewModel)this.DataContext;
+            var entry = model.Highlights.Single(viewModel => viewModel.Year == (string)menu.Tag);
+
+            foreach (MenuItem item in entry.Links.Select(link => new MenuItem {Header = link.Key, Tag = link.Value}))
+            {
+                item.Click += (obj, args) =>
+                {
+                    MenuItem menuItem = (MenuItem)obj;
+                    string encodedUri = HttpUtility.HtmlEncode((string)menuItem.Tag);
+                    Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+                    NavigationService.Navigate(uri);
+                };
+                menu.Items.Add(item);
+            }
+        }
     }
 }

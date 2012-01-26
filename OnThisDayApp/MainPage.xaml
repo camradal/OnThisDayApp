@@ -7,6 +7,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -18,15 +19,20 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
+        <controls:Pivot
+            x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
+            
             <!--Pivot highlights-->
-            <controls:PivotItem Header="highlights">
+            <controls:PivotItem Name="highlightsPivotItem" Header="highlights">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                                 <TextBlock Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12"/>
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu Name="mainMenu" Tag="{Binding Year}" Loaded="mainMenu_Loaded" />
+                                </toolkit:ContextMenuService.ContextMenu>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -34,7 +40,7 @@
             </controls:PivotItem>
 
             <!--Pivot holidays-->
-            <controls:PivotItem Header="holidays" Visibility="Collapsed">
+            <controls:PivotItem Name="holidaysPivotItem" Header="holidays" Visibility="Collapsed">
                 <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -47,7 +53,7 @@
             </controls:PivotItem>
 
             <!--Pivot events-->
-            <controls:PivotItem Header="events" Visibility="Collapsed">
+            <controls:PivotItem Name="eventsPivotItem" Header="events" Visibility="Collapsed">
                 <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -61,7 +67,7 @@
             </controls:PivotItem>
 
             <!--Pivot births-->
-            <controls:PivotItem Header="deaths" Visibility="Collapsed">
+            <controls:PivotItem Name="deathsPivotItem" Header="deaths" Visibility="Collapsed">
                 <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -75,7 +81,7 @@
             </controls:PivotItem>
 
             <!--Pivot deaths-->
-            <controls:PivotItem Header="births" Visibility="Collapsed">
+            <controls:PivotItem Name="birthsPivotItem" Header="births" Visibility="Collapsed">
                 <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

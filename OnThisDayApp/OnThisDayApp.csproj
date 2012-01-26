@@ -55,9 +55,6 @@
     <Reference Include="AgFx">
       <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
     </Reference>
-    <Reference Include="AgFx.Controls">
-      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
@@ -67,13 +64,10 @@
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.13\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
-    <Reference Include="mscorlib.extensions" />
     <Reference Include="System.Xml.XPath">
       <HintPath>..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.XPath.dll</HintPath>
     </Reference>
