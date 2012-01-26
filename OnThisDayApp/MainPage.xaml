@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -28,12 +27,12 @@
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
@@ -49,7 +48,7 @@
                 <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" MinWidth="100"/>
                                 </Grid.ColumnDefinitions>
@@ -68,12 +67,12 @@
                 <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
@@ -89,13 +88,13 @@
                 <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>
@@ -110,13 +109,13 @@
                 <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,12" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="350" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>

@@ -40,42 +40,48 @@ namespace OnThisDayApp.Parsers
             return events;
         }
 
-        private static EntryViewModel ExtractEntryFromNode(HtmlNode entry)
+        private static EntryViewModel ExtractEntryFromNode(HtmlNode node)
         {
-            EntryViewModel newEvent = new EntryViewModel();
+            EntryViewModel entry = new EntryViewModel();
 
-            var yearLink = entry.Descendants("a").First();
-            var description = entry.InnerText;
+            string innerText = node.InnerText;
 
-            int firstSpace = description.IndexOf(' ');
-            int secondSpace = description.IndexOf(' ', firstSpace + 1);
-            description = description.Substring(secondSpace + 1);
-            description = HttpUtility.HtmlDecode(description);
+            // assumption - there is always a space around the separator
+            // otherwise some string truncation will occur
+            int splitIndex = innerText.IndexOfAny(new[] {'–', '-'});
+            string secondPart = innerText.Substring(splitIndex + 2);
+            string firstPart = innerText.Substring(0, splitIndex -1);
 
-            HtmlNode firstLink;
+            entry.Year= firstPart;
+            entry.Description = HttpUtility.HtmlDecode(secondPart);
+            entry.Links = ExtractAllLinksFromHtmlNode(node);
+            entry.Link = ExtractFirstLink(node, entry);
 
-            var firstBoldItem = entry.Descendants("b").FirstOrDefault();
-            if (firstBoldItem != null)
-            {
-                firstLink = firstBoldItem.Descendants("a").First();
-            }
-            else
-            {
-                firstLink = entry.Descendants("a").Skip(1).First();
-            }
-
-            newEvent.Year = yearLink.InnerText;
-            newEvent.Description = description;
-            newEvent.Link = firstLink.Attributes["href"].Value;
-            newEvent.Links = ExtractAllLinksFromHtmlNode(entry);
-            return newEvent;
+            return entry;
         }
 
         private static Dictionary<string, string> ExtractAllLinksFromHtmlNode(HtmlNode entry)
         {
             return entry.Descendants("a").Select(
-                item => new {text = item.InnerText, url = item.Attributes["href"].Value}).ToDictionary(
+                item => new { text = item.InnerText, url = item.Attributes["href"].Value }).ToDictionary(
                     pair => pair.text, pair => pair.url);
+        }
+
+        private static string ExtractFirstLink(HtmlNode node, EntryViewModel entry)
+        {
+            string firstLink;
+            HtmlNode firstBoldItem = node.Descendants("b").FirstOrDefault();
+            if (firstBoldItem != null)
+            {
+                firstLink = firstBoldItem.Descendants("a").First().Attributes["href"].Value;
+            }
+            else
+            {
+                // assumption - there is always one link besides a year
+                int value;
+                firstLink = entry.Links.FirstOrDefault(link => !int.TryParse(link.Key, out value)).Value;
+            }
+            return firstLink;
         }
 
         private static EntryViewModel ExtractHolidayFromNode(HtmlNode entry)
