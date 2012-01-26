@@ -10,6 +10,7 @@ using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Shell;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
+using Utilities;
 
 namespace OnThisDayApp
 {
@@ -50,6 +51,7 @@ namespace OnThisDayApp
         public MainPage()
         {
             InitializeComponent();
+
             LoadData();
 
             // specify the text explicitly on the app bar using our resource string
@@ -67,16 +69,25 @@ namespace OnThisDayApp
         /// </summary>
         private void LoadData()
         {
+            GlobalLoading.Instance.IsLoading = true;
+            GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
+
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
-                vm => { },
+                vm =>
+                {
+                    GlobalLoading.Instance.IsLoading = false;
+                    GlobalLoading.Instance.LoadingText = null;
+
+                    MainPivot.Title = string.Format(
+                        CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
+                },
                 ex =>
                 {
                     MessageBox.Show("Failed to get data for " + CurrentDate);
+                    GlobalLoading.Instance.IsLoading = false;
+                    GlobalLoading.Instance.LoadingText = null;
                 });
-
-            MainPivot.Title = string.Format(
-                CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
         }
 
         private void OpenDetailsPage(string url)

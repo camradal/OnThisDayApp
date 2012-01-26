@@ -85,6 +85,7 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
     <Compile Include="Utilities\ReviewThisAppTask.cs" />
     <Compile Include="ViewModels\DayLoadContext.cs" />
