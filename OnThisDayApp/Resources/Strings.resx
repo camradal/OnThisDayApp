@@ -126,6 +126,9 @@
   <data name="Author" xml:space="preserve">
     <value>by Dapper Panda</value>
   </data>
+  <data name="ButtonChooseDate" xml:space="preserve">
+    <value>choose date</value>
+  </data>
   <data name="ButtonFeedback" xml:space="preserve">
     <value>Email feedback</value>
   </data>
@@ -139,7 +142,7 @@
     <value>On This Day... is a simple app for viewing important events in history.</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>The contents are provided by Wikipedia.</value>
+    <value>The content is provided by Wikipedia.</value>
   </data>
   <data name="ErrorInternetConnection" xml:space="preserve">
     <value>Internet connection is not available</value>
@@ -155,6 +158,12 @@
   </data>
   <data name="MenuItemAbout" xml:space="preserve">
     <value>about</value>
+  </data>
+  <data name="MessageBoxRateThisAppSummary" xml:space="preserve">
+    <value>Please take a moment to rate or review this app. We'd love to hear from you.</value>
+  </data>
+  <data name="MessageBoxRateThisAppTitle" xml:space="preserve">
+    <value>Rate or review this app?</value>
   </data>
   <data name="PageTitleAbout" xml:space="preserve">
     <value>about</value>

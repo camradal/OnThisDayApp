@@ -88,6 +88,15 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to choose date.
+        /// </summary>
+        public static string ButtonChooseDate {
+            get {
+                return ResourceManager.GetString("ButtonChooseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email feedback.
         /// </summary>
         public static string ButtonFeedback {
@@ -124,7 +133,7 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The contents are provided by Wikipedia..
+        ///   Looks up a localized string similar to The content is provided by Wikipedia..
         /// </summary>
         public static string Disclaimer {
             get {
@@ -174,6 +183,24 @@ namespace OnThisDayApp.Resources {
         public static string MenuItemAbout {
             get {
                 return ResourceManager.GetString("MenuItemAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please take a moment to rate or review this app. We&apos;d love to hear from you..
+        /// </summary>
+        public static string MessageBoxRateThisAppSummary {
+            get {
+                return ResourceManager.GetString("MessageBoxRateThisAppSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate or review this app?.
+        /// </summary>
+        public static string MessageBoxRateThisAppTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxRateThisAppTitle", resourceCulture);
             }
         }
         

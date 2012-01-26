@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using AgFx;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
+using Microsoft.Phone.Shell;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
-using Microsoft.Phone.Controls;
 
 namespace OnThisDayApp
 {
@@ -51,7 +51,16 @@ namespace OnThisDayApp
         {
             InitializeComponent();
             LoadData();
+
+            // specify the text explicitly on the app bar using our resource string
+            var buttonRefresh = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            buttonRefresh.Text = Strings.ButtonChooseDate;
+
+            var menuItemAbout = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
+            menuItemAbout.Text = Strings.MenuItemAbout;
         }
+
+        #region Helpers
 
         /// <summary>
         /// Load either from the cache on internet
@@ -70,11 +79,21 @@ namespace OnThisDayApp
                 CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
         }
 
+        private void OpenDetailsPage(string url)
+        {
+            string encodedUri = HttpUtility.HtmlEncode(url);
+            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+            NavigationService.Navigate(uri);
+        }
+
+        #endregion
+      
+
         #region ListBox Handlers
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = (ListBox)sender;
+            ListBox listBox = (ListBox)sender;
 
             // if selected index is -1 (no selection) do nothing
             if (listBox.SelectedIndex == -1)
@@ -84,9 +103,7 @@ namespace OnThisDayApp
 
             // navigate to the new page
             var selectedItem = (EntryViewModel)listBox.SelectedItem;
-            string encodedUri = HttpUtility.HtmlEncode(selectedItem.Link);
-            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
-            NavigationService.Navigate(uri);
+            OpenDetailsPage(selectedItem.Link);
 
             // reset selected index to -1 (no selection)
             listBox.SelectedIndex = -1;
@@ -120,25 +137,27 @@ namespace OnThisDayApp
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            // restore from datetime picker page
             if (page != null && page.Value.HasValue)
             {
                 currentDate = page.Value.Value;
                 page = null;
                 LoadData();
             }
-
-            base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            // set current date in datetime picker page
             page = e.Content as IDateTimePickerPage;
             if (page != null)
             {
                 page.Value = DateTime.Now;
             }
-
-            base.OnNavigatedTo(e);
         }
 
         #endregion
@@ -161,12 +180,12 @@ namespace OnThisDayApp
                 string url = link.Value;
                 container.Click += (obj, args) =>
                 {
-                    string encodedUri = HttpUtility.HtmlEncode(url);
-                    Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
-                    NavigationService.Navigate(uri);
+                    OpenDetailsPage(url);
                 };
             }
         }
+
+        
 
         #endregion
     }

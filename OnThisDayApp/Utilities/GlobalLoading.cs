@@ -2,7 +2,6 @@
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using AgFx;
 
 namespace Utilities
 {
@@ -10,7 +9,8 @@ namespace Utilities
     {
         private ProgressIndicator indicator;
         private static GlobalLoading instance;
-        private int _loadingCount;
+        private int loadingCount;
+        private string text;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,20 +28,29 @@ namespace Utilities
         {
             get
             {
-                return _loadingCount > 0;
+                return loadingCount > 0;
             }
             set
             {
                 bool loading = IsLoading;
                 if (value)
                 {
-                    ++_loadingCount;
+                    ++loadingCount;
                 }
                 else
                 {
-                    --_loadingCount;
+                    --loadingCount;
                 }
 
+                NotifyValueChanged();
+            }
+        }
+
+        public string LoadingText
+        {
+            set
+            {
+                text = value;
                 NotifyValueChanged();
             }
         }
@@ -65,9 +74,6 @@ namespace Utilities
 
         public void Initialize(PhoneApplicationFrame frame)
         {
-            // using AgFx
-            DataManager.Current.PropertyChanged += OnDataManagerPropertyChanged;
-
             indicator = new ProgressIndicator();
             frame.Navigated += OnRootFrameNavigated;
         }
@@ -87,8 +93,6 @@ namespace Utilities
         {
             if ("IsLoading" == e.PropertyName)
             {
-                // using AgFx
-                IsDataManagerLoading = DataManager.Current.IsLoading;
                 NotifyValueChanged();
             }
         }
@@ -97,7 +101,10 @@ namespace Utilities
         {
             if (indicator != null)
             {
-                indicator.IsIndeterminate = _loadingCount > 0 || IsDataManagerLoading;
+                indicator.IsIndeterminate = loadingCount > 0 || IsDataManagerLoading;
+
+                // set text value
+                indicator.Text = text;
 
                 // for now, just make sure it's always visible.
                 if (indicator.IsVisible == false)
