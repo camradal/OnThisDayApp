@@ -142,7 +142,7 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The content is provided by Wikipedia..
+        ///   Looks up a localized string similar to The content is provided by Wikipedia. The application icon is by Icon8 (www.icons8.com).
         /// </summary>
         public static string Disclaimer {
             get {

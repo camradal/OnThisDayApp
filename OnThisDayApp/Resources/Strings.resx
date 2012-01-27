@@ -145,7 +145,7 @@
     <value>On This Day... is a simple app for viewing important events in history.</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>The content is provided by Wikipedia.</value>
+    <value>The content is provided by Wikipedia. The application icon is by Icon8 (www.icons8.com)</value>
   </data>
   <data name="ErrorInternetConnection" xml:space="preserve">
     <value>Internet connection is not available</value>
