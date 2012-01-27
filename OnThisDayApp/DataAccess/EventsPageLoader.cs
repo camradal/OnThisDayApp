@@ -37,10 +37,11 @@ namespace OnThisDayApp.DataAccess
                 viewModel.Deaths.Add(entry);
             }
 
-            foreach (EntryViewModel entry in entries["Holidays"])
-            {
-                viewModel.Holidays.Add(entry);
-            }
+            // TODO: uncomment for next realease
+            //foreach (EntryViewModel entry in entries["Holidays"])
+            //{
+            //    viewModel.Holidays.Add(entry);
+            //}
 
             return viewModel;
         }

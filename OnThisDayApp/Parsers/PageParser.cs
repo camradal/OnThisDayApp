@@ -104,13 +104,17 @@ namespace OnThisDayApp.Parsers
             List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
             List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
             List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
-            List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
 
-            Dictionary<string, List<EntryViewModel>> result = new Dictionary<string, List<EntryViewModel>>();
-            result.Add("Events", events);
-            result.Add("Births", births);
-            result.Add("Deaths", deaths);
-            result.Add("Holidays", holidays);
+            // TODO: uncomment for next version
+            //List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
+
+            Dictionary<string, List<EntryViewModel>> result = new Dictionary<string, List<EntryViewModel>>
+                                                              {
+                                                                  {"Events", events},
+                                                                  {"Births", births},
+                                                                  {"Deaths", deaths}
+                                                              };
+            //result.Add("Holidays", holidays);
 
             return result;
         }
@@ -121,21 +125,7 @@ namespace OnThisDayApp.Parsers
             var list = otd.ParentNode.NextSibling.NextSibling;
             var entries = list.Descendants("li");
 
-            List<EntryViewModel> events = new List<EntryViewModel>();
-            foreach (var entry in entries)
-            {
-                try
-                {
-                    EntryViewModel newEvent = ExtractEntryFromNode(entry);
-                    events.Add(newEvent);
-                }
-                catch
-                {
-                    // TODO
-                    // failed to add 1 event, skip for now
-                }
-            }
-            return events;
+            return entries.Select(ExtractEntryFromNode).ToList();
         }
 
         private static List<EntryViewModel> ExtractHolidays(HtmlDocument htmlDoc, string id)

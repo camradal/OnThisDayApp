@@ -31,7 +31,7 @@
             <ListBoxItem>
                 <StackPanel Orientation="Horizontal">
                     <Canvas Margin="12,0,12,12" Height="173" Width="173" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{StaticResource PhoneAccentBrush}">
-                        <Image Name="imageLogo" Stretch="Fill" Source="icons/Application_Icon_173.png" />
+                        <Image Name="imageLogo" Stretch="Fill" Source="/icons/Application_Icon_173.png" />
                     </Canvas>
                     <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                         <TextBlock HorizontalAlignment="Left" Text="{Binding Source={StaticResource Strings}, Path=Resources.AppTitle}" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="0"/>
