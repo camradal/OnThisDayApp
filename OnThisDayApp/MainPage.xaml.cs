@@ -57,7 +57,10 @@ namespace OnThisDayApp
             LoadData();
 
             // specify the text explicitly on the app bar using our resource string
-            var chooseDate = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            var today = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            today.Text = Strings.ButtonToday;
+
+            var chooseDate = (ApplicationBarIconButton)ApplicationBar.Buttons[1];
             chooseDate.Text = Strings.ButtonChooseDate;
 
             var menuItemAbout = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
@@ -152,13 +155,19 @@ namespace OnThisDayApp
             });
         }
 
-        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
         {
             // use dispatcher to prevent jumping elements on the screen
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
             });
+        }
+
+        private void AppBarButtonToday_Click(object sender, EventArgs e)
+        {
+            currentDate = DateTime.Now;
+            LoadData();
         }
 
         #endregion

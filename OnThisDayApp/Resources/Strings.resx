@@ -135,6 +135,9 @@
   <data name="ButtonRate" xml:space="preserve">
     <value>Rate this app</value>
   </data>
+  <data name="ButtonToday" xml:space="preserve">
+    <value>today</value>
+  </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>dapperpanda@gmail.com</value>
   </data>

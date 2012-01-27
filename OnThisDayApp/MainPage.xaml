@@ -137,7 +137,8 @@
  
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.calendar.png" Text="choose date" Click="ApplicationBarIconButton_Click" />
+            <shell:ApplicationBarIconButton x:Name="AppBarButtonToday" IconUri="/icons/appbar.home.png" Text="today" Click="AppBarButtonToday_Click" />
+            <shell:ApplicationBarIconButton x:Name="AppBarButtonChooseDate" IconUri="/icons/appbar.calendar.png" Text="choose date" Click="AppBarButtonChooseDate_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

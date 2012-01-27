@@ -115,6 +115,15 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to today.
+        /// </summary>
+        public static string ButtonToday {
+            get {
+                return ResourceManager.GetString("ButtonToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to dapperpanda@gmail.com.
         /// </summary>
         public static string ContactEmail {
