@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -18,9 +18,13 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
         <!--Pivot Control-->
-        <controls:Pivot
-            x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
+        <controls:Pivot Grid.Row="0" x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
             
             <!--Pivot highlights-->
             <controls:PivotItem Name="highlightsPivotItem" Header="highlights">
@@ -126,6 +130,9 @@
             </controls:PivotItem>
 
         </controls:Pivot>
+
+        <!-- Ad Control -->
+        <my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle2}"/>
     </Grid>
  
     <phone:PhoneApplicationPage.ApplicationBar>
