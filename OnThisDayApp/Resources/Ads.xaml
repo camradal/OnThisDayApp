@@ -29,7 +29,7 @@
                 <Setter Property="Foreground" Value="{StaticResource PhoneForegroundColor}" />
               </Style>
             </Border.Resources>
-            <StackPanel x:Name="LayoutRoot" Background="Transparent" />
+            <StackPanel x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}" />
           </Border>
         </ControlTemplate>
       </Setter.Value>
