@@ -8,7 +8,7 @@ namespace OnThisDayApp.ViewModels
     /// Primary view model used for binding to the view
     /// </summary>
     [CachePolicy(CachePolicy.Forever)]
-    [DataLoader(typeof (PageLoader))]
+    [DataLoader(typeof (HighlightsPageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
         private readonly BatchObservableCollection<EntryViewModel> highlights =

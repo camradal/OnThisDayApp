@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,55 +10,42 @@ namespace OnThisDayApp.Parsers
 {
     public sealed class PageParser
     {
-        public List<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
+        public IEnumerable<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
-            var list = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
 
-            List<EntryViewModel> events = new List<EntryViewModel>();
-            foreach (var entry in list.Descendants("li"))
-            {
-                try
-                {
-                    EntryViewModel newEvent = ExtractEntryFromNode(entry);
-                    events.Add(newEvent);
-                }
-                catch
-                {
-                    // TODO
-                    // failed to add 1 event, skip for now
-                }
-            }
+            HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
+            IEnumerable<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode);
 
-
-                //Event newEvent = new Event();
-                //newEvent.Year = int.Parse(match.Groups["Year"].Value);
-                //newEvent.Description = htmlTags.Replace(match.Groups["Description"].Value, string.Empty);
-                //newEvent.Link = match.Groups["Link"].Value;
-                //events.Add(newEvent);
-
-            return events;
+            return entries;
         }
 
         private static EntryViewModel ExtractEntryFromNode(HtmlNode node)
         {
-            EntryViewModel entry = new EntryViewModel();
+            try
+            {
+                EntryViewModel entry = new EntryViewModel();
 
-            string innerText = node.InnerText;
+                string innerText = node.InnerText;
 
-            // assumption - there is always a space around the separator
-            // otherwise some string truncation will occur
-            int splitIndex = innerText.IndexOfAny(new[] {'–', '-'});
-            string secondPart = innerText.Substring(splitIndex + 2);
-            string firstPart = innerText.Substring(0, splitIndex -1);
+                // assumption - there is always a space around the separator
+                // otherwise some string truncation will occur
+                int splitIndex = innerText.IndexOfAny(new[] { '–', '-' });
+                string secondPart = innerText.Substring(splitIndex + 2);
+                string firstPart = innerText.Substring(0, splitIndex - 1);
 
-            entry.Year= firstPart;
-            entry.Description = HttpUtility.HtmlDecode(secondPart);
-            entry.Links = ExtractAllLinksFromHtmlNode(node);
-            entry.Link = ExtractFirstLink(node, entry);
+                entry.Year = firstPart;
+                entry.Description = HttpUtility.HtmlDecode(secondPart);
+                entry.Links = ExtractAllLinksFromHtmlNode(node);
+                entry.Link = ExtractFirstLink(node, entry);
 
-            return entry;
+                return entry;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private static Dictionary<string, string> ExtractAllLinksFromHtmlNode(HtmlNode entry)

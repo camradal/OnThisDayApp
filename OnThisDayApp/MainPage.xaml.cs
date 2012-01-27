@@ -14,7 +14,7 @@ using Utilities;
 
 namespace OnThisDayApp
 {
-    public partial class MainPage
+    public partial class MainPage : PhoneApplicationPage
     {
         /// <summary>
         /// Reference to datetime picker page, so we can get the value from it
@@ -27,7 +27,7 @@ namespace OnThisDayApp
         /// <summary>
         /// Date displayed in UI
         /// </summary>
-        public string CurrentDate
+        private string CurrentDate
         {
             get
             {
