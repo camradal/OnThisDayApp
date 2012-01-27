@@ -48,6 +48,8 @@ namespace OnThisDayApp
 
         #endregion
 
+        #region Constructors and loaders
+
         public MainPage()
         {
             InitializeComponent();
@@ -55,14 +57,21 @@ namespace OnThisDayApp
             LoadData();
 
             // specify the text explicitly on the app bar using our resource string
-            var buttonRefresh = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
-            buttonRefresh.Text = Strings.ButtonChooseDate;
+            var chooseDate = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            chooseDate.Text = Strings.ButtonChooseDate;
 
             var menuItemAbout = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
             menuItemAbout.Text = Strings.MenuItemAbout;
+
+            Loaded += MainPage_Loaded;
         }
 
-        #region Helpers
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReviewThisAppTask rate = new ReviewThisAppTask();
+            rate.NumberOfStarts++;
+            rate.ShowAfterThreshold();
+        }
 
         /// <summary>
         /// Load either from the cache on internet
@@ -70,17 +79,24 @@ namespace OnThisDayApp
         private void LoadData()
         {
             GlobalLoading.Instance.IsLoading = true;
-            GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
+
+            if (App.FirstLoad)
+            {
+                GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
+            }
 
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
                 vm =>
                 {
                     GlobalLoading.Instance.IsLoading = false;
-                    GlobalLoading.Instance.LoadingText = null;
 
-                    MainPivot.Title = string.Format(
-                        CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
+                    if (App.FirstLoad)
+                    {
+                        SetPivotTitle();
+                        GlobalLoading.Instance.LoadingText = null;
+                        App.FirstLoad = false;
+                    }
                 },
                 ex =>
                 {
@@ -88,18 +104,21 @@ namespace OnThisDayApp
                     GlobalLoading.Instance.IsLoading = false;
                     GlobalLoading.Instance.LoadingText = null;
                 });
+
+            if (!App.FirstLoad)
+            {
+                SetPivotTitle();
+            }
         }
 
-        private void OpenDetailsPage(string url)
+        private void SetPivotTitle()
         {
-            string encodedUri = HttpUtility.HtmlEncode(url);
-            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
-            NavigationService.Navigate(uri);
+            MainPivot.Title = string.Format(
+                CultureInfo.CurrentCulture, "{0} {1}", Strings.AppTitleCapitalized, CurrentDate).ToUpper();
         }
 
         #endregion
       
-
         #region ListBox Handlers
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -169,6 +188,13 @@ namespace OnThisDayApp
             {
                 page.Value = DateTime.Now;
             }
+        }
+
+        private void OpenDetailsPage(string url)
+        {
+            string encodedUri = HttpUtility.HtmlEncode(url);
+            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+            NavigationService.Navigate(uri);
         }
 
         #endregion

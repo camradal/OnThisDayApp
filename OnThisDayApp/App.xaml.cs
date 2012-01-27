@@ -14,6 +14,8 @@ namespace OnThisDayApp
 {
     public partial class App : Application
     {
+        public static bool FirstLoad { get; set; }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -60,6 +62,7 @@ namespace OnThisDayApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            FirstLoad = true;
         }
 
         // Code to execute when the application is activated (brought to foreground)

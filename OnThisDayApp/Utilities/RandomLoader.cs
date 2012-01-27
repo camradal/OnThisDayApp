@@ -12,7 +12,8 @@ namespace Utilities
                                                        "Sorting dates and figures",
                                                        "Uncovering the history",
                                                        "Digitizing the collections",
-                                                       "Converting the calendar"
+                                                       "Converting the calendar",
+                                                       "Double-checking the facts"
                                                    };
 
         public static string GetRandomString()
