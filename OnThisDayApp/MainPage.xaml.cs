@@ -14,7 +14,7 @@ using Utilities;
 
 namespace OnThisDayApp
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage
     {
         /// <summary>
         /// Reference to datetime picker page, so we can get the value from it
@@ -100,6 +100,10 @@ namespace OnThisDayApp
                         GlobalLoading.Instance.LoadingText = null;
                         App.FirstLoad = false;
                     }
+
+                    EventsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Events;
+                    BirthsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Births;
+                    DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
                 },
                 ex =>
                 {

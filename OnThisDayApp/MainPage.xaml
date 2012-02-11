@@ -68,7 +68,7 @@
 
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="events" Visibility="Collapsed">
-                <ListBox x:Name="EventsListBox" ItemsSource="{Binding Path=Events.Events}" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="EventsListBox" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
@@ -89,7 +89,7 @@
 
             <!--Pivot births-->
             <controls:PivotItem Name="deathsPivotItem" Header="deaths" Visibility="Collapsed">
-                <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Path=Events.Deaths}" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="DeathsListBox" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
@@ -110,7 +110,7 @@
 
             <!--Pivot deaths-->
             <controls:PivotItem Name="birthsPivotItem" Header="births" Visibility="Collapsed">
-                <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Path=Events.Births}" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="BirthsListBox" SelectionChanged="ListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">

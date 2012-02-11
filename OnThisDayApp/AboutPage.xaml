@@ -48,16 +48,16 @@
                     </StackPanel>
                     <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Description}" TextWrapping="Wrap" />
                     <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Disclaimer}" TextWrapping="Wrap" Margin="12,12,12,0" />
-                    <HyperlinkButton x:Name="feedbackButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="feedbackButton_Click">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Feedback}" TextWrapping="Wrap"/>
-                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonFeedback}" Foreground="{StaticResource PhoneAccentBrush}"/>
-                        </StackPanel>
-                    </HyperlinkButton>
                     <HyperlinkButton x:Name="rateButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="rateButton_Click">
                         <StackPanel>
                             <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Rate}" TextWrapping="Wrap"/>
                             <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonRate}" Foreground="{StaticResource PhoneAccentBrush}"/>
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton x:Name="feedbackButton" HorizontalAlignment="Left" Style="{StaticResource EmptyButtonStyle}" Margin="0,24,0,0" Click="feedbackButton_Click">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.Feedback}" TextWrapping="Wrap"/>
+                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Source={StaticResource Strings}, Path=Resources.ButtonFeedback}" Foreground="{StaticResource PhoneAccentBrush}"/>
                         </StackPanel>
                     </HyperlinkButton>
                 </StackPanel>

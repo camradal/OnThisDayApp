@@ -8,7 +8,7 @@ namespace Utilities
     public sealed class ReviewThisAppTask
     {
         private const string numberOfStarts = "NumberOfStarts";
-        private const int numberOfStartsThreshold = 10;
+        private const int numberOfStartsThreshold = 5;
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
         public int NumberOfStarts
