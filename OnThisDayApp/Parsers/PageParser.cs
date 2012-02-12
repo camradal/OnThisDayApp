@@ -72,28 +72,26 @@ namespace OnThisDayApp.Parsers
             return firstLink;
         }
 
-        private static EntryViewModel ExtractHolidayFromNode(HtmlNode entry)
+        private static EntryViewModel ExtractHolidayFromNode(HtmlNode node)
         {
-            EntryViewModel newEvent = new EntryViewModel();
+            EntryViewModel entry = new EntryViewModel();
+            entry.Links = ExtractAllLinksFromHtmlNode(node);
+            entry.Link = ExtractFirstLink(node, entry);
 
-            string description = entry.InnerText;
-            description = HttpUtility.HtmlDecode(description);
-
-            HtmlNode firstLink;
-
-            var firstBoldItem = entry.Descendants("b").FirstOrDefault();
-            if (firstBoldItem != null)
+            // put sublists into a description
+            if (node.HasChildNodes)
             {
-                firstLink = firstBoldItem.Descendants("a").First();
-            }
-            else
-            {
-                firstLink = entry.Descendants("a").First();
+                HtmlNode extraListNode = node.Descendants("ul").FirstOrDefault();
+                if (extraListNode != null)
+                {
+                    entry.Description = HttpUtility.HtmlDecode(extraListNode.InnerText.Trim());
+                    node.RemoveChild(extraListNode);
+                }
             }
 
-            newEvent.Description = description;
-            newEvent.Link = firstLink.Attributes["href"].Value;
-            return newEvent;
+            entry.Year = HttpUtility.HtmlDecode(node.InnerText.Trim().TrimEnd(':'));
+
+            return entry;
         }
 
         public Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
@@ -104,17 +102,15 @@ namespace OnThisDayApp.Parsers
             List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
             List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
             List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
+            List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
 
-            // TODO: uncomment for next version
-            //List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
-
-            Dictionary<string, List<EntryViewModel>> result = new Dictionary<string, List<EntryViewModel>>
-                                                              {
-                                                                  {"Events", events},
-                                                                  {"Births", births},
-                                                                  {"Deaths", deaths}
-                                                              };
-            //result.Add("Holidays", holidays);
+            var result = new Dictionary<string, List<EntryViewModel>>
+                         {
+                             { "Events", events },
+                             { "Births", births },
+                             { "Deaths", deaths },
+                             { "Holidays", holidays }
+                         };
 
             return result;
         }
@@ -132,7 +128,7 @@ namespace OnThisDayApp.Parsers
         {
             var otd = htmlDoc.GetElementbyId(id);
             var list = otd.ParentNode.NextSibling.NextSibling;
-            var entries = list.Descendants("li");
+            var entries = list.ChildNodes.Where(node => node.Name == "li");
 
             List<EntryViewModel> events = new List<EntryViewModel>();
             foreach (var entry in entries)

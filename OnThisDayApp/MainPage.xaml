@@ -48,23 +48,21 @@
             </controls:PivotItem>
 
             <!--Pivot holidays-->
-            <!--<controls:PivotItem Name="holidaysPivotItem" Header="holidays" Visibility="Collapsed">
-                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Path=Events.Holidays}" SelectionChanged="ListBox_SelectionChanged">
+            <controls:PivotItem Name="holidaysPivotItem" Header="holidays">
+                <ListBox x:Name="HolidaysListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,0,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="0,0,0,6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="100"/>
-                                </Grid.ColumnDefinitions>
+                            <StackPanel Margin="12,0,0,12">
+                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </controls:PivotItem>-->
+            </controls:PivotItem>
 
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="events" Visibility="Collapsed">

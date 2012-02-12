@@ -104,6 +104,7 @@ namespace OnThisDayApp
                     EventsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Events;
                     BirthsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Births;
                     DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
+                    HolidaysListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Holidays;
                 },
                 ex =>
                 {
