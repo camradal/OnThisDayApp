@@ -59,14 +59,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Advertising.Mobile, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.Advertising.Mobile.UI, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.13\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
