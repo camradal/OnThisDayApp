@@ -10,6 +10,7 @@ namespace OnThisDayApp.ViewModels
         private string link;
         private Dictionary<string, string> links;
         private string year;
+        private string imageUrl;
 
         #region Properties
 
@@ -30,6 +31,16 @@ namespace OnThisDayApp.ViewModels
             {
                 description = value;
                 RaisePropertyChanged("Description");
+            }
+        }
+
+        public string ImageUrl
+        {
+            get { return imageUrl; }
+            set
+            {
+                imageUrl = value;
+                RaisePropertyChanged("ImageUrl");
             }
         }
 

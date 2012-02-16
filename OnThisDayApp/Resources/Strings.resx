@@ -132,6 +132,12 @@
   <data name="ButtonFeedback" xml:space="preserve">
     <value>Email feedback</value>
   </data>
+  <data name="ButtonNextDay" xml:space="preserve">
+    <value>next day</value>
+  </data>
+  <data name="ButtonPrevDay" xml:space="preserve">
+    <value>previous</value>
+  </data>
   <data name="ButtonRate" xml:space="preserve">
     <value>Rate this app</value>
   </data>

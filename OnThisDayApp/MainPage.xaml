@@ -22,22 +22,27 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <!--Pivot Control-->
         <controls:Pivot Grid.Row="0" x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
-            
+
             <!--Pivot highlights-->
             <controls:PivotItem Name="highlightsPivotItem" Header="highlights">
-                <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="105"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Left"/>
+                                <Image Grid.Column="0" Grid.Row="1" Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>
@@ -49,7 +54,7 @@
 
             <!--Pivot holidays-->
             <controls:PivotItem Name="holidaysPivotItem" Header="holidays">
-                <ListBox x:Name="HolidaysListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,0,0">
+                <ListBox x:Name="HolidaysListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="12,0,0,12">
@@ -66,15 +71,15 @@
 
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="events" Visibility="Collapsed">
-                <ListBox x:Name="EventsListBox" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="EventsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="105"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
@@ -87,15 +92,15 @@
 
             <!--Pivot births-->
             <controls:PivotItem Name="deathsPivotItem" Header="deaths" Visibility="Collapsed">
-                <ListBox x:Name="DeathsListBox" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="DeathsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="105"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
@@ -108,15 +113,15 @@
 
             <!--Pivot deaths-->
             <controls:PivotItem Name="birthsPivotItem" Header="births" Visibility="Collapsed">
-                <ListBox x:Name="BirthsListBox" SelectionChanged="ListBox_SelectionChanged">
+                <ListBox x:Name="BirthsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,6">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                    <ColumnDefinition Width="105"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
@@ -132,11 +137,13 @@
         <!-- Ad Control -->
         <my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle2}"/>
     </Grid>
- 
+
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton x:Name="AppBarButtonToday" IconUri="/icons/appbar.home.png" Text="today" Click="AppBarButtonToday_Click" />
             <shell:ApplicationBarIconButton x:Name="AppBarButtonChooseDate" IconUri="/icons/appbar.calendar.png" Text="choose date" Click="AppBarButtonChooseDate_Click" />
+            <shell:ApplicationBarIconButton x:Name="AppBarButtonPrevDay" IconUri="/icons/appbar.back.rest.png" Text="previous" Click="AppBarButtonPrevDay_Click" />
+            <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

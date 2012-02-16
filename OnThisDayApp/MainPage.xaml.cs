@@ -57,11 +57,10 @@ namespace OnThisDayApp
             LoadData();
 
             // specify the text explicitly on the app bar using our resource string
-            var today = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
-            today.Text = Strings.ButtonToday;
-
-            var chooseDate = (ApplicationBarIconButton)ApplicationBar.Buttons[1];
-            chooseDate.Text = Strings.ButtonChooseDate;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).Text = Strings.ButtonToday;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[1]).Text = Strings.ButtonChooseDate;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
 
             var menuItemAbout = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
             menuItemAbout.Text = Strings.MenuItemAbout;
@@ -96,7 +95,6 @@ namespace OnThisDayApp
 
                     if (App.FirstLoad)
                     {
-                        SetPivotTitle();
                         GlobalLoading.Instance.LoadingText = null;
                         App.FirstLoad = false;
                     }
@@ -113,10 +111,7 @@ namespace OnThisDayApp
                     GlobalLoading.Instance.LoadingText = null;
                 });
 
-            if (!App.FirstLoad)
-            {
-                SetPivotTitle();
-            }
+            SetPivotTitle();
         }
 
         private void SetPivotTitle()
@@ -172,6 +167,18 @@ namespace OnThisDayApp
         private void AppBarButtonToday_Click(object sender, EventArgs e)
         {
             currentDate = DateTime.Now;
+            LoadData();
+        }
+
+        private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
+        {
+            currentDate = currentDate.AddDays(-1);
+            LoadData();
+        }
+
+        private void AppBarButtonNextDay_Click(object sender, EventArgs e)
+        {
+            currentDate = currentDate.AddDays(1);
             LoadData();
         }
 

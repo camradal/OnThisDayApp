@@ -16,7 +16,20 @@ namespace OnThisDayApp.Parsers
             htmlDoc.Load(stream);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
-            IEnumerable<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode);
+            List<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).ToList();
+
+            // attach a picture to one of the entries
+            listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']");
+            HtmlNode imageNode = listNode.Descendants("img").LastOrDefault();
+            if (imageNode != null)
+            {
+                string url = "http:" + imageNode.Attributes["src"].Value;
+                var pictureEntry = entries.FirstOrDefault(entry => entry.Description.Contains("pictured"));
+                if (pictureEntry != null)
+                {
+                    pictureEntry.ImageUrl = url;
+                }
+            }
 
             return entries;
         }
@@ -36,7 +49,7 @@ namespace OnThisDayApp.Parsers
                 string firstPart = innerText.Substring(0, splitIndex - 1);
 
                 entry.Year = firstPart;
-                entry.Description = HttpUtility.HtmlDecode(secondPart);
+                entry.Description = HttpUtility.HtmlDecode(secondPart).Trim();
                 entry.Links = ExtractAllLinksFromHtmlNode(node);
                 entry.Link = ExtractFirstLink(node, entry);
 

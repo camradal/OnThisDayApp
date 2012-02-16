@@ -106,6 +106,24 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to next day.
+        /// </summary>
+        public static string ButtonNextDay {
+            get {
+                return ResourceManager.GetString("ButtonNextDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to previous.
+        /// </summary>
+        public static string ButtonPrevDay {
+            get {
+                return ResourceManager.GetString("ButtonPrevDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate this app.
         /// </summary>
         public static string ButtonRate {
