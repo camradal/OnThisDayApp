@@ -146,6 +146,7 @@
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icons\ad.png" />
     <Content Include="icons\appbar.back.rest.png" />
     <Content Include="icons\appbar.home.png" />
     <Content Include="icons\appbar.next.rest.png" />

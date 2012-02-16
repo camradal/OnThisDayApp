@@ -64,7 +64,7 @@ namespace OnThisDayApp.Parsers
         private static Dictionary<string, string> ExtractAllLinksFromHtmlNode(HtmlNode entry)
         {
             return entry.Descendants("a").Select(
-                item => new { text = item.InnerText, url = item.Attributes["href"].Value }).ToDictionary(
+                item => new { text = HttpUtility.HtmlDecode(item.InnerText), url = item.Attributes["href"].Value }).ToDictionary(
                     pair => pair.text, pair => pair.url);
         }
 
