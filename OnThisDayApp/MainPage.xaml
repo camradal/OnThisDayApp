@@ -135,8 +135,8 @@
         </controls:Pivot>
 
         <!-- Ad Control -->
-        <!--<Image Grid.Row="1" Source="/icons/ad.png"/>-->
-        <my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle2}"/>
+        <Image Grid.Row="1" Source="/icons/ad.png" Width="480" Height="80"/>
+        <!--<my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle2}"/>-->
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
