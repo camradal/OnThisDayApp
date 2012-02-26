@@ -44,11 +44,11 @@ namespace OnThisDayApp.Parsers
 
                 // assumption - there is always a space around the separator
                 // otherwise some string truncation will occur
-                int splitIndex = innerText.IndexOfAny(new[] { '–', '-' });
-                string secondPart = innerText.Substring(splitIndex + 2);
-                string firstPart = innerText.Substring(0, splitIndex - 1);
+                int splitIndex = innerText.IndexOfAny(new[] { '–', '-', '—' });
+                string secondPart = innerText.Substring(splitIndex + 1);
+                string firstPart = innerText.Substring(0, splitIndex);
 
-                entry.Year = firstPart;
+                entry.Year = HttpUtility.HtmlDecode(firstPart).Trim();
                 entry.Description = HttpUtility.HtmlDecode(secondPart).Trim();
                 entry.Links = ExtractAllLinksFromHtmlNode(node);
                 entry.Link = ExtractFirstLink(node, entry);
