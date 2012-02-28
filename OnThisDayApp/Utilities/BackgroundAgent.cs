@@ -2,20 +2,66 @@
 using System.Linq;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
-namespace OnThisDayApp.Utilities
+namespace Utilities
 {
-    public class BackgroundAgent
+    class BackgroundAgent
     {
+        private const string SettingString = "LiveTileDisabled";
         private const string TaskName = "OnThisDayApp.LiveTileScheduledTask";
+        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
-        public void StopAndStart()
+        public bool LiveTileDisabled
         {
-            StopAgentIfStarted();
-            StartAgent();
+            get
+            {
+                if (settings.Contains(SettingString))
+                {
+                    return bool.Parse(SettingString);
+                }
+
+                return false;
+            }
+            set
+            {
+                settings[SettingString] = value;
+            }
         }
 
-        public void StartAgent()
+        public void Toggle()
+        {
+            LiveTileDisabled = !LiveTileDisabled;
+
+            if (LiveTileDisabled)
+            {
+                Stop();
+                ResetTileToDefault();
+            }
+            else
+            {
+                Start();
+            }
+        }
+
+        public void StartIfEnabled()
+        {
+            if (!LiveTileDisabled)
+            {
+                ScheduledAction action = ScheduledActionService.Find(TaskName);
+                if (action == null)
+                {
+                    Start();
+                }
+                else if (action != null && !action.IsEnabled)
+                {
+                    Stop();
+                    Start();
+                }
+            }
+        }
+
+        private void Start()
         {
             PeriodicTask task = new PeriodicTask(TaskName);
             task.Description = "Service to update On This Day... live tile";
@@ -27,7 +73,7 @@ namespace OnThisDayApp.Utilities
 #endif
         }
 
-        public void StopAgentIfStarted()
+        private void Stop()
         {
             if (ScheduledActionService.Find(TaskName) != null)
             {
@@ -35,13 +81,13 @@ namespace OnThisDayApp.Utilities
             }
         }
 
-        public void ResetTileToDefault()
+        private void ResetTileToDefault()
         {
-            StandardTileData newTileData = new StandardTileData();
-            newTileData.BackgroundImage = new Uri("appdata:/icons/Application_Icon_173.png");
+            StandardTileData tileData = new StandardTileData();
+            tileData.BackgroundImage = new Uri("appdata:/icons/Application_Icon_173.png");
 
-            ShellTile appTile = ShellTile.ActiveTiles.First();
-            appTile.Update(newTileData);
+            ShellTile tile = ShellTile.ActiveTiles.First();
+            tile.Update(tileData);
         }
     }
 }

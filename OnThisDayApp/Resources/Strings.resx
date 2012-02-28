@@ -171,6 +171,15 @@
   <data name="MenuItemAbout" xml:space="preserve">
     <value>about</value>
   </data>
+  <data name="MenuItemDisableLiveTile" xml:space="preserve">
+    <value>disable live tile</value>
+  </data>
+  <data name="MenuItemEnableLiveTile" xml:space="preserve">
+    <value>enable live tile</value>
+  </data>
+  <data name="MenuItemRateThisApp" xml:space="preserve">
+    <value>rate this app</value>
+  </data>
   <data name="MessageBoxRateThisAppSummary" xml:space="preserve">
     <value>Please take a moment to rate or review this app. We'd love to hear from you.</value>
   </data>

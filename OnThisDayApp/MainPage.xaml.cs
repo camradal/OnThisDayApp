@@ -8,11 +8,10 @@ using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
-using Microsoft.Phone.Scheduler;
-using OnThisDayApp.Utilities;
 
 namespace OnThisDayApp
 {
@@ -23,6 +22,8 @@ namespace OnThisDayApp
         /// </summary>
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
+
+        private BackgroundAgent backgroundAgent = new BackgroundAgent();
 
         #region Properties
 
@@ -64,8 +65,15 @@ namespace OnThisDayApp
             ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
             ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
 
-            var menuItemAbout = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
-            menuItemAbout.Text = Strings.MenuItemAbout;
+            if (backgroundAgent.LiveTileDisabled)
+            {
+                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemEnableLiveTile;
+            }
+            {
+                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemDisableLiveTile;
+            }
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemRateThisApp;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
 
             Loaded += MainPage_Loaded;
         }
@@ -78,8 +86,7 @@ namespace OnThisDayApp
             rate.ShowAfterThreshold();
 
             // make sure background agent is running
-            BackgroundAgent agent = new BackgroundAgent();
-            agent.StopAndStart();
+            backgroundAgent.StartIfEnabled();
         }
 
         /// <summary>
@@ -160,6 +167,24 @@ namespace OnThisDayApp
             {
                 NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
             });
+        }
+
+        private void LiveTileMenuItem_Click(object sender, EventArgs e)
+        {
+            backgroundAgent.Toggle();
+        }
+
+        private void RateThisAppMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MarketplaceReviewTask task = new MarketplaceReviewTask();
+                task.Show();
+            }
+            catch
+            {
+                // prevent exceptions from double-click
+            }
         }
 
         private void AppBarButtonChooseDate_Click(object sender, EventArgs e)

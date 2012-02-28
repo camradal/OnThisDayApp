@@ -223,6 +223,33 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to disable live tile.
+        /// </summary>
+        public static string MenuItemDisableLiveTile {
+            get {
+                return ResourceManager.GetString("MenuItemDisableLiveTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to enable live tile.
+        /// </summary>
+        public static string MenuItemEnableLiveTile {
+            get {
+                return ResourceManager.GetString("MenuItemEnableLiveTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rate this app.
+        /// </summary>
+        public static string MenuItemRateThisApp {
+            get {
+                return ResourceManager.GetString("MenuItemRateThisApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please take a moment to rate or review this app. We&apos;d love to hear from you..
         /// </summary>
         public static string MessageBoxRateThisAppSummary {
