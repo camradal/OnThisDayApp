@@ -1,11 +1,35 @@
-﻿using System.Windows;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using AgFx;
 using Microsoft.Phone.Scheduler;
+using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.LiveTileScheduledTask
 {
     public class ScheduledAgent : ScheduledTaskAgent
     {
+        private static readonly Random random = new Random();
         private static volatile bool _classInitialized;
+        private DayViewModel data;
+
+        #region Properties
+
+        /// <summary>
+        /// Date passed as a primary key for wiki
+        /// </summary>
+        private string CurrentDateForWiki
+        {
+            get
+            {
+                return DateTime.Now.ToString("MMMM_d", CultureInfo.InvariantCulture);
+            }
+        }
+
+        #endregion
+
+        #region ScheduledTaskAgent Implementation
 
         /// <remarks>
         /// ScheduledAgent constructor, initializes the UnhandledException handler
@@ -44,9 +68,39 @@ namespace OnThisDayApp.LiveTileScheduledTask
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
-            //TODO: Add code to perform your task in background
-
-            NotifyComplete();
+            data = DataManager.Current.Load<DayViewModel>(
+                CurrentDateForWiki,
+                vm =>
+                {
+                    UpdateTile();
+                    NotifyComplete();
+                },
+                ex =>
+                {
+                    NotifyComplete();
+                });
         }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void UpdateTile()
+        {
+            if (IsDataLoaded())
+            {
+                var entry = data.Highlights[random.Next(data.Highlights.Count)];
+                string title = entry.Year;
+                string content = entry.Description;
+                LiveTile.UpdateLiveTile(title, content);
+            }
+        }
+
+        private bool IsDataLoaded()
+        {
+            return data != null && data.Highlights != null && data.Highlights.Any();
+        }
+
+        #endregion
     }
 }

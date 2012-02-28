@@ -20,6 +20,12 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent"
+                                Name="OnThisDayApp.LiveTileScheduledTask"
+                                Source="OnThisDayApp.LiveTileScheduledTask"
+                                Type="OnThisDayApp.LiveTileScheduledTask.ScheduledAgent" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="OnThisDayAppToken" TaskName="_default">

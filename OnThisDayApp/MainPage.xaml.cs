@@ -11,6 +11,8 @@ using Microsoft.Phone.Shell;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
+using Microsoft.Phone.Scheduler;
+using OnThisDayApp.Utilities;
 
 namespace OnThisDayApp
 {
@@ -31,7 +33,7 @@ namespace OnThisDayApp
         {
             get
             {
-                return currentDate.ToString("MMMM d", CultureInfo.CurrentCulture);
+                return currentDate.ToString("M", CultureInfo.CurrentCulture);
             }
         }
 
@@ -70,9 +72,14 @@ namespace OnThisDayApp
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // show review pane
             ReviewThisAppTask rate = new ReviewThisAppTask();
             rate.NumberOfStarts++;
             rate.ShowAfterThreshold();
+
+            // make sure background agent is running
+            BackgroundAgent agent = new BackgroundAgent();
+            agent.StopAndStart();
         }
 
         /// <summary>
