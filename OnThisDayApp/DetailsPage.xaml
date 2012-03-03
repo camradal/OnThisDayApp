@@ -17,14 +17,14 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <Image Grid.Row="0" Source="/icons/ad.png" Width="480" Height="80"/>
-        <!--<my:AdControl Grid.Row="0" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle1}"/>-->
-        <phone:WebBrowser Grid.Row="1" x:Name="webBrowser1" IsScriptEnabled="True" Margin="0" />
+        <phone:WebBrowser Grid.Row="0" x:Name="webBrowser1" IsScriptEnabled="True" Margin="0" />
+        <my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle1}"/>
+        <!--<Image Grid.Row="1" Source="/icons/ad.png" Width="480" Height="80"/>-->
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
