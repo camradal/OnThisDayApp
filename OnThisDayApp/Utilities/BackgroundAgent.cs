@@ -12,13 +12,15 @@ namespace Utilities
         private const string TaskName = "OnThisDayApp.LiveTileScheduledTask";
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
+        #region Properties
+
         public bool LiveTileDisabled
         {
             get
             {
                 if (settings.Contains(SettingString))
                 {
-                    return bool.Parse(SettingString);
+                    return bool.Parse(settings[SettingString].ToString());
                 }
 
                 return false;
@@ -28,6 +30,10 @@ namespace Utilities
                 settings[SettingString] = value;
             }
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void Toggle()
         {
@@ -40,7 +46,7 @@ namespace Utilities
             }
             else
             {
-                Start();
+                StartIfEnabledInternal();
             }
         }
 
@@ -48,16 +54,25 @@ namespace Utilities
         {
             if (!LiveTileDisabled)
             {
-                ScheduledAction action = ScheduledActionService.Find(TaskName);
-                if (action == null)
-                {
-                    Start();
-                }
-                else if (action != null && !action.IsEnabled)
-                {
-                    Stop();
-                    Start();
-                }
+                StartIfEnabledInternal();
+            }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void StartIfEnabledInternal()
+        {
+            ScheduledAction action = ScheduledActionService.Find(TaskName);
+            if (action == null)
+            {
+                Start();
+            }
+            else if (action != null && !action.IsEnabled)
+            {
+                Stop();
+                Start();
             }
         }
 
@@ -83,11 +98,16 @@ namespace Utilities
 
         private void ResetTileToDefault()
         {
-            StandardTileData tileData = new StandardTileData();
-            tileData.BackgroundImage = new Uri("appdata:/icons/Application_Icon_173.png");
+            StandardTileData tileData = new StandardTileData()
+            {
+                BackTitle = string.Empty,
+                BackContent = string.Empty
+            };
 
             ShellTile tile = ShellTile.ActiveTiles.First();
             tile.Update(tileData);
         }
+
+        #endregion
     }
 }

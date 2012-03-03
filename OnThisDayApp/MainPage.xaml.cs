@@ -65,28 +65,9 @@ namespace OnThisDayApp
             ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
             ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
 
-            if (backgroundAgent.LiveTileDisabled)
-            {
-                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemEnableLiveTile;
-            }
-            {
-                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemDisableLiveTile;
-            }
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemRateThisApp;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
+            EnableDisableMenuItem();
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
-
-            Loaded += MainPage_Loaded;
-        }
-
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            // show review pane
-            ReviewThisAppTask rate = new ReviewThisAppTask();
-            rate.NumberOfStarts++;
-            rate.ShowAfterThreshold();
-
-            // make sure background agent is running
-            backgroundAgent.StartIfEnabled();
         }
 
         /// <summary>
@@ -172,6 +153,7 @@ namespace OnThisDayApp
         private void LiveTileMenuItem_Click(object sender, EventArgs e)
         {
             backgroundAgent.Toggle();
+            EnableDisableMenuItem();
         }
 
         private void RateThisAppMenuItem_Click(object sender, EventArgs e)
@@ -214,6 +196,18 @@ namespace OnThisDayApp
             LoadData();
         }
 
+        private void EnableDisableMenuItem()
+        {
+            if (backgroundAgent.LiveTileDisabled)
+            {
+                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemEnableLiveTile;
+            }
+            else
+            {
+                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemDisableLiveTile;
+            }
+        }
+
         #endregion
 
         #region Navigation handlers
@@ -229,6 +223,14 @@ namespace OnThisDayApp
                 page = null;
                 LoadData();
             }
+
+            // show review pane
+            ReviewThisAppTask rate = new ReviewThisAppTask();
+            rate.NumberOfStarts++;
+            rate.ShowAfterThreshold();
+
+            // make sure background agent is running
+            backgroundAgent.StartIfEnabled();
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
