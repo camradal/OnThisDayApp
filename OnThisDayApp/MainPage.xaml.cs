@@ -230,7 +230,10 @@ namespace OnThisDayApp
             rate.ShowAfterThreshold();
 
             // make sure background agent is running
-            backgroundAgent.StartIfEnabled();
+            if (!backgroundAgent.StartIfEnabled())
+            {
+                EnableDisableMenuItem();
+            }
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
@@ -276,8 +279,6 @@ namespace OnThisDayApp
                 };
             }
         }
-
-        
 
         #endregion
     }

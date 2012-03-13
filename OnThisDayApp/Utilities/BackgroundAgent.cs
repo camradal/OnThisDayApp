@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
+using OnThisDayApp.Resources;
 
 namespace Utilities
 {
@@ -37,75 +39,124 @@ namespace Utilities
 
         public void Toggle()
         {
+            bool result = false;
             LiveTileDisabled = !LiveTileDisabled;
 
             if (LiveTileDisabled)
             {
                 Stop();
                 ResetTileToDefault();
+                result = true;
             }
             else
             {
-                StartIfEnabledInternal();
+                result = StartIfEnabledInternal();
+            }
+
+            // do not switch values if not succesful
+            if (!result)
+            {
+                LiveTileDisabled = !LiveTileDisabled;
             }
         }
 
-        public void StartIfEnabled()
+        public bool StartIfEnabled()
         {
+            bool result = true;
             if (!LiveTileDisabled)
             {
-                StartIfEnabledInternal();
+                result = StartIfEnabledInternal();
             }
+            return result;
         }
 
         #endregion
 
         #region Helper Methods
 
-        private void StartIfEnabledInternal()
+        private bool StartIfEnabledInternal()
         {
+            bool result = false;
             ScheduledAction action = ScheduledActionService.Find(TaskName);
             if (action == null)
             {
-                Start();
+                result = Start();
             }
             else if (action != null && !action.IsEnabled)
             {
                 Stop();
-                Start();
+                result = Start();
             }
+
+            return result;
         }
 
-        private void Start()
+        private bool Start()
         {
-            PeriodicTask task = new PeriodicTask(TaskName);
-            task.Description = "Service to update On This Day... live tile";
-            ScheduledActionService.Add(task);
-
+            bool result = false;
+            try
+            {
+                PeriodicTask task = new PeriodicTask(TaskName);
+                task.Description = "Service to update On This Day... live tile";
+                ScheduledActionService.Add(task);
+                result = true;
 #if DEBUG
-            // If we're debugging, attempt to start the task immediately 
-            ScheduledActionService.LaunchForTest(TaskName, new TimeSpan(0, 0, 1));
+                // If we're debugging, attempt to start the task immediately 
+                ScheduledActionService.LaunchForTest(TaskName, new TimeSpan(0, 0, 1));
 #endif
+            }
+            catch (InvalidOperationException ioe)
+            {
+                MessageBox.Show(
+                    Strings.ErrorCouldNotEnableLiveTileDescription,
+                    Strings.ErrorCouldNotEnableLiveTileTitle,
+                    MessageBoxButton.OK);
+            }
+            catch (Exception)
+            {
+                // still show the main UI
+            }
+
+            return result;
         }
 
         private void Stop()
         {
-            if (ScheduledActionService.Find(TaskName) != null)
+            try
             {
-                ScheduledActionService.Remove(TaskName);
+                if (ScheduledActionService.Find(TaskName) != null)
+                {
+                    ScheduledActionService.Remove(TaskName);
+                }
+            }
+            catch (Exception)
+            {
+                // ignore, best effort cleanup
             }
         }
 
-        private void ResetTileToDefault()
+        private bool ResetTileToDefault()
         {
-            StandardTileData tileData = new StandardTileData()
-            {
-                BackTitle = string.Empty,
-                BackContent = string.Empty
-            };
+            bool result = false;
 
-            ShellTile tile = ShellTile.ActiveTiles.First();
-            tile.Update(tileData);
+            try
+            {
+                StandardTileData tileData = new StandardTileData()
+                {
+                    BackTitle = string.Empty,
+                    BackContent = string.Empty
+                };
+
+                ShellTile tile = ShellTile.ActiveTiles.First();
+                tile.Update(tileData);
+                result = true;
+            }
+            catch (Exception)
+            {
+                // ignore, best effort cleanup
+            }
+
+            return result;
         }
 
         #endregion
