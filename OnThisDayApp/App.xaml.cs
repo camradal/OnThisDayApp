@@ -1,20 +1,21 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Utilities;
-using System.Diagnostics;
-using System.IO;
-using System;
-using System.Threading;
-using System.Windows.Media;
 
 namespace OnThisDayApp
 {
     public partial class App : Application
     {
         public static bool FirstLoad { get; set; }
+        public static bool IsMemoryLimited { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -66,12 +67,14 @@ namespace OnThisDayApp
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             FirstLoad = true;
+            IsMemoryLimited = false;
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            IsMemoryLimited = false;
         }
 
         // Code to execute when the application is deactivated (sent to background)

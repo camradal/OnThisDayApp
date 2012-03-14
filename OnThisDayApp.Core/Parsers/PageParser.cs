@@ -8,9 +8,11 @@ using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.Parsers
 {
-    public sealed class PageParser
+    internal static class PageParser
     {
-        public IEnumerable<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
+        #region Public Methods
+
+        public static IEnumerable<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
@@ -33,6 +35,31 @@ namespace OnThisDayApp.Parsers
 
             return entries;
         }
+
+        public static Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
+        {
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.Load(stream);
+
+            List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
+            List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
+            List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
+            List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
+
+            var result = new Dictionary<string, List<EntryViewModel>>
+                         {
+                             { "Events", events },
+                             { "Births", births },
+                             { "Deaths", deaths },
+                             { "Holidays", holidays }
+                         };
+
+            return result;
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private static EntryViewModel ExtractEntryFromNode(HtmlNode node)
         {
@@ -107,27 +134,6 @@ namespace OnThisDayApp.Parsers
             return entry;
         }
 
-        public Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
-        {
-            HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.Load(stream);
-
-            List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
-            List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
-            List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
-            List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
-
-            var result = new Dictionary<string, List<EntryViewModel>>
-                         {
-                             { "Events", events },
-                             { "Births", births },
-                             { "Deaths", deaths },
-                             { "Holidays", holidays }
-                         };
-
-            return result;
-        }
-
         private static List<EntryViewModel> ExtractById(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
@@ -159,5 +165,7 @@ namespace OnThisDayApp.Parsers
             }
             return events;
         }
+
+        #endregion
     }
 }

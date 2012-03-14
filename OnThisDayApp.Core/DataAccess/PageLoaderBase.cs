@@ -8,7 +8,6 @@ namespace OnThisDayApp.DataAccess
 {
     public abstract class PageLoaderBase : IDataLoader<DayLoadContext>
     {
-        protected readonly PageParser parser = new PageParser();
         protected abstract string SourceUriFormat { get; }
 
         public LoadRequest GetLoadRequest(DayLoadContext loadContext, Type objectType)

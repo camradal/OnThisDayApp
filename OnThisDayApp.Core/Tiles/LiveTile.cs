@@ -30,9 +30,10 @@ namespace OnThisDayApp
                 string fileName = WriteTileToDisk(title, content);
                 StandardTileData data = new StandardTileData()
                 {
-                    BackTitle = title,
-                    BackContent = string.Empty,
-                    BackBackgroundImage = new Uri("isostore:" + fileName)
+                    Title = title,
+                    BackTitle = "On This Day...",
+                    BackgroundImage = new Uri("isostore:" + fileName),
+                    BackBackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative)
                 };
                 tile.Update(data);
             }
@@ -43,24 +44,28 @@ namespace OnThisDayApp
         private static string WriteTileToDisk(string year, string description)
         {
             Grid container = new Grid()
+            //Grid container = new Grid()
             {
                 Width = TileSize,
                 Height = TileSize,
-                Background = (Brush)Application.Current.Resources["TransparentBrush"]
+                Background = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"],
+                //Background = (Brush)Application.Current.Resources["TransparentBrush"]
             };
 
             container.Children.Add(GetTextBlockToRender(description));
 
             // Force the container to render itself
+            container.UpdateLayout();
             container.Arrange(new Rect(0, 0, TileSize, TileSize));
 
             WriteableBitmap wb = new WriteableBitmap(container, null);
-            string fileName = SharedImagePath + "tile.png";
+
+            string fileName = SharedImagePath + "tile.jpg";
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
             {
                 if (wb.PixelHeight > 0)
                 {
-                    wb.WritePNG(stream);
+                    wb.SaveJpeg(stream, TileSize, TileSize, 0, 100);
                 }
             }
 
@@ -77,7 +82,7 @@ namespace OnThisDayApp
                                     Foreground = new SolidColorBrush(Colors.White),
                                     FontSize = Double.Parse(Application.Current.Resources["PhoneFontSizeSmall"].ToString()),
                                     TextTrimming = TextTrimming.WordEllipsis,
-                                    Margin = new Thickness(12, 6, 6, 32) // TODO: 12, 10, 8, 34
+                                    Margin = new Thickness(12, 6, 6, 32), // TODO: 12, 10, 8, 34
                                 };
         }
 

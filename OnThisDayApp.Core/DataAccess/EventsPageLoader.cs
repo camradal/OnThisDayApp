@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.DataAccess
@@ -19,7 +20,7 @@ namespace OnThisDayApp.DataAccess
         /// </summary>
         public override object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
-            Dictionary<string, List<EntryViewModel>> entries = parser.ExtractEventEntriesFromHtml(stream);
+            Dictionary<string, List<EntryViewModel>> entries = PageParser.ExtractEventEntriesFromHtml(stream);
             EventsViewModel viewModel = new EventsViewModel(loadContext.Day);
 
             foreach (EntryViewModel entry in entries["Events"])

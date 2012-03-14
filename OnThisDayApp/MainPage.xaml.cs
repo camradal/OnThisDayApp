@@ -17,13 +17,16 @@ namespace OnThisDayApp
 {
     public partial class MainPage
     {
+        #region Variables
+
         /// <summary>
         /// Reference to datetime picker page, so we can get the value from it
         /// </summary>
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
-
         private BackgroundAgent backgroundAgent = new BackgroundAgent();
+
+        #endregion
 
         #region Properties
 
@@ -51,7 +54,7 @@ namespace OnThisDayApp
 
         #endregion
 
-        #region Constructors and loaders
+        #region Constructors and Loaders
 
         public MainPage()
         {
@@ -65,6 +68,7 @@ namespace OnThisDayApp
             ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
             ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
 
+            // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
             EnableDisableMenuItem();
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
@@ -75,29 +79,27 @@ namespace OnThisDayApp
         /// </summary>
         private void LoadData()
         {
-            GlobalLoading.Instance.IsLoading = true;
-
-            if (App.FirstLoad)
-            {
-                GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
-            }
+            int numberOfStarts = ReviewThisAppTask.NumberOfStarts;
+            IndicateStartedLoading(numberOfStarts);
 
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
                 vm =>
                 {
-                    GlobalLoading.Instance.IsLoading = false;
-
-                    if (App.FirstLoad)
-                    {
-                        GlobalLoading.Instance.LoadingText = null;
-                        App.FirstLoad = false;
-                    }
+                    IndicateStoppedLoading();
 
                     EventsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Events;
                     BirthsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Births;
                     DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
                     HolidaysListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Holidays;
+
+                    ShowReviewPane();
+
+                    if (!App.IsMemoryLimited)
+                    {
+                        SetUpLiveTile(numberOfStarts);
+                        CheckBackgroundAgent();
+                    }
                 },
                 ex =>
                 {
@@ -107,6 +109,67 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
+        }
+
+        private void IndicateStartedLoading(int numberOfStarts)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+            if (App.FirstLoad)
+            {
+                if (numberOfStarts == 0)
+                {
+                    LoadingTextBox.Text = App.IsMemoryLimited ?
+                        "Welcome! Please wait a few moments for the initial setup..." :
+                        "Welcome! Please wait a few moments for the live tile setup...";
+
+                    LoadingTextBox.Visibility = System.Windows.Visibility.Visible;
+                    MainListBox.Loaded += (sender, e) =>
+                    {
+                        LoadingTextBox.Visibility = Visibility.Collapsed;
+                    };
+                }
+                else
+                {
+                    GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
+                }
+            }
+        }
+
+        private void IndicateStoppedLoading()
+        {
+            GlobalLoading.Instance.IsLoading = false;
+            if (App.FirstLoad)
+            {
+                GlobalLoading.Instance.LoadingText = null;
+                App.FirstLoad = false;
+            }
+        }
+
+        private void SetUpLiveTile(int numberOfStarts)
+        {
+            if (numberOfStarts == 0)
+            {
+                DayViewModel data = ((DayViewModel)this.DataContext);
+                if (data != null && data.Highlights != null && data.Highlights.Count > 0)
+                {
+                    LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
+                }
+            }
+        }
+
+        private void CheckBackgroundAgent()
+        {
+            if (!backgroundAgent.StartIfEnabled())
+            {
+                EnableDisableMenuItem();
+            }
+        }
+
+        private void ShowReviewPane()
+        {
+            ReviewThisAppTask rate = new ReviewThisAppTask();
+            ReviewThisAppTask.NumberOfStarts++;
+            rate.ShowAfterThreshold();
         }
 
         private void SetPivotTitle()
@@ -222,17 +285,6 @@ namespace OnThisDayApp
                 currentDate = page.Value.Value;
                 page = null;
                 LoadData();
-            }
-
-            // show review pane
-            ReviewThisAppTask rate = new ReviewThisAppTask();
-            rate.NumberOfStarts++;
-            rate.ShowAfterThreshold();
-
-            // make sure background agent is running
-            if (!backgroundAgent.StartIfEnabled())
-            {
-                EnableDisableMenuItem();
             }
         }
 

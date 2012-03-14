@@ -8,7 +8,7 @@ using OnThisDayApp.Resources;
 
 namespace Utilities
 {
-    class BackgroundAgent
+    internal sealed class BackgroundAgent
     {
         private const string SettingString = "LiveTileDisabled";
         private const string TaskName = "OnThisDayApp.LiveTileScheduledTask";
@@ -77,6 +77,7 @@ namespace Utilities
         private bool StartIfEnabledInternal()
         {
             bool result = false;
+
             ScheduledAction action = ScheduledActionService.Find(TaskName);
             if (action == null)
             {
@@ -87,6 +88,11 @@ namespace Utilities
                 Stop();
                 result = Start();
             }
+
+#if DEBUG
+            // If we're debugging, attempt to start the task immediately 
+            ScheduledActionService.LaunchForTest(TaskName, new TimeSpan(0, 0, 1));
+#endif
 
             return result;
         }
@@ -100,10 +106,6 @@ namespace Utilities
                 task.Description = "Service to update On This Day... live tile";
                 ScheduledActionService.Add(task);
                 result = true;
-#if DEBUG
-                // If we're debugging, attempt to start the task immediately 
-                ScheduledActionService.LaunchForTest(TaskName, new TimeSpan(0, 0, 1));
-#endif
             }
             catch (InvalidOperationException ioe)
             {
@@ -143,6 +145,9 @@ namespace Utilities
             {
                 StandardTileData tileData = new StandardTileData()
                 {
+                    Title = "On This Day...",
+                    BackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative),
+                    BackBackgroundImage = new Uri("NONESUCH.png", UriKind.Relative),
                     BackTitle = string.Empty,
                     BackContent = string.Empty
                 };
