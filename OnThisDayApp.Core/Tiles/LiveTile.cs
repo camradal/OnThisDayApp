@@ -58,14 +58,14 @@ namespace OnThisDayApp
             container.UpdateLayout();
             container.Arrange(new Rect(0, 0, TileSize, TileSize));
 
-            WriteableBitmap wb = new WriteableBitmap(container, null);
+            WriteableBitmap writeableBitmap = new WriteableBitmap(container, null);
 
             string fileName = SharedImagePath + "tile.jpg";
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
             {
-                if (wb.PixelHeight > 0)
+                if (writeableBitmap.PixelHeight > 0)
                 {
-                    wb.SaveJpeg(stream, TileSize, TileSize, 0, 100);
+                    writeableBitmap.SaveJpeg(stream, TileSize, TileSize, 0, 100);
                 }
             }
 

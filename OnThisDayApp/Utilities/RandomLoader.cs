@@ -11,6 +11,8 @@ namespace Utilities
                                                        "Tap any entry to jump to wiki",
                                                        "Hold any entry for context menu",
                                                        "Pin the live tile for updates",
+                                                       "Comments? Send us your thoughts",
+                                                       "Like this app? Please rate it",
                                                        "Checking the archives",
                                                        "Sorting dates and figures",
                                                        "Uncovering the history",

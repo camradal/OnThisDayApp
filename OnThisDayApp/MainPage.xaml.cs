@@ -118,15 +118,9 @@ namespace OnThisDayApp
             {
                 if (numberOfStarts == 0)
                 {
-                    LoadingTextBox.Text = App.IsMemoryLimited ?
-                        "Welcome! Please wait a few moments for the initial setup..." :
-                        "Welcome! Please wait a few moments for the live tile setup...";
-
-                    LoadingTextBox.Visibility = System.Windows.Visibility.Visible;
-                    MainListBox.Loaded += (sender, e) =>
-                    {
-                        LoadingTextBox.Visibility = Visibility.Collapsed;
-                    };
+                    GlobalLoading.Instance.LoadingText = App.IsMemoryLimited ?
+                        Strings.InitialLoadLowMemoryDevice :
+                        Strings.InitialLoadRegularDevice;
                 }
                 else
                 {

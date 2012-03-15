@@ -223,6 +223,24 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Welcome! Setting up now.
+        /// </summary>
+        public static string InitialLoadLowMemoryDevice {
+            get {
+                return ResourceManager.GetString("InitialLoadLowMemoryDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome! Setting up the live tile now.
+        /// </summary>
+        public static string InitialLoadRegularDevice {
+            get {
+                return ResourceManager.GetString("InitialLoadRegularDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
