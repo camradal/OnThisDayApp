@@ -116,7 +116,8 @@ namespace OnThisDayApp
             GlobalLoading.Instance.IsLoading = true;
             if (App.FirstLoad)
             {
-                if (numberOfStarts == 0)
+                // TODO: remove first start next release
+                if (numberOfStarts == 0 || ReviewThisAppTask.FirstStart)
                 {
                     GlobalLoading.Instance.LoadingText = App.IsMemoryLimited ?
                         Strings.InitialLoadLowMemoryDevice :
@@ -141,13 +142,15 @@ namespace OnThisDayApp
 
         private void SetUpLiveTile(int numberOfStarts)
         {
-            if (numberOfStarts == 0)
+            // TODO: remove first start next release
+            if (numberOfStarts == 0 || ReviewThisAppTask.FirstStart)
             {
                 DayViewModel data = ((DayViewModel)this.DataContext);
                 if (data != null && data.Highlights != null && data.Highlights.Count > 0)
                 {
                     LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
                 }
+                ReviewThisAppTask.FirstStart = false;
             }
         }
 

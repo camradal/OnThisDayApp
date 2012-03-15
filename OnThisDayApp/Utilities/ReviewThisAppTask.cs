@@ -8,6 +8,7 @@ namespace Utilities
     public sealed class ReviewThisAppTask
     {
         private const string numberOfStarts = "NumberOfStarts";
+        private const string firstStart = "FirstStart";
         private const int numberOfStartsThreshold = 5;
         private static readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
@@ -25,6 +26,19 @@ namespace Utilities
             set
             {
                 settings[numberOfStarts] = NumberOfStarts + 1;
+            }
+        }
+
+        // TODO: remove in the next update
+        public static bool FirstStart
+        {
+            get
+            {
+                return !settings.Contains(firstStart);
+            }
+            set
+            {
+                settings[firstStart] = true;
             }
         }
 
