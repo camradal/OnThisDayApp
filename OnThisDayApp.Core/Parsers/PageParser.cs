@@ -44,7 +44,18 @@ namespace OnThisDayApp.Parsers
             List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
             List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
             List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
-            List<EntryViewModel> holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
+
+            List<EntryViewModel> holidays;
+            try
+            {
+                holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
+            }
+            catch (Exception)
+            {
+                EntryViewModel entry = new EntryViewModel();
+                entry.Year = "Can't find any holidays for this day";
+                holidays = new List<EntryViewModel>() { entry };
+            }
 
             var result = new Dictionary<string, List<EntryViewModel>>
                          {
