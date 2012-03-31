@@ -5,8 +5,8 @@ using OnThisDayApp.DataAccess;
 
 namespace OnThisDayApp.ViewModels
 {
-    [CachePolicy(CachePolicy.Forever)]
-    [DataLoader(typeof (EventsPageLoader))]
+    [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
+    [DataLoader(typeof(EventsPageLoader))]
     public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
     {
         private readonly BatchObservableCollection<EntryViewModel> births =

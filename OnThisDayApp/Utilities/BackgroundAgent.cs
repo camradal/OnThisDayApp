@@ -107,7 +107,7 @@ namespace Utilities
                 ScheduledActionService.Add(task);
                 result = true;
             }
-            catch (InvalidOperationException ioe)
+            catch (InvalidOperationException)
             {
                 MessageBox.Show(
                     Strings.ErrorCouldNotEnableLiveTileDescription,

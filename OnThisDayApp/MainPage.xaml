@@ -147,7 +147,7 @@
             <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
-                <shell:ApplicationBarMenuItem x:Name="LiveTileMenuItem" Text="disable live tile" Click="LiveTileMenuItem_Click" />
+                <shell:ApplicationBarMenuItem x:Name="SettingsMenuItem" Text="settings" Click="SettingsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>

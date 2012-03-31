@@ -70,7 +70,7 @@ namespace OnThisDayApp
 
             // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
-            EnableDisableMenuItem();
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemSettings;
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
         }
 
@@ -81,6 +81,8 @@ namespace OnThisDayApp
         {
             int numberOfStarts = ReviewThisAppTask.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
+
+            DataManager.Current.UnhandledError += new EventHandler<ApplicationUnhandledExceptionEventArgs>(Current_UnhandledError);
 
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
@@ -98,7 +100,6 @@ namespace OnThisDayApp
                     if (!App.IsMemoryLimited)
                     {
                         SetUpLiveTile(numberOfStarts);
-                        CheckBackgroundAgent();
                     }
                 },
                 ex =>
@@ -109,6 +110,12 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
+        }
+
+        void Current_UnhandledError(object sender, ApplicationUnhandledExceptionEventArgs e)
+        {
+            string errorMessage = string.Format("Error loading data: {0}", e.ExceptionObject.Message);
+            MessageBox.Show(errorMessage);
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -152,13 +159,9 @@ namespace OnThisDayApp
                 }
                 ReviewThisAppTask.FirstStart = false;
             }
-        }
-
-        private void CheckBackgroundAgent()
-        {
-            if (!backgroundAgent.StartIfEnabled())
+            else
             {
-                EnableDisableMenuItem();
+                backgroundAgent.StartIfEnabled();
             }
         }
 
@@ -190,7 +193,10 @@ namespace OnThisDayApp
             }
 
             // navigate to the new page
+            FrameworkElement root = Application.Current.RootVisual as FrameworkElement;
             var selectedItem = (EntryViewModel)listBox.SelectedItem;
+            root.DataContext = selectedItem;
+
             OpenDetailsPage(selectedItem.Link);
 
             // reset selected index to -1 (no selection)
@@ -210,10 +216,13 @@ namespace OnThisDayApp
             });
         }
 
-        private void LiveTileMenuItem_Click(object sender, EventArgs e)
+        private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            backgroundAgent.Toggle();
-            EnableDisableMenuItem();
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            });
         }
 
         private void RateThisAppMenuItem_Click(object sender, EventArgs e)
@@ -254,18 +263,6 @@ namespace OnThisDayApp
         {
             currentDate = currentDate.AddDays(1);
             LoadData();
-        }
-
-        private void EnableDisableMenuItem()
-        {
-            if (backgroundAgent.LiveTileDisabled)
-            {
-                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemEnableLiveTile;
-            }
-            else
-            {
-                ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemDisableLiveTile;
-            }
         }
 
         #endregion
@@ -330,5 +327,6 @@ namespace OnThisDayApp
         }
 
         #endregion
+
     }
 }

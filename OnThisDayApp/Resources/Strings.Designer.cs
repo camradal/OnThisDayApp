@@ -286,6 +286,15 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string MenuItemSettings {
+            get {
+                return ResourceManager.GetString("MenuItemSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please take a moment to rate or review this app. We&apos;d love to hear from you..
         /// </summary>
         public static string MessageBoxRateThisAppSummary {
@@ -313,11 +322,29 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string PageTitleSettings {
+            get {
+                return ResourceManager.GetString("PageTitleSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please rate and comment on this app in Marketplace.
         /// </summary>
         public static string Rate {
             get {
                 return ResourceManager.GetString("Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live tile.
+        /// </summary>
+        public static string SettingLiveTile {
+            get {
+                return ResourceManager.GetString("SettingLiveTile", resourceCulture);
             }
         }
         

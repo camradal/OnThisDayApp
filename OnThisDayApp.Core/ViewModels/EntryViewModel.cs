@@ -3,7 +3,7 @@ using AgFx;
 
 namespace OnThisDayApp.ViewModels
 {
-    [CachePolicy(CachePolicy.Forever)]
+    [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
     public sealed class EntryViewModel : ModelItemBase<DayLoadContext>
     {
         private string description;

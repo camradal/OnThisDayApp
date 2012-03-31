@@ -192,6 +192,9 @@
   <data name="MenuItemRateThisApp" xml:space="preserve">
     <value>rate this app</value>
   </data>
+  <data name="MenuItemSettings" xml:space="preserve">
+    <value>settings</value>
+  </data>
   <data name="MessageBoxRateThisAppSummary" xml:space="preserve">
     <value>Please take a moment to rate or review this app. We'd love to hear from you.</value>
   </data>
@@ -201,8 +204,14 @@
   <data name="PageTitleAbout" xml:space="preserve">
     <value>about</value>
   </data>
+  <data name="PageTitleSettings" xml:space="preserve">
+    <value>settings</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>Please rate and comment on this app in Marketplace</value>
+  </data>
+  <data name="SettingLiveTile" xml:space="preserve">
+    <value>Live tile</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version:</value>

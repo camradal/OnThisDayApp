@@ -4,13 +4,17 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using OnThisDayApp.Resources;
 using Utilities;
+using Microsoft.Phone.Tasks;
+using Microsoft.Phone.Shell;
 
 namespace OnThisDayApp
 {
     public partial class DetailsPage : PhoneApplicationPage
     {
+        private bool isNewPage;
         private bool navigating;
         private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
+        private Uri sourceUrl;
 
         public DetailsPage()
         {
@@ -18,19 +22,42 @@ namespace OnThisDayApp
 
             webBrowser1.Navigated += webBrowser1_Navigated;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
+
+            isNewPage = true;
         }
+
+        #region Navigation
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
             string uri;
             if (NavigationContext.QueryString.TryGetValue("uri", out uri))
             {
                 string decodedUri = HttpUtility.HtmlDecode(uri);
                 string sourceString = string.Format(sourceUriFormat, decodedUri);
-                Uri source = new Uri(sourceString, UriKind.Absolute);
-                webBrowser1.Source = source;
+                sourceUrl = new Uri(sourceString, UriKind.Absolute);
+                webBrowser1.Source = sourceUrl;
+            }
+            //else if (isNewPage && State.ContainsKey("SourceUrl"))
+            //{
+            //    sourceUrl = new Uri(State["SourceUrl"].ToString());
+            //    webBrowser1.Source = sourceUrl;
+            //}
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                //State["SourceUrl"] = sourceUrl;
             }
         }
+
+        #endregion
 
         #region Web browser
 
@@ -55,5 +82,21 @@ namespace OnThisDayApp
         }
 
         #endregion
+
+        private void AppBarButtonShare_Click(object sender, EventArgs e)
+        {
+            if (webBrowser1.Source != null)
+            {
+                try
+                {
+                    ShareLinkTask shareLinkTask = new ShareLinkTask();
+                    shareLinkTask.LinkUri = webBrowser1.Source;
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+            }
+        }
     }
 }

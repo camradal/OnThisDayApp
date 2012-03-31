@@ -66,6 +66,7 @@
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.13\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -82,9 +83,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
     <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
@@ -107,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -143,6 +152,7 @@
     <Content Include="icons\appbar.back.rest.png" />
     <Content Include="icons\appbar.home.png" />
     <Content Include="icons\appbar.next.rest.png" />
+    <Content Include="icons\appbar.share.rest.png" />
     <Content Include="icons\Application_Icon_62.png" />
     <Content Include="icons\Application_Icon_173.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png">

@@ -1,13 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using AgFx;
 using OnThisDayApp.DataAccess;
+using System;
 
 namespace OnThisDayApp.ViewModels
 {
     /// <summary>
     /// Primary view model used for binding to the view
     /// </summary>
-    [CachePolicy(CachePolicy.Forever)]
+    [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
     [DataLoader(typeof (HighlightsPageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
