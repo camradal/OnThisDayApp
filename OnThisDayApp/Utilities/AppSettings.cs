@@ -1,14 +1,16 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
 
-namespace SettingsSample
+namespace Utilities
 {
     /// <summary>
-    /// Class for loading application settings
+    /// Singleton class for loading application settings
     /// </summary>
     public sealed class AppSettings
     {
         #region Variables
+
+        private static readonly AppSettings instance = new AppSettings();
 
         private readonly IsolatedStorageSettings settings;
 
@@ -16,15 +18,25 @@ namespace SettingsSample
         private const string FirstStartKeyName = "FirstStart";
         private const string InterfaceLanguageKeyName = "InterfaceLanguage";
         private const string ContentLanguageKeyName = "ContentLanguage";
+        private const string LiveTileDisabledKeyName = "LiveTileDisabled";
 
         private const int NumberOfStartsDefault = 0;
         private const bool FirstStartDefault = false;
         private const string InterfaceLanguageDefault = "en";
         private const string ContentLanguageDefault = "en";
+        private const bool LiveTileDisabledDefault = false;
 
         #endregion
 
         #region Properties
+
+        public static AppSettings Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
 
         public int NumberOfStarts
         {
@@ -86,11 +98,30 @@ namespace SettingsSample
             }
         }
 
+        public bool LiveTileDisabled
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(LiveTileDisabledKeyName, LiveTileDisabledDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(LiveTileDisabledKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
         #endregion
 
         #region Constructor
 
-        public AppSettings()
+        static AppSettings()
+        {
+        }
+
+        private AppSettings()
         {
             // Get the settings for this application.
             settings = IsolatedStorageSettings.ApplicationSettings;
@@ -145,6 +176,15 @@ namespace SettingsSample
         private void Save()
         {
             settings.Save();
+        }
+
+        private void ClearOldSettings()
+        {
+            // FirstStart - not needed anymore
+            if (settings.Contains(FirstStartKeyName))
+            {
+                settings.Remove(FirstStartKeyName);
+            }
         }
 
         #endregion

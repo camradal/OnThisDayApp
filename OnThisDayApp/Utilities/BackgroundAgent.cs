@@ -10,39 +10,16 @@ namespace Utilities
 {
     internal sealed class BackgroundAgent
     {
-        private const string SettingString = "LiveTileDisabled";
         private const string TaskName = "OnThisDayApp.LiveTileScheduledTask";
-        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-
-        #region Properties
-
-        public bool LiveTileDisabled
-        {
-            get
-            {
-                if (settings.Contains(SettingString))
-                {
-                    return bool.Parse(settings[SettingString].ToString());
-                }
-
-                return false;
-            }
-            set
-            {
-                settings[SettingString] = value;
-            }
-        }
-
-        #endregion
 
         #region Public Methods
 
         public void Toggle()
         {
             bool result = false;
-            LiveTileDisabled = !LiveTileDisabled;
+            AppSettings.Instance.LiveTileDisabled = !AppSettings.Instance.LiveTileDisabled;
 
-            if (LiveTileDisabled)
+            if (AppSettings.Instance.LiveTileDisabled)
             {
                 Stop();
                 ResetTileToDefault();
@@ -56,14 +33,14 @@ namespace Utilities
             // do not switch values if not succesful
             if (!result)
             {
-                LiveTileDisabled = !LiveTileDisabled;
+                AppSettings.Instance.LiveTileDisabled = !AppSettings.Instance.LiveTileDisabled;
             }
         }
 
         public bool StartIfEnabled()
         {
             bool result = true;
-            if (!LiveTileDisabled)
+            if (!AppSettings.Instance.LiveTileDisabled)
             {
                 result = StartIfEnabledInternal();
             }

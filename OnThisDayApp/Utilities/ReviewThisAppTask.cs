@@ -7,44 +7,16 @@ namespace Utilities
 {
     public sealed class ReviewThisAppTask
     {
-        private const string numberOfStarts = "NumberOfStarts";
-        private const string firstStart = "FirstStart";
         private const int numberOfStartsThreshold = 5;
-        private static readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
-        public static int NumberOfStarts
+        public ReviewThisAppTask()
         {
-            get
-            {
-                if (settings.Contains(numberOfStarts))
-                {
-                    return int.Parse(settings[numberOfStarts].ToString());
-                }
-
-                return 0;
-            }
-            set
-            {
-                settings[numberOfStarts] = NumberOfStarts + 1;
-            }
-        }
-
-        // TODO: remove in the next update
-        public static bool FirstStart
-        {
-            get
-            {
-                return !settings.Contains(firstStart);
-            }
-            set
-            {
-                settings[firstStart] = true;
-            }
+            AppSettings.Instance.NumberOfStarts++;
         }
 
         public void ShowAfterThreshold()
         {
-            if (NumberOfStarts == numberOfStartsThreshold &&
+            if (AppSettings.Instance.NumberOfStarts == numberOfStartsThreshold &&
                 GetMessageBoxResult() == MessageBoxResult.OK)
             {
                 MarketplaceReviewTask task = new MarketplaceReviewTask();

@@ -79,7 +79,7 @@ namespace OnThisDayApp
         /// </summary>
         private void LoadData()
         {
-            int numberOfStarts = ReviewThisAppTask.NumberOfStarts;
+            int numberOfStarts = AppSettings.Instance.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
 
             DataManager.Current.UnhandledError += new EventHandler<ApplicationUnhandledExceptionEventArgs>(Current_UnhandledError);
@@ -124,7 +124,7 @@ namespace OnThisDayApp
             if (App.FirstLoad)
             {
                 // TODO: remove first start next release
-                if (numberOfStarts == 0 || ReviewThisAppTask.FirstStart)
+                if (numberOfStarts == 0)
                 {
                     GlobalLoading.Instance.LoadingText = App.IsMemoryLimited ?
                         Strings.InitialLoadLowMemoryDevice :
@@ -149,15 +149,13 @@ namespace OnThisDayApp
 
         private void SetUpLiveTile(int numberOfStarts)
         {
-            // TODO: remove first start next release
-            if (numberOfStarts == 0 || ReviewThisAppTask.FirstStart)
+            if (numberOfStarts == 0)
             {
                 DayViewModel data = ((DayViewModel)this.DataContext);
                 if (data != null && data.Highlights != null && data.Highlights.Count > 0)
                 {
                     LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
                 }
-                ReviewThisAppTask.FirstStart = false;
             }
             else
             {
@@ -168,7 +166,6 @@ namespace OnThisDayApp
         private void ShowReviewPane()
         {
             ReviewThisAppTask rate = new ReviewThisAppTask();
-            ReviewThisAppTask.NumberOfStarts++;
             rate.ShowAfterThreshold();
         }
 

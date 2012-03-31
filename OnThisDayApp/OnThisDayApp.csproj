@@ -89,7 +89,7 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="Utilities\AppSettings.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
     <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
