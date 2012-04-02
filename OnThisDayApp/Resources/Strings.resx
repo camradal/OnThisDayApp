@@ -207,6 +207,21 @@
   <data name="PageTitleSettings" xml:space="preserve">
     <value>settings</value>
   </data>
+  <data name="PivotTitleBirths" xml:space="preserve">
+    <value>births</value>
+  </data>
+  <data name="PivotTitleDeaths" xml:space="preserve">
+    <value>deaths</value>
+  </data>
+  <data name="PivotTitleEvents" xml:space="preserve">
+    <value>events</value>
+  </data>
+  <data name="PivotTitleHighlights" xml:space="preserve">
+    <value>highlights</value>
+  </data>
+  <data name="PivotTitleHolidays" xml:space="preserve">
+    <value>holidays</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>Please rate and comment on this app in Marketplace</value>
   </data>

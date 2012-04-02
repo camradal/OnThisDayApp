@@ -331,6 +331,51 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to births.
+        /// </summary>
+        public static string PivotTitleBirths {
+            get {
+                return ResourceManager.GetString("PivotTitleBirths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to deaths.
+        /// </summary>
+        public static string PivotTitleDeaths {
+            get {
+                return ResourceManager.GetString("PivotTitleDeaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to events.
+        /// </summary>
+        public static string PivotTitleEvents {
+            get {
+                return ResourceManager.GetString("PivotTitleEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to highlights.
+        /// </summary>
+        public static string PivotTitleHighlights {
+            get {
+                return ResourceManager.GetString("PivotTitleHighlights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to holidays.
+        /// </summary>
+        public static string PivotTitleHolidays {
+            get {
+                return ResourceManager.GetString("PivotTitleHolidays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please rate and comment on this app in Marketplace.
         /// </summary>
         public static string Rate {

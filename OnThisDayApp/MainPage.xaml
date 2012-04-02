@@ -27,7 +27,7 @@
         <controls:Pivot Grid.Row="0" x:Name="MainPivot" Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
 
             <!--Pivot highlights-->
-            <controls:PivotItem Name="highlightsPivotItem" Header="highlights">
+            <controls:PivotItem Name="highlightsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHighlights}">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -53,7 +53,7 @@
             </controls:PivotItem>
 
             <!--Pivot holidays-->
-            <controls:PivotItem Name="holidaysPivotItem" Header="holidays">
+            <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
                 <ListBox x:Name="HolidaysListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -70,7 +70,7 @@
             </controls:PivotItem>
 
             <!--Pivot events-->
-            <controls:PivotItem Name="eventsPivotItem" Header="events" Visibility="Collapsed">
+            <controls:PivotItem Name="eventsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleEvents}" Visibility="Collapsed">
                 <ListBox x:Name="EventsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -90,8 +90,8 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <!--Pivot births-->
-            <controls:PivotItem Name="deathsPivotItem" Header="deaths" Visibility="Collapsed">
+            <!--Pivot deaths-->
+            <controls:PivotItem Name="deathsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleDeaths}" Visibility="Collapsed">
                 <ListBox x:Name="DeathsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -111,8 +111,8 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <!--Pivot deaths-->
-            <controls:PivotItem Name="birthsPivotItem" Header="births" Visibility="Collapsed">
+            <!--Pivot births-->
+            <controls:PivotItem Name="birthsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirths}" Visibility="Collapsed">
                 <ListBox x:Name="BirthsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
