@@ -82,8 +82,6 @@ namespace OnThisDayApp
             int numberOfStarts = AppSettings.Instance.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
 
-            DataManager.Current.UnhandledError += new EventHandler<ApplicationUnhandledExceptionEventArgs>(Current_UnhandledError);
-
             this.DataContext = DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
                 vm =>
@@ -110,12 +108,6 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
-        }
-
-        void Current_UnhandledError(object sender, ApplicationUnhandledExceptionEventArgs e)
-        {
-            string errorMessage = string.Format("Error loading data: {0}", e.ExceptionObject.Message);
-            MessageBox.Show(errorMessage);
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
