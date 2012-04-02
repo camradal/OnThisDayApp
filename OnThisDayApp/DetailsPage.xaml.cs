@@ -13,7 +13,7 @@ namespace OnThisDayApp
     {
         private bool isNewPage;
         private bool navigating;
-        private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
+        private const string sourceUriFormat = @"http://en.m.wikipedia.org{0}";
         private Uri sourceUrl;
 
         public DetailsPage()
