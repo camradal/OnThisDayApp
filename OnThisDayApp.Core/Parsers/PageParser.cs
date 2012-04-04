@@ -101,9 +101,19 @@ namespace OnThisDayApp.Parsers
 
         private static Dictionary<string, string> ExtractAllLinksFromHtmlNode(HtmlNode entry)
         {
-            return entry.Descendants("a").Select(
-                item => new { text = HttpUtility.HtmlDecode(item.InnerText), url = item.Attributes["href"].Value }).ToDictionary(
-                    pair => pair.text, pair => pair.url);
+            var hyperlinks = entry.Descendants("a").Select(_ =>
+                new KeyValuePair<string, string>(
+                    HttpUtility.HtmlDecode(_.InnerText),
+                    _.Attributes["href"].Value));
+
+            var result = new Dictionary<string, string>() { { "Share...", "" } };
+
+            foreach (KeyValuePair<string, string> hyperlink in hyperlinks)
+            {
+                result.Add(hyperlink.Key, hyperlink.Value);
+            }
+
+            return result;
         }
 
         private static string ExtractFirstLink(HtmlNode node, EntryViewModel entry)

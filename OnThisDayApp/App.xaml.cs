@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using AgFx;
+using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Utilities;
@@ -28,8 +29,10 @@ namespace OnThisDayApp
         /// </summary>
         public App()
         {
+            BugSenseHandler.Instance.Init(this, "52782d56");
+
             // Global handler for uncaught exceptions. 
-            UnhandledException += Application_UnhandledException;
+            BugSenseHandler.Instance.UnhandledException += Application_UnhandledException; 
 
             // Standard Silverlight initialization
             InitializeComponent();
@@ -111,6 +114,7 @@ namespace OnThisDayApp
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
             }
+            BugSenseHandler.Instance.LogError(e.ExceptionObject, "Unhandled exception occurred");
         }
 
         #region Data manager statistics

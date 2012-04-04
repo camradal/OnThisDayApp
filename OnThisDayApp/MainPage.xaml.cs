@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using AgFx;
+using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Shell;
@@ -59,19 +60,8 @@ namespace OnThisDayApp
         public MainPage()
         {
             InitializeComponent();
-
             LoadData();
-
-            // specify the text explicitly on the app bar using our resource string
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).Text = Strings.ButtonToday;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[1]).Text = Strings.ButtonChooseDate;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
-
-            // menu bar
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
+            SetApplicationBarLocalizedStrings();
         }
 
         /// <summary>
@@ -102,12 +92,26 @@ namespace OnThisDayApp
                 },
                 ex =>
                 {
-                    MessageBox.Show("Failed to get data for " + CurrentDate);
+                    BugSenseHandler.Instance.LogError(ex.InnerException, "Failed to get data for " + CurrentDate);
                     GlobalLoading.Instance.IsLoading = false;
                     GlobalLoading.Instance.LoadingText = null;
                 });
 
             SetPivotTitle();
+        }
+
+        private void SetApplicationBarLocalizedStrings()
+        {
+            // specify the text explicitly on the app bar using our resource string
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).Text = Strings.ButtonToday;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[1]).Text = Strings.ButtonChooseDate;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
+
+            // menu bar
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemSettings;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -196,24 +200,6 @@ namespace OnThisDayApp
 
         #region Application Bar Handlers
 
-        private void AboutMenuItem_Click(object sender, EventArgs e)
-        {
-            // use dispatcher to prevent jumping elements on the screen
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
-            });
-        }
-
-        private void SettingsMenuItem_Click(object sender, EventArgs e)
-        {
-            // use dispatcher to prevent jumping elements on the screen
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
-            });
-        }
-
         private void RateThisAppMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -227,12 +213,21 @@ namespace OnThisDayApp
             }
         }
 
-        private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
+        private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
             // use dispatcher to prevent jumping elements on the screen
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            });
+        }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
             });
         }
 
@@ -240,6 +235,15 @@ namespace OnThisDayApp
         {
             currentDate = DateTime.Now;
             LoadData();
+        }
+
+        private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
+            });
         }
 
         private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
@@ -307,6 +311,7 @@ namespace OnThisDayApp
             foreach (KeyValuePair<string, string> link in links)
             {
                 MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
+
                 string url = link.Value;
                 container.Click += (obj, args) =>
                 {
@@ -316,6 +321,5 @@ namespace OnThisDayApp
         }
 
         #endregion
-
     }
 }
