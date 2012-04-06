@@ -3,12 +3,6 @@ using AgFx;
 
 namespace OnThisDayApp.ViewModels
 {
-    public struct Link
-    {
-        string Text;
-        string Url;
-    }
-
     [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
     public sealed class EntryViewModel : ModelItemBase<DayLoadContext>
     {

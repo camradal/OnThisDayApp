@@ -11,12 +11,12 @@ namespace Utilities
 
         public ReviewThisAppTask()
         {
-            AppSettings.Instance.NumberOfStarts++;
+            AppSettings.NumberOfStarts++;
         }
 
         public void ShowAfterThreshold()
         {
-            if (AppSettings.Instance.NumberOfStarts == numberOfStartsThreshold &&
+            if (AppSettings.NumberOfStarts == numberOfStartsThreshold &&
                 GetMessageBoxResult() == MessageBoxResult.OK)
             {
                 MarketplaceReviewTask task = new MarketplaceReviewTask();

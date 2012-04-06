@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Utilities\AppSettings.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
+    <Compile Include="Utilities\LowMemoryHelper.cs" />
     <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
     <Compile Include="Utilities\ReviewThisAppTask.cs" />

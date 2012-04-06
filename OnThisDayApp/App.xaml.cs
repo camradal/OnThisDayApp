@@ -10,6 +10,7 @@ using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Utilities;
+using OnThisDayApp.Utilities;
 
 namespace OnThisDayApp
 {
@@ -70,14 +71,14 @@ namespace OnThisDayApp
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             FirstLoad = true;
-            IsMemoryLimited = false;
+            IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            IsMemoryLimited = false;
+            IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
         }
 
         // Code to execute when the application is deactivated (sent to background)

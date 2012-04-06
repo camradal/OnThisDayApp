@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Info;
 
 namespace OnThisDayApp
 {
@@ -18,8 +19,6 @@ namespace OnThisDayApp
         private const int TileSize = 173;
         private const string SharedImagePath = "/Shared/ShellContent/";
 
-        private static IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication();
-
         public static void UpdateLiveTile(string title, string content)
         {
             // application tile is always the first tile, even if it is not pinned
@@ -27,7 +26,15 @@ namespace OnThisDayApp
 
             if (tile != null)
             {
+                var x = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
+
                 string fileName = WriteTileToDisk(title, content);
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                var y = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
+
                 StandardTileData data = new StandardTileData()
                 {
                     Title = title,
@@ -61,11 +68,14 @@ namespace OnThisDayApp
             WriteableBitmap writeableBitmap = new WriteableBitmap(container, null);
 
             string fileName = SharedImagePath + "tile.jpg";
-            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
+            using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                if (writeableBitmap.PixelHeight > 0)
+                using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
                 {
-                    writeableBitmap.SaveJpeg(stream, TileSize, TileSize, 0, 100);
+                    if (writeableBitmap.PixelHeight > 0)
+                    {
+                        writeableBitmap.SaveJpeg(stream, TileSize, TileSize, 0, 100);
+                    }
                 }
             }
 

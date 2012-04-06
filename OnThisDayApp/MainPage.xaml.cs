@@ -69,7 +69,7 @@ namespace OnThisDayApp
         /// </summary>
         private void LoadData()
         {
-            int numberOfStarts = AppSettings.Instance.NumberOfStarts;
+            int numberOfStarts =  AppSettings.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
 
             this.DataContext = DataManager.Current.Load<DayViewModel>(
@@ -153,10 +153,8 @@ namespace OnThisDayApp
                     LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
                 }
             }
-            else
-            {
-                backgroundAgent.StartIfEnabled();
-            }
+            
+            backgroundAgent.StartIfEnabled();
         }
 
         private void ShowReviewPane()
@@ -312,11 +310,35 @@ namespace OnThisDayApp
             {
                 MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
 
-                string url = link.Value;
-                container.Click += (obj, args) =>
+                if (string.Equals(link.Key, "share...", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    OpenDetailsPage(url);
-                };
+                    container.Click += (obj, args) =>
+                    {
+                        string title = "On this day in " + model.Year;
+                        try
+                        {
+                            ShareLinkTask task = new ShareLinkTask()
+                            {
+                                Title = title,
+                                Message = title + ": " + model.Description,
+                                LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else
+                {
+                    string url = link.Value;
+                    container.Click += (obj, args) =>
+                    {
+                        OpenDetailsPage(url);
+                    };
+                }
             }
         }
 

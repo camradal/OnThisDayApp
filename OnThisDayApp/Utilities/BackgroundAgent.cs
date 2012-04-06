@@ -17,9 +17,9 @@ namespace Utilities
         public void Toggle()
         {
             bool result = false;
-            AppSettings.Instance.LiveTileDisabled = !AppSettings.Instance.LiveTileDisabled;
+            AppSettings.LiveTileDisabled = !AppSettings.LiveTileDisabled;
 
-            if (AppSettings.Instance.LiveTileDisabled)
+            if (AppSettings.LiveTileDisabled)
             {
                 Stop();
                 ResetTileToDefault();
@@ -33,14 +33,14 @@ namespace Utilities
             // do not switch values if not succesful
             if (!result)
             {
-                AppSettings.Instance.LiveTileDisabled = !AppSettings.Instance.LiveTileDisabled;
+                AppSettings.LiveTileDisabled = !AppSettings.LiveTileDisabled;
             }
         }
 
         public bool StartIfEnabled()
         {
             bool result = true;
-            if (!AppSettings.Instance.LiveTileDisabled)
+            if (!AppSettings.LiveTileDisabled)
             {
                 result = StartIfEnabledInternal();
             }

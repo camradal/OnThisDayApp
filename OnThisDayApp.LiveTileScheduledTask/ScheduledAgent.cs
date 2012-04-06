@@ -5,14 +5,13 @@ using System.Windows;
 using AgFx;
 using Microsoft.Phone.Scheduler;
 using OnThisDayApp.ViewModels;
+using Microsoft.Phone.Info;
 
 namespace OnThisDayApp.LiveTileScheduledTask
 {
     public class ScheduledAgent : ScheduledTaskAgent
     {
-        private static readonly Random random = new Random();
         private static volatile bool _classInitialized;
-        private DayViewModel data;
 
         #region Properties
 
@@ -55,6 +54,8 @@ namespace OnThisDayApp.LiveTileScheduledTask
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
             }
+
+            // TODO: report error usin 
         }
 
         /// <summary>
@@ -68,37 +69,33 @@ namespace OnThisDayApp.LiveTileScheduledTask
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
-            data = DataManager.Current.Load<DayViewModel>(
+            DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
                 vm =>
                 {
-                    UpdateTile();
+                    int index = new Random().Next(vm.Highlights.Count);
+                    EntryViewModel entry = vm.Highlights[index];
+
+                    string title = entry.Year;
+                    string content = entry.Description;
+
+                    var x = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+
+                    var y = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
+
+                    LiveTile.UpdateLiveTile(title, content);
+
+                    var z = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
+
                     NotifyComplete();
                 },
                 ex =>
                 {
                     NotifyComplete();
                 });
-        }
-
-        #endregion
-
-        #region Helper Methods
-
-        private void UpdateTile()
-        {
-            if (IsDataLoaded())
-            {
-                var entry = data.Highlights[random.Next(data.Highlights.Count)];
-                string title = entry.Year;
-                string content = entry.Description;
-                LiveTile.UpdateLiveTile(title, content);
-            }
-        }
-
-        private bool IsDataLoaded()
-        {
-            return data != null && data.Highlights != null && data.Highlights.Any();
         }
 
         #endregion

@@ -19,10 +19,15 @@ namespace OnThisDayApp.Parsers
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
             List<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).ToList();
+            AttachPictureToNode(htmlDoc, entries);
 
-            // attach a picture to one of the entries
-            listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']");
-            HtmlNode imageNode = listNode.Descendants("img").LastOrDefault();
+            return entries;
+        }
+
+        private static void AttachPictureToNode(HtmlDocument htmlDoc, List<EntryViewModel> entries)
+        {
+            HtmlNode contentNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']");
+            HtmlNode imageNode = contentNode.Descendants("img").LastOrDefault();
             if (imageNode != null)
             {
                 string url = "http:" + imageNode.Attributes["src"].Value;
@@ -32,8 +37,6 @@ namespace OnThisDayApp.Parsers
                     pictureEntry.ImageUrl = url;
                 }
             }
-
-            return entries;
         }
 
         public static Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
@@ -103,11 +106,10 @@ namespace OnThisDayApp.Parsers
         {
             var hyperlinks = entry.Descendants("a").Select(_ =>
                 new KeyValuePair<string, string>(
-                    HttpUtility.HtmlDecode(_.InnerText),
+                    HttpUtility.HtmlDecode(_.InnerText).ToLower(),
                     _.Attributes["href"].Value));
 
-            var result = new Dictionary<string, string>() { { "Share...", "" } };
-
+            var result = new Dictionary<string, string>() { { "share...", string.Empty } };
             foreach (KeyValuePair<string, string> hyperlink in hyperlinks)
             {
                 result.Add(hyperlink.Key, hyperlink.Value);

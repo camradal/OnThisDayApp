@@ -4,15 +4,13 @@ using System.IO.IsolatedStorage;
 namespace Utilities
 {
     /// <summary>
-    /// Singleton class for loading application settings
+    /// Class for handling application settings
     /// </summary>
     public sealed class AppSettings
     {
         #region Variables
 
-        private static readonly AppSettings instance = new AppSettings();
-
-        private readonly IsolatedStorageSettings settings;
+        private static readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
         private const string NumberOfStartsKeyName = "NumberOfStarts";
         private const string FirstStartKeyName = "FirstStart";
@@ -30,15 +28,7 @@ namespace Utilities
 
         #region Properties
 
-        public static AppSettings Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
-        public int NumberOfStarts
+        public static int NumberOfStarts
         {
             get
             {
@@ -53,7 +43,7 @@ namespace Utilities
             }
         }
 
-        public bool FirstStartSetting
+        public static bool FirstStartSetting
         {
             get
             {
@@ -68,7 +58,7 @@ namespace Utilities
             }
         }
 
-        public string InterfaceLanguage
+        public static string InterfaceLanguage
         {
             get
             {
@@ -83,7 +73,7 @@ namespace Utilities
             }
         }
 
-        public string ContentLanguageSetting
+        public static string ContentLanguageSetting
         {
             get
             {
@@ -98,7 +88,19 @@ namespace Utilities
             }
         }
 
-        public bool LiveTileDisabled
+        public static bool LiveTileEnabled
+        {
+            get
+            {
+                return !LiveTileDisabled;
+            }
+            set
+            {
+                LiveTileDisabled = !value;
+            }
+        }
+
+        public static bool LiveTileDisabled
         {
             get
             {
@@ -115,26 +117,12 @@ namespace Utilities
 
         #endregion
 
-        #region Constructor
-
-        static AppSettings()
-        {
-        }
-
-        private AppSettings()
-        {
-            // Get the settings for this application.
-            settings = IsolatedStorageSettings.ApplicationSettings;
-        }
-
-        #endregion
-
         #region Helper Methods
 
         /// <summary>
         /// Update a setting value. If the setting does not, then add the setting.
         /// </summary>
-        private bool AddOrUpdateValue(string key, Object value)
+        private static bool AddOrUpdateValue(string key, Object value)
         {
             bool valueChanged = false;
 
@@ -158,7 +146,7 @@ namespace Utilities
         /// Get the current value of the setting, or if it is not found, set the 
         /// setting to the default setting.
         /// </summary>
-        private T GetValueOrDefault<T>(string Key, T defaultValue)
+        private static T GetValueOrDefault<T>(string Key, T defaultValue)
         {
             T value;
 
@@ -173,12 +161,12 @@ namespace Utilities
             return value;
         }
 
-        private void Save()
+        private static void Save()
         {
             settings.Save();
         }
 
-        private void ClearOldSettings()
+        private static void ClearOldSettings()
         {
             // FirstStart - not needed anymore
             if (settings.Contains(FirstStartKeyName))
