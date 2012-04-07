@@ -145,16 +145,20 @@ namespace OnThisDayApp
 
         private void SetUpLiveTile(int numberOfStarts)
         {
-            if (numberOfStarts == 0)
+            bool agentStarted = backgroundAgent.StartIfEnabled();
+            if (agentStarted && (numberOfStarts == 0))
             {
-                DayViewModel data = ((DayViewModel)this.DataContext);
-                if (data != null && data.Highlights != null && data.Highlights.Count > 0)
-                {
-                    LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
-                }
+                InitialTileSetup();
             }
-            
-            backgroundAgent.StartIfEnabled();
+        }
+
+        private void InitialTileSetup()
+        {
+            DayViewModel data = ((DayViewModel)this.DataContext);
+            if (data != null && data.Highlights != null && data.Highlights.Count > 0)
+            {
+                LiveTile.UpdateLiveTile(data.Highlights[0].Year, data.Highlights[0].Description);
+            }
         }
 
         private void ShowReviewPane()

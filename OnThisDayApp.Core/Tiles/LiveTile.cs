@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Shell;
-using Microsoft.Phone.Info;
 
 namespace OnThisDayApp
 {
@@ -26,15 +25,7 @@ namespace OnThisDayApp
 
             if (tile != null)
             {
-                var x = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
-
                 string fileName = WriteTileToDisk(title, content);
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                var y = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
-
                 StandardTileData data = new StandardTileData()
                 {
                     Title = title,

@@ -18,6 +18,7 @@
 
     <phone:PhoneApplicationPage.Resources>
         <utilities:AppSettings x:Key="appSettings" />
+        <utilities:InverseConverter x:Key="inverseConverter" />
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -35,6 +36,7 @@
         <StackPanel x:Name="SettingsPanel" Grid.Row="1" Margin="12,0,12,12">
             <toolkit:ToggleSwitch x:Name="LiveTileToggle"
                                   Header="{Binding Source={StaticResource Strings}, Path=Resources.SettingLiveTile}"
+                                  IsEnabled="{Binding Source={StaticResource appSettings}, Path=IsLowMemDevice, Mode=OneWay, Converter={StaticResource inverseConverter}}"
                                   IsChecked="{Binding Source={StaticResource appSettings}, Path=LiveTileEnabled, Mode=TwoWay}"/>
         </StackPanel>
     </Grid>

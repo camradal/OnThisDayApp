@@ -88,11 +88,19 @@ namespace Utilities
             }
         }
 
+        public static bool IsLowMemDevice
+        {
+            get
+            {
+                return LowMemoryHelper.IsLowMemDevice;
+            }
+        }
+
         public static bool LiveTileEnabled
         {
             get
             {
-                return !LiveTileDisabled;
+                return !IsLowMemDevice && !LiveTileDisabled;
             }
             set
             {

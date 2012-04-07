@@ -10,7 +10,6 @@ using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Utilities;
-using OnThisDayApp.Utilities;
 
 namespace OnThisDayApp
 {
