@@ -62,7 +62,7 @@
                                 <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
+                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
                                 </toolkit:ContextMenuService.ContextMenu>
                             </StackPanel>
                         </DataTemplate>

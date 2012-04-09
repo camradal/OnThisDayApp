@@ -55,7 +55,7 @@ namespace OnThisDayApp.LiveTileScheduledTask
                 System.Diagnostics.Debugger.Break();
             }
 
-            // TODO: report error usin 
+            // TODO: report error using bugsense
         }
 
         /// <summary>
@@ -79,21 +79,16 @@ namespace OnThisDayApp.LiveTileScheduledTask
                     string title = entry.Year;
                     string content = entry.Description;
 
-                    var x = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
-
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
 
-                    var y = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
-
                     LiveTile.UpdateLiveTile(title, content);
-
-                    var z = (double)DeviceStatus.ApplicationCurrentMemoryUsage;
 
                     NotifyComplete();
                 },
                 ex =>
                 {
+                    // TODO: report error using bugsense
                     NotifyComplete();
                 });
         }

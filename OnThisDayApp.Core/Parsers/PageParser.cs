@@ -130,7 +130,7 @@ namespace OnThisDayApp.Parsers
             {
                 // assumption - there is always one link besides a year
                 int value;
-                firstLink = entry.Links.FirstOrDefault(link => !int.TryParse(link.Key, out value)).Value;
+                firstLink = entry.Links.FirstOrDefault(_ => !int.TryParse(_.Key, out value) && _.Key != "share...").Value;
             }
             return firstLink;
         }

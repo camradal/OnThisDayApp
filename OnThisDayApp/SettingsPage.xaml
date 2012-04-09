@@ -37,7 +37,7 @@
             <toolkit:ToggleSwitch x:Name="LiveTileToggle"
                                   Header="{Binding Source={StaticResource Strings}, Path=Resources.SettingLiveTile}"
                                   IsEnabled="{Binding Source={StaticResource appSettings}, Path=IsLowMemDevice, Mode=OneWay, Converter={StaticResource inverseConverter}}"
-                                  IsChecked="{Binding Source={StaticResource appSettings}, Path=LiveTileEnabled, Mode=TwoWay}"/>
+                                  IsChecked="{Binding Source={StaticResource appSettings}, Path=LiveTileEnabled, Mode=OneWay}" Click="LiveTileToggle_Click"/>
         </StackPanel>
     </Grid>
 

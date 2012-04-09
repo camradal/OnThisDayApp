@@ -13,6 +13,7 @@ using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
+using System.Threading;
 
 namespace OnThisDayApp
 {
@@ -26,6 +27,7 @@ namespace OnThisDayApp
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
         private BackgroundAgent backgroundAgent = new BackgroundAgent();
+        private ManualResetEvent loadEvent = new ManualResetEvent(false);
 
         #endregion
 
@@ -76,12 +78,12 @@ namespace OnThisDayApp
                 CurrentDateForWiki,
                 vm =>
                 {
-                    IndicateStoppedLoading();
-
                     EventsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Events;
                     BirthsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Births;
                     DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
                     HolidaysListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Holidays;
+
+                    IndicateStoppedLoading();
 
                     ShowReviewPane();
 
@@ -325,6 +327,52 @@ namespace OnThisDayApp
                             {
                                 Title = title,
                                 Message = title + ": " + model.Description,
+                                LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else
+                {
+                    string url = link.Value;
+                    container.Click += (obj, args) =>
+                    {
+                        OpenDetailsPage(url);
+                    };
+                }
+            }
+        }
+
+        private void mainMenuHolidays_Loaded(object sender, RoutedEventArgs e)
+        {
+            ContextMenu menu = (ContextMenu)sender;
+
+            if (menu.ItemContainerGenerator == null)
+                return;
+
+            EntryViewModel model = (EntryViewModel)menu.DataContext;
+            Dictionary<string, string> links = model.Links;
+
+            foreach (KeyValuePair<string, string> link in links)
+            {
+                MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
+
+                if (string.Equals(link.Key, "share...", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    container.Click += (obj, args) =>
+                    {
+                        string title = "Today is " + model.Year;
+                        try
+                        {
+                            ShareLinkTask task = new ShareLinkTask()
+                            {
+                                Title = title,
+                                Message = title + model.Description,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
                             };
                             task.Show();
