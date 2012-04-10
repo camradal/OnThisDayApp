@@ -121,7 +121,6 @@ namespace OnThisDayApp
             GlobalLoading.Instance.IsLoading = true;
             if (App.FirstLoad)
             {
-                // TODO: remove first start next release
                 if (numberOfStarts == 0)
                 {
                     GlobalLoading.Instance.LoadingText = App.IsMemoryLimited ?

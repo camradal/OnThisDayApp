@@ -38,6 +38,8 @@
                                   Header="{Binding Source={StaticResource Strings}, Path=Resources.SettingLiveTile}"
                                   IsEnabled="{Binding Source={StaticResource appSettings}, Path=IsLowMemDevice, Mode=OneWay, Converter={StaticResource inverseConverter}}"
                                   IsChecked="{Binding Source={StaticResource appSettings}, Path=LiveTileEnabled, Mode=OneWay}" Click="LiveTileToggle_Click"/>
+            <TextBlock Name="SupportTheDevelopersTextBox" Text="Support the developers, disable the ads..." Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+            <Button x:Name="BuyAddFreeVersionButton" Content="buy ad-free version" Click="BuyAddFreeVersionButton_Click"/>
         </StackPanel>
     </Grid>
 

@@ -10,7 +10,7 @@ namespace Utilities
     {
         #region Variables
 
-        private static readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private static readonly IsolatedStorageSettings settings;
 
         private const string NumberOfStartsKeyName = "NumberOfStarts";
         private const string FirstStartKeyName = "FirstStart";
@@ -120,6 +120,18 @@ namespace Utilities
                 {
                     Save();
                 }
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        static AppSettings()
+        {
+            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
+            {
+                settings = IsolatedStorageSettings.ApplicationSettings;
             }
         }
 
