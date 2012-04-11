@@ -85,14 +85,13 @@ namespace OnThisDayApp
                     DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
                     HolidaysListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Holidays;
 
-                    IndicateStoppedLoading();
-
                     ShowReviewPane();
 
-                    if (!App.IsMemoryLimited)
+                    if (!App.IsMemoryLimited && App.FirstLoad)
                     {
                         SetUpLiveTile(numberOfStarts);
                     }
+                    IndicateStoppedLoading();
                 },
                 ex =>
                 {

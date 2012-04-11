@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using Utilities;
+using System.Threading;
 
 namespace OnThisDayApp
 {
@@ -13,10 +14,19 @@ namespace OnThisDayApp
 
         private void LiveTileToggle_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            BackgroundAgent agent = new BackgroundAgent();
-            agent.Toggle();
+            try
+            {
+                GlobalLoading.Instance.IsLoading = true;
+                BackgroundAgent agent = new BackgroundAgent();
+                agent.Toggle();
 
-            LiveTileToggle.IsChecked = AppSettings.LiveTileEnabled;
+                LiveTileToggle.IsChecked = AppSettings.LiveTileEnabled;
+            }
+            finally
+            {
+                Thread.CurrentThread.Join(250);
+                GlobalLoading.Instance.IsLoading = false;
+            }
         }
 
         private void BuyAddFreeVersionButton_Click(object sender, System.Windows.RoutedEventArgs e)
