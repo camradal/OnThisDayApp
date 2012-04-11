@@ -53,7 +53,7 @@ namespace Utilities
 
         private bool StartIfEnabledInternal()
         {
-            bool result = false;
+            bool result = true;
 
             ScheduledAction action = ScheduledActionService.Find(TaskName);
             if (action == null)
@@ -114,7 +114,7 @@ namespace Utilities
             }
         }
 
-        private bool ResetTileToDefault()
+        public bool ResetTileToDefault()
         {
             bool result = false;
 

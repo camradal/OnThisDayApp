@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 using AgFx;
 using BugSense;
 using Microsoft.Phone.Controls;
@@ -14,6 +15,7 @@ using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
 using System.Threading;
+using System.Text;
 
 namespace OnThisDayApp
 {
@@ -150,6 +152,10 @@ namespace OnThisDayApp
             if (agentStarted && (numberOfStarts == 0))
             {
                 InitialTileSetup();
+            }
+            if (!agentStarted)
+            {
+                backgroundAgent.ResetTileToDefault();
             }
         }
 
@@ -308,6 +314,8 @@ namespace OnThisDayApp
             if (menu.ItemContainerGenerator == null)
                 return;
 
+            string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
+
             EntryViewModel model = (EntryViewModel)menu.DataContext;
             Dictionary<string, string> links = model.Links;
 
@@ -325,7 +333,7 @@ namespace OnThisDayApp
                             ShareLinkTask task = new ShareLinkTask()
                             {
                                 Title = title,
-                                Message = title + ": " + model.Description,
+                                Message = title + ": " + model.Description + suffix,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
                             };
                             task.Show();
@@ -368,10 +376,11 @@ namespace OnThisDayApp
                         string title = "Today is " + model.Year;
                         try
                         {
+                            string buffer = ReformatDescriptionForHolidays(model.Description);
                             ShareLinkTask task = new ShareLinkTask()
                             {
                                 Title = title,
-                                Message = title + model.Description,
+                                Message = title + buffer,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
                             };
                             task.Show();
@@ -391,6 +400,28 @@ namespace OnThisDayApp
                     };
                 }
             }
+        }
+
+        private static string ReformatDescriptionForHolidays(string description)
+        {
+            if (string.IsNullOrEmpty(description))
+                return string.Empty;
+
+            var lines = description.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (lines.Count <= 1)
+                return description;
+
+            StringBuilder buffer = new StringBuilder(": ");
+            for (int i = 0; i < lines.Count - 1; i++)
+            {
+                buffer.AppendFormat("{0}, ", lines[i]);
+            }
+            var lastLine = lines.LastOrDefault();
+            if (!string.IsNullOrEmpty(lastLine))
+            {
+                buffer.Append(lastLine);
+            }
+            return buffer.ToString();
         }
 
         #endregion

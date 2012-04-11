@@ -104,7 +104,7 @@
                                 <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
+                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" Tag="died" />
                                 </toolkit:ContextMenuService.ContextMenu>
                             </Grid>
                         </DataTemplate>
@@ -125,7 +125,7 @@
                                 <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
                                 <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
+                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" Tag="was born" />
                                 </toolkit:ContextMenuService.ContextMenu>
                             </Grid>
                         </DataTemplate>
