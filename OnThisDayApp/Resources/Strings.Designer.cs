@@ -169,7 +169,7 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please check On This Day... task under Settings &gt;Applications &gt;Background Tasks  Then restart the app and enable the tile from application bar..
+        ///   Looks up a localized string similar to Please check On This Day... task under Settings &gt;Applications &gt;Background Tasks  Then restart the app and enable the live tile from the settings page..
         /// </summary>
         public static string ErrorCouldNotEnableLiveTileDescription {
             get {

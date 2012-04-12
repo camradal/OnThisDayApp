@@ -154,6 +154,7 @@ namespace OnThisDayApp
             }
             if (!agentStarted)
             {
+                AppSettings.LiveTileDisabled = true;
                 backgroundAgent.ResetTileToDefault();
             }
         }

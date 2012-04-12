@@ -154,7 +154,7 @@
     <value>The content is provided by Wikipedia. The application icon is by Icon8 (www.icons8.com)</value>
   </data>
   <data name="ErrorCouldNotEnableLiveTileDescription" xml:space="preserve">
-    <value>Please check On This Day... task under Settings &gt;Applications &gt;Background Tasks  Then restart the app and enable the tile from application bar.</value>
+    <value>Please check On This Day... task under Settings &gt;Applications &gt;Background Tasks  Then restart the app and enable the live tile from the settings page.</value>
   </data>
   <data name="ErrorCouldNotEnableLiveTileTitle" xml:space="preserve">
     <value>Could not enable the live tile</value>
