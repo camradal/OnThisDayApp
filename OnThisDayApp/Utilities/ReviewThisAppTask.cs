@@ -1,13 +1,13 @@
-﻿using System.IO.IsolatedStorage;
-using System.Windows;
-using OnThisDayApp.Resources;
+﻿using System.Windows;
 using Microsoft.Phone.Tasks;
+using OnThisDayApp.Resources;
 
 namespace Utilities
 {
     public sealed class ReviewThisAppTask
     {
         private const int numberOfStartsThreshold = 5;
+        private const int numberOfStartsModulo = 50;
 
         public ReviewThisAppTask()
         {
@@ -16,11 +16,18 @@ namespace Utilities
 
         public void ShowAfterThreshold()
         {
-            if (AppSettings.NumberOfStarts == numberOfStartsThreshold &&
+            int starts = AppSettings.NumberOfStarts;
+            if ((starts == numberOfStartsThreshold || starts % numberOfStartsModulo == 0) &&
                 GetMessageBoxResult() == MessageBoxResult.OK)
             {
-                MarketplaceReviewTask task = new MarketplaceReviewTask();
-                task.Show();
+                try
+                {
+                    MarketplaceReviewTask task = new MarketplaceReviewTask();
+                    task.Show();
+                }
+                catch
+                {
+                }
             }
         }
 

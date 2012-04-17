@@ -120,18 +120,20 @@ namespace OnThisDayApp.Parsers
 
         private static string ExtractFirstLink(HtmlNode node, EntryViewModel entry)
         {
-            string firstLink;
+            // assumption - there is always one link besides a year
+            int value;
+            string firstLink = entry.Links.FirstOrDefault(_ => !int.TryParse(_.Key, out value) && _.Key != "share...").Value;
+
             HtmlNode firstBoldItem = node.Descendants("b").FirstOrDefault();
             if (firstBoldItem != null)
             {
-                firstLink = firstBoldItem.Descendants("a").First().Attributes["href"].Value;
+                var first = firstBoldItem.Descendants("a").FirstOrDefault();
+                if (first != null)
+                {
+                    firstLink = first.Attributes["href"].Value;
+                }
             }
-            else
-            {
-                // assumption - there is always one link besides a year
-                int value;
-                firstLink = entry.Links.FirstOrDefault(_ => !int.TryParse(_.Key, out value) && _.Key != "share...").Value;
-            }
+
             return firstLink;
         }
 

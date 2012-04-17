@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
 using AgFx;
 using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
-using System.Threading;
-using System.Text;
 
 namespace OnThisDayApp
 {
@@ -66,6 +67,7 @@ namespace OnThisDayApp
             InitializeComponent();
             LoadData();
             SetApplicationBarLocalizedStrings();
+            ShowReviewPane();
         }
 
         /// <summary>
@@ -80,24 +82,27 @@ namespace OnThisDayApp
                 CurrentDateForWiki,
                 vm =>
                 {
-                    EventsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Events;
-                    BirthsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Births;
-                    DeathsListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Deaths;
-                    HolidaysListBox.ItemsSource = ((DayViewModel)this.DataContext).Events.Holidays;
-
-                    ShowReviewPane();
-
                     if (!App.IsMemoryLimited && App.FirstLoad)
                     {
                         SetUpLiveTile(numberOfStarts);
                     }
+
                     IndicateStoppedLoading();
                 },
                 ex =>
                 {
-                    BugSenseHandler.Instance.LogError(ex.InnerException, "Failed to get data for " + CurrentDate);
                     GlobalLoading.Instance.IsLoading = false;
                     GlobalLoading.Instance.LoadingText = null;
+
+                    if (NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Strings.ErrorInternetConnection);
+                    }
+
                 });
 
             SetPivotTitle();
@@ -281,6 +286,11 @@ namespace OnThisDayApp
                 currentDate = page.Value.Value;
                 page = null;
                 LoadData();
+            }
+            else if (App.ReloadRequired)
+            {
+                LoadData();
+                App.ReloadRequired = false;
             }
         }
 

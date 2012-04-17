@@ -44,12 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AgFx">
-      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
-    </Reference>
-    <Reference Include="AgFx.Controls">
-      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -63,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AgFx\AgFx\AgFx.csproj">
+      <Project>{3ED37B15-A664-4E31-ABD3-CD3522B35E27}</Project>
+      <Name>AgFx</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnThisDayApp.Core\OnThisDayApp.Core.csproj">
       <Project>{1E8E96FD-B82D-44D5-A62C-A62AE223D912}</Project>
       <Name>OnThisDayApp.Core</Name>

@@ -55,7 +55,7 @@
 
             <!--Pivot holidays-->
             <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
-                <ListBox x:Name="HolidaysListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,-12,0">
+                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Events.Holidays}"  SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="12,0,6,12">
@@ -72,7 +72,7 @@
 
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleEvents}" Visibility="Collapsed">
-                <ListBox x:Name="EventsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
+                <ListBox x:Name="EventsListBox" ItemsSource="{Binding Events.Events}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,6,6">
@@ -93,7 +93,7 @@
 
             <!--Pivot deaths-->
             <controls:PivotItem Name="deathsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleDeaths}" Visibility="Collapsed">
-                <ListBox x:Name="DeathsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
+                <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Events.Deaths}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,6,6">
@@ -114,7 +114,7 @@
 
             <!--Pivot births-->
             <controls:PivotItem Name="birthsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirths}" Visibility="Collapsed">
-                <ListBox x:Name="BirthsListBox" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
+                <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Events.Births}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,6,6">

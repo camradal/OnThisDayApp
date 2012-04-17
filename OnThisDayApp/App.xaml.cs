@@ -17,6 +17,7 @@ namespace OnThisDayApp
     {
         public static bool FirstLoad { get; set; }
         public static bool IsMemoryLimited { get; set; }
+        public static bool ReloadRequired { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -29,10 +30,11 @@ namespace OnThisDayApp
         /// </summary>
         public App()
         {
-            BugSenseHandler.Instance.Init(this, "52782d56");
-
-            // Global handler for uncaught exceptions. 
-            BugSenseHandler.Instance.UnhandledException += Application_UnhandledException; 
+            var overridenOptions = BugSenseHandler.Instance.GetDefaultOptions();
+            overridenOptions.Title = "Oops! Something is wrong";
+            overridenOptions.Text = "We've noticed an error has occurred. We've logged it and will fix it in the next update.";
+            overridenOptions.Type = enNotificationType.MessageBox;
+            BugSenseHandler.Instance.Init(this, "52782d56", overridenOptions);
 
             // Standard Silverlight initialization
             InitializeComponent();
@@ -104,17 +106,6 @@ namespace OnThisDayApp
                 // A navigation has failed; break into the debugger
                 System.Diagnostics.Debugger.Break();
             }
-        }
-
-        // Code to execute on Unhandled Exceptions
-        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
-        {
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                // An unhandled exception has occurred; break into the debugger
-                System.Diagnostics.Debugger.Break();
-            }
-            BugSenseHandler.Instance.LogError(e.ExceptionObject, "Unhandled exception occurred");
         }
 
         #region Data manager statistics

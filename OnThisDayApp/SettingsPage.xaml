@@ -38,8 +38,12 @@
                                   Header="{Binding Source={StaticResource Strings}, Path=Resources.SettingLiveTile}"
                                   IsEnabled="{Binding Source={StaticResource appSettings}, Path=IsLowMemDevice, Mode=OneWay, Converter={StaticResource inverseConverter}}"
                                   IsChecked="{Binding Source={StaticResource appSettings}, Path=LiveTileEnabled, Mode=OneWay}" Click="LiveTileToggle_Click"/>
-            <TextBlock Name="SupportTheDevelopersTextBox" Text="Support the developers, disable the ads..." Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+            
+            <TextBlock x:Name="SupportTheDevelopersTextBox" Text="Support the developers, disable the ads..." Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}"  TextWrapping="Wrap"/>
             <Button x:Name="BuyAddFreeVersionButton" Content="buy ad-free version" Click="BuyAddFreeVersionButton_Click"/>
+            
+            <TextBlock x:Name="ClearSavedDataTextBox" Text="If you have trouble viewing any of the events, try clearing the saved data" Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap"/>
+            <Button x:Name="ClearSavedDataButton" Content="clear saved data" Click="ClearSavedDataButton_Click"/>
         </StackPanel>
     </Grid>
 

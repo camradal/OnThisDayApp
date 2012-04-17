@@ -11,7 +11,6 @@ namespace OnThisDayApp
 {
     public partial class DetailsPage : PhoneApplicationPage
     {
-        private bool isNewPage;
         private bool navigating;
         private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
         private Uri sourceUrl;
@@ -22,8 +21,6 @@ namespace OnThisDayApp
 
             webBrowser1.Navigated += webBrowser1_Navigated;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
-
-            isNewPage = true;
         }
 
         #region Navigation
