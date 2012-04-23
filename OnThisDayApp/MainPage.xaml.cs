@@ -253,7 +253,6 @@ namespace OnThisDayApp
 
         private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
         {
-            // use dispatcher to prevent jumping elements on the screen
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
@@ -310,7 +309,10 @@ namespace OnThisDayApp
         {
             string encodedUri = HttpUtility.HtmlEncode(url);
             Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
-            NavigationService.Navigate(uri);
+            Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(uri);
+            });
         }
 
         #endregion

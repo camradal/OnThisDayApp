@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows;
 using Microsoft.Phone.Scheduler;
@@ -55,16 +54,8 @@ namespace Utilities
         {
             bool result = true;
 
-            ScheduledAction action = ScheduledActionService.Find(TaskName);
-            if (action == null)
-            {
-                result = Start();
-            }
-            else if (action != null && !action.IsEnabled)
-            {
-                Stop();
-                result = Start();
-            }
+            Stop();
+            result = Start();
 
 #if DEBUG
             // If we're debugging, attempt to start the task immediately 
