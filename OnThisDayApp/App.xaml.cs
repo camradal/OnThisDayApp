@@ -15,6 +15,8 @@ namespace OnThisDayApp
 {
     public partial class App : Application
     {
+        private const string ApiKeyValue = "B425M7FWBTPLWEPT3XFW";
+
         public static bool FirstLoad { get; set; }
         public static bool IsMemoryLimited { get; set; }
         public static bool ReloadRequired { get; set; }
@@ -73,12 +75,14 @@ namespace OnThisDayApp
         {
             FirstLoad = true;
             IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
+            FlurryWP7SDK.Api.StartSession(ApiKeyValue);
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            FlurryWP7SDK.Api.StartSession(ApiKeyValue);
             IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
         }
 

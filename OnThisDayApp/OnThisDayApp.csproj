@@ -52,8 +52,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdDuplex.AdControl.Silverlight, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="BugSense">
       <HintPath>..\packages\BugSense.WP7.0.9.9.1\lib\sl3-wp\BugSense.dll</HintPath>
+    </Reference>
+    <Reference Include="FlurryWP7SDK">
+      <HintPath>..\packages\Flurry\FlurryWP7SDK.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -148,7 +152,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Properties\WMAppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\ad.png" />

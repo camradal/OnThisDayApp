@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
+using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Advertising;
 using Microsoft.Phone.Controls;
 using OnThisDayApp.Resources;
 using Utilities;
-using Microsoft.Phone.Tasks;
-using Microsoft.Phone.Shell;
 
 namespace OnThisDayApp
 {
@@ -21,6 +21,10 @@ namespace OnThisDayApp
 
             webBrowser1.Navigated += webBrowser1_Navigated;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
+
+            // ads
+            AdBox.ErrorOccurred += new EventHandler<AdErrorEventArgs>(AdBox_ErrorOccurred);
+            AdBox.AdRefreshed += new EventHandler(AdBox_AdRefreshed);
         }
 
         #region Navigation
@@ -80,20 +84,26 @@ namespace OnThisDayApp
 
         #endregion
 
-        private void AppBarButtonShare_Click(object sender, EventArgs e)
+        #region Ads
+
+        void AdBox_AdRefreshed(object sender, EventArgs e)
         {
-            if (webBrowser1.Source != null)
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                try
-                {
-                    ShareLinkTask shareLinkTask = new ShareLinkTask();
-                    shareLinkTask.LinkUri = webBrowser1.Source;
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
-            }
+                AdDuplexAdControl.Visibility = Visibility.Collapsed;
+                AdBox.Visibility = Visibility.Visible;
+            });
         }
+
+        void AdBox_ErrorOccurred(object sender, Microsoft.Advertising.AdErrorEventArgs e)
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                AdBox.Visibility = Visibility.Collapsed;
+                AdDuplexAdControl.Visibility = Visibility.Visible;
+            });
+        }
+
+        #endregion
     }
 }

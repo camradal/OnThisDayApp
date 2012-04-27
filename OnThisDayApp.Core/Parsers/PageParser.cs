@@ -12,13 +12,13 @@ namespace OnThisDayApp.Parsers
     {
         #region Public Methods
 
-        public static IEnumerable<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
+        public static List<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
-            List<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).ToList();
+            List<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
 
             return entries;
@@ -112,7 +112,10 @@ namespace OnThisDayApp.Parsers
             var result = new Dictionary<string, string>() { { "share...", string.Empty } };
             foreach (KeyValuePair<string, string> hyperlink in hyperlinks)
             {
-                result.Add(hyperlink.Key, hyperlink.Value);
+                if (!result.ContainsKey(hyperlink.Key))
+                {
+                    result.Add(hyperlink.Key, hyperlink.Value);
+                }
             }
 
             return result;
@@ -122,7 +125,7 @@ namespace OnThisDayApp.Parsers
         {
             // assumption - there is always one link besides a year
             int value;
-            string firstLink = entry.Links.FirstOrDefault(_ => !int.TryParse(_.Key, out value) && _.Key != "share...").Value;
+            string firstLink = entry.Links.FirstOrDefault(e => !int.TryParse(e.Key, out value) && e.Key != "share...").Value;
 
             HtmlNode firstBoldItem = node.Descendants("b").FirstOrDefault();
             if (firstBoldItem != null)
@@ -165,7 +168,7 @@ namespace OnThisDayApp.Parsers
             var list = otd.ParentNode.NextSibling.NextSibling;
             var entries = list.Descendants("li");
 
-            return entries.Select(ExtractEntryFromNode).ToList();
+            return entries.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
         }
 
         private static List<EntryViewModel> ExtractHolidays(HtmlDocument htmlDoc, string id)

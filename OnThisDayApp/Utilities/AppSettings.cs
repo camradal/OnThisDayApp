@@ -17,12 +17,14 @@ namespace Utilities
         private const string InterfaceLanguageKeyName = "InterfaceLanguage";
         private const string ContentLanguageKeyName = "ContentLanguage";
         private const string LiveTileDisabledKeyName = "LiveTileDisabled";
+        private const string ReverseSortOrderKeyName = "ReverseSortOrder";
 
         private const int NumberOfStartsDefault = 0;
         private const bool FirstStartDefault = false;
         private const string InterfaceLanguageDefault = "en";
         private const string ContentLanguageDefault = "en";
         private const bool LiveTileDisabledDefault = false;
+        private const bool ReverseSortOrderDefault = false;
 
         #endregion
 
@@ -117,6 +119,21 @@ namespace Utilities
             set
             {
                 if (AddOrUpdateValue(LiveTileDisabledKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public static bool ReverseSortOrder
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(ReverseSortOrderKeyName, ReverseSortOrderDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(ReverseSortOrderKeyName, value))
                 {
                     Save();
                 }
