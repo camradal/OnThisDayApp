@@ -394,6 +394,33 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to newest first.
+        /// </summary>
+        public static string SettingShowNewestFirst {
+            get {
+                return ResourceManager.GetString("SettingShowNewestFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to oldest first.
+        /// </summary>
+        public static string SettingShowOldestFirst {
+            get {
+                return ResourceManager.GetString("SettingShowOldestFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order of events.
+        /// </summary>
+        public static string SettingSortOrder {
+            get {
+                return ResourceManager.GetString("SettingSortOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
         public static string Version {

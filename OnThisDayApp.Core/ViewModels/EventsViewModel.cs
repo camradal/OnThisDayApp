@@ -88,9 +88,20 @@ namespace OnThisDayApp.ViewModels
 
                 if (source != null)
                 {
-                    foreach (EntryViewModel item in source)
+                    // TODO: optimize insert perf
+                    if (LoadContext.ReverseOrder)
                     {
-                        destination.Add(item);
+                        foreach (EntryViewModel item in source)
+                        {
+                            destination.Insert(0, item);
+                        }
+                    }
+                    else
+                    {
+                        foreach (EntryViewModel item in source)
+                        {
+                            destination.Add(item);
+                        }
                     }
                 }
             }

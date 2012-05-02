@@ -1,11 +1,11 @@
-﻿using Microsoft.Phone.Controls;
-using Microsoft.Phone.Tasks;
-using Utilities;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 using AgFx;
-using System;
-using System.Globalization;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 using OnThisDayApp.ViewModels;
+using Utilities;
 
 namespace OnThisDayApp
 {
@@ -15,12 +15,27 @@ namespace OnThisDayApp
         {
             get
             {
+                // TODO: this should grab actual date, instead of current date
                 return DateTime.Now.ToString("MMMM_d", CultureInfo.InvariantCulture);
+            }
+        }
+
+        public bool ShowNewestItemsFirst
+        {
+            get
+            {
+                return AppSettings.ShowNewestItemsFirst;
+            }
+            set
+            {
+                AppSettings.ShowNewestItemsFirst = value;
+                App.ReverseRequired = true;
             }
         }
 
         public SettingsPage()
         {
+            DataContext = this;
             InitializeComponent();
         }
 

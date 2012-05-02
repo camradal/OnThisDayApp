@@ -18,6 +18,7 @@ using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
+using System.Collections.ObjectModel;
 
 namespace OnThisDayApp
 {
@@ -83,8 +84,9 @@ namespace OnThisDayApp
             int numberOfStarts =  AppSettings.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
 
+            var loadContext = new DayLoadContext(CurrentDateForWiki, AppSettings.ShowNewestItemsFirst);
             this.DataContext = DataManager.Current.Load<DayViewModel>(
-                CurrentDateForWiki,
+                loadContext,
                 vm =>
                 {
                     if (!App.IsMemoryLimited && App.FirstLoad)
@@ -291,16 +293,28 @@ namespace OnThisDayApp
                 page = null;
                 LoadData();
             }
-            else if (App.ReloadRequired)
+            else
             {
-                LoadData();
-                App.ReloadRequired = false;
+                if (App.ReverseRequired)
+                {
+                    var model = (DayViewModel)DataContext;
+                    model.Highlights = new ObservableCollection<EntryViewModel>(model.Highlights.Reverse());
+                    model.Events.Events = new ObservableCollection<EntryViewModel>(model.Events.Events.Reverse());
+                    model.Events.Births = new ObservableCollection<EntryViewModel>(model.Events.Births.Reverse());
+                    model.Events.Deaths = new ObservableCollection<EntryViewModel>(model.Events.Deaths.Reverse());
+                    App.ReverseRequired = false;
+                }
+                if (App.ReloadRequired)
+                {
+                    LoadData();
+                    App.ReloadRequired = false;
+                }
             }
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+            base.OnNavigatedFrom(e);
 
             // set current date in datetime picker page
             page = e.Content as IDateTimePickerPage;

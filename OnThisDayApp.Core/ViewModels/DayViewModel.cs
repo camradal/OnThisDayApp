@@ -34,9 +34,20 @@ namespace OnThisDayApp.ViewModels
 
                     if (value != null)
                     {
-                        foreach (EntryViewModel item in value)
+                        // TODO: optimize insert perf
+                        if (LoadContext.ReverseOrder)
                         {
-                            highlights.Add(item);
+                            foreach (EntryViewModel item in value)
+                            {
+                                highlights.Insert(0, item);
+                            }
+                        }
+                        else
+                        {
+                            foreach (EntryViewModel item in value)
+                            {
+                                highlights.Add(item);
+                            }
                         }
                     }
                 }

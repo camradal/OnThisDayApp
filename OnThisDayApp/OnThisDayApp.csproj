@@ -113,6 +113,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\GlobalLoading.cs" />
+    <Compile Include="Utilities\SortOrderConverter.cs" />
     <Compile Include="Utilities\StringProvider.cs" />
   </ItemGroup>
   <ItemGroup>

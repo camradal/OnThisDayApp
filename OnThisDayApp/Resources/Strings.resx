@@ -228,6 +228,15 @@
   <data name="SettingLiveTile" xml:space="preserve">
     <value>Live tile</value>
   </data>
+  <data name="SettingShowNewestFirst" xml:space="preserve">
+    <value>newest first</value>
+  </data>
+  <data name="SettingShowOldestFirst" xml:space="preserve">
+    <value>oldest first</value>
+  </data>
+  <data name="SettingSortOrder" xml:space="preserve">
+    <value>Order of events</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version:</value>
   </data>
