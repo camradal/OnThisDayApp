@@ -12,18 +12,19 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof (HighlightsPageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<EntryViewModel> highlights =
-            new BatchObservableCollection<EntryViewModel>();
+        private readonly BatchObservableCollection<Entry> highlights =
+            new BatchObservableCollection<Entry>();
 
         public DayViewModel()
         {
         }
 
-        public DayViewModel(string day) : base(new DayLoadContext(day))
+        public DayViewModel(DayLoadContext loadContext)
+            : base(loadContext)
         {
         }
 
-        public ObservableCollection<EntryViewModel> Highlights
+        public ObservableCollection<Entry> Highlights
         {
             get { return highlights; }
             set
@@ -34,20 +35,9 @@ namespace OnThisDayApp.ViewModels
 
                     if (value != null)
                     {
-                        // TODO: optimize insert perf
-                        if (LoadContext.ReverseOrder)
+                        foreach (Entry item in value)
                         {
-                            foreach (EntryViewModel item in value)
-                            {
-                                highlights.Insert(0, item);
-                            }
-                        }
-                        else
-                        {
-                            foreach (EntryViewModel item in value)
-                            {
-                                highlights.Add(item);
-                            }
+                            highlights.Add(item);
                         }
                     }
                 }
@@ -57,7 +47,7 @@ namespace OnThisDayApp.ViewModels
 
         public EventsViewModel Events
         {
-            get { return DataManager.Current.Load<EventsViewModel>(LoadContext.Day); }
+            get { return DataManager.Current.Load<EventsViewModel>(LoadContext); }
         }
     }
 }

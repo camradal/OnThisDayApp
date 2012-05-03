@@ -74,7 +74,7 @@ namespace OnThisDayApp.LiveTileScheduledTask
                 vm =>
                 {
                     int index = new Random().Next(vm.Highlights.Count);
-                    EntryViewModel entry = vm.Highlights[index];
+                    Entry entry = vm.Highlights[index];
 
                     string title = entry.Year;
                     string content = entry.Description;

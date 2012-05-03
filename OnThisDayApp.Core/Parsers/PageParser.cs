@@ -12,19 +12,19 @@ namespace OnThisDayApp.Parsers
     {
         #region Public Methods
 
-        public static List<EntryViewModel> ExtractHighlightEntriesFromHtml(Stream stream)
+        public static List<Entry> ExtractHighlightEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
-            List<EntryViewModel> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
+            List<Entry> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
 
             return entries;
         }
 
-        private static void AttachPictureToNode(HtmlDocument htmlDoc, List<EntryViewModel> entries)
+        private static void AttachPictureToNode(HtmlDocument htmlDoc, List<Entry> entries)
         {
             HtmlNode contentNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']");
             HtmlNode imageNode = contentNode.Descendants("img").LastOrDefault();
@@ -39,28 +39,28 @@ namespace OnThisDayApp.Parsers
             }
         }
 
-        public static Dictionary<string, List<EntryViewModel>> ExtractEventEntriesFromHtml(Stream stream)
+        public static Dictionary<string, List<Entry>> ExtractEventEntriesFromHtml(Stream stream)
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
-            List<EntryViewModel> events = ExtractById(htmlDoc, "Events");
-            List<EntryViewModel> births = ExtractById(htmlDoc, "Births");
-            List<EntryViewModel> deaths = ExtractById(htmlDoc, "Deaths");
+            List<Entry> events = ExtractById(htmlDoc, "Events");
+            List<Entry> births = ExtractById(htmlDoc, "Births");
+            List<Entry> deaths = ExtractById(htmlDoc, "Deaths");
 
-            List<EntryViewModel> holidays;
+            List<Entry> holidays;
             try
             {
                 holidays = ExtractHolidays(htmlDoc, "Holidays_and_observances");
             }
             catch (Exception)
             {
-                EntryViewModel entry = new EntryViewModel();
+                Entry entry = new Entry();
                 entry.Year = "Can't find any holidays for this day";
-                holidays = new List<EntryViewModel>() { entry };
+                holidays = new List<Entry>() { entry };
             }
 
-            var result = new Dictionary<string, List<EntryViewModel>>
+            var result = new Dictionary<string, List<Entry>>
                          {
                              { "Events", events },
                              { "Births", births },
@@ -75,11 +75,11 @@ namespace OnThisDayApp.Parsers
 
         #region Private Methods
 
-        private static EntryViewModel ExtractEntryFromNode(HtmlNode node)
+        private static Entry ExtractEntryFromNode(HtmlNode node)
         {
             try
             {
-                EntryViewModel entry = new EntryViewModel();
+                Entry entry = new Entry();
 
                 string innerText = node.InnerText;
 
@@ -121,7 +121,7 @@ namespace OnThisDayApp.Parsers
             return result;
         }
 
-        private static string ExtractFirstLink(HtmlNode node, EntryViewModel entry)
+        private static string ExtractFirstLink(HtmlNode node, Entry entry)
         {
             // assumption - there is always one link besides a year
             int value;
@@ -140,9 +140,9 @@ namespace OnThisDayApp.Parsers
             return firstLink;
         }
 
-        private static EntryViewModel ExtractHolidayFromNode(HtmlNode node)
+        private static Entry ExtractHolidayFromNode(HtmlNode node)
         {
-            EntryViewModel entry = new EntryViewModel();
+            Entry entry = new Entry();
             entry.Links = ExtractAllLinksFromHtmlNode(node);
             entry.Link = ExtractFirstLink(node, entry);
 
@@ -162,7 +162,7 @@ namespace OnThisDayApp.Parsers
             return entry;
         }
 
-        private static List<EntryViewModel> ExtractById(HtmlDocument htmlDoc, string id)
+        private static List<Entry> ExtractById(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
             var list = otd.ParentNode.NextSibling.NextSibling;
@@ -171,18 +171,18 @@ namespace OnThisDayApp.Parsers
             return entries.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
         }
 
-        private static List<EntryViewModel> ExtractHolidays(HtmlDocument htmlDoc, string id)
+        private static List<Entry> ExtractHolidays(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
             var list = otd.ParentNode.NextSibling.NextSibling;
             var entries = list.ChildNodes.Where(node => node.Name == "li");
 
-            List<EntryViewModel> events = new List<EntryViewModel>();
+            List<Entry> events = new List<Entry>();
             foreach (var entry in entries)
             {
                 try
                 {
-                    EntryViewModel newEvent = ExtractHolidayFromNode(entry);
+                    Entry newEvent = ExtractHolidayFromNode(entry);
                     events.Add(newEvent);
                 }
                 catch

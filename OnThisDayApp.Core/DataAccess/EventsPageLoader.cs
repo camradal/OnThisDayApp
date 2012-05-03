@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
+using System.Diagnostics;
 
 namespace OnThisDayApp.DataAccess
 {
@@ -20,27 +21,35 @@ namespace OnThisDayApp.DataAccess
         /// </summary>
         public override object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
-            Dictionary<string, List<EntryViewModel>> entries = PageParser.ExtractEventEntriesFromHtml(stream);
-            EventsViewModel viewModel = new EventsViewModel(loadContext.Day);
+            Dictionary<string, List<Entry>> entries = PageParser.ExtractEventEntriesFromHtml(stream);
+            EventsViewModel viewModel = new EventsViewModel(loadContext);
 
-            foreach (EntryViewModel entry in entries["Events"])
+            // TODO: get rid of this and use backwards for loop
+            if (loadContext.ReverseOrder)
             {
-                viewModel.Events.Add(entry);
+                entries["Events"].Reverse();
+                entries["Births"].Reverse();
+                entries["Deaths"].Reverse();
             }
 
-            foreach (EntryViewModel entry in entries["Births"])
+            foreach (Entry entry in entries["Holidays"])
+            {
+                viewModel.Holidays.Add(entry);
+            }
+
+            foreach (Entry entry in entries["Births"])
             {
                 viewModel.Births.Add(entry);
             }
 
-            foreach (EntryViewModel entry in entries["Deaths"])
+            foreach (Entry entry in entries["Events"])
             {
-                viewModel.Deaths.Add(entry);
+                viewModel.Events.Add(entry);
             }
 
-            foreach (EntryViewModel entry in entries["Holidays"])
+            foreach (Entry entry in entries["Deaths"])
             {
-                viewModel.Holidays.Add(entry);
+                viewModel.Deaths.Add(entry);
             }
 
             return viewModel;

@@ -7,7 +7,7 @@ namespace OnThisDayApp.ViewModels
     /// </summary>
     public sealed class DayLoadContext : LoadContext
     {
-        public bool ReverseOrder { get; private set; }
+        public bool ReverseOrder { get; set; }
 
         public string Day
         {

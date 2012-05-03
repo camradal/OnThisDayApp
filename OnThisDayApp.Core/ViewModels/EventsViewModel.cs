@@ -9,21 +9,21 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof(EventsPageLoader))]
     public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<EntryViewModel> births =
-            new BatchObservableCollection<EntryViewModel>();
+        private readonly BatchObservableCollection<Entry> births =
+            new BatchObservableCollection<Entry>();
 
-        private readonly BatchObservableCollection<EntryViewModel> deaths =
-            new BatchObservableCollection<EntryViewModel>();
+        private readonly BatchObservableCollection<Entry> deaths =
+            new BatchObservableCollection<Entry>();
 
-        private readonly BatchObservableCollection<EntryViewModel> events =
-            new BatchObservableCollection<EntryViewModel>();
+        private readonly BatchObservableCollection<Entry> events =
+            new BatchObservableCollection<Entry>();
 
-        private readonly BatchObservableCollection<EntryViewModel> holidays =
-            new BatchObservableCollection<EntryViewModel>();
+        private readonly BatchObservableCollection<Entry> holidays =
+            new BatchObservableCollection<Entry>();
 
         #region Properties
 
-        public ObservableCollection<EntryViewModel> Events
+        public ObservableCollection<Entry> Events
         {
             get { return events; }
             set
@@ -33,7 +33,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public ObservableCollection<EntryViewModel> Births
+        public ObservableCollection<Entry> Births
         {
             get { return births; }
             set
@@ -43,7 +43,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public ObservableCollection<EntryViewModel> Deaths
+        public ObservableCollection<Entry> Deaths
         {
             get { return deaths; }
             set
@@ -53,7 +53,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public ObservableCollection<EntryViewModel> Holidays
+        public ObservableCollection<Entry> Holidays
         {
             get { return holidays; }
             set
@@ -71,16 +71,16 @@ namespace OnThisDayApp.ViewModels
         {
         }
 
-        public EventsViewModel(string day)
-            : base(new DayLoadContext(day))
+        public EventsViewModel(DayLoadContext loadContext)
+            : base(loadContext)
         {
         }
 
         #endregion
 
         private void SetCollection(
-            IEnumerable<EntryViewModel> source,
-            ObservableCollection<EntryViewModel> destination)
+            IEnumerable<Entry> source,
+            ObservableCollection<Entry> destination)
         {
             if (destination != null)
             {
@@ -88,20 +88,9 @@ namespace OnThisDayApp.ViewModels
 
                 if (source != null)
                 {
-                    // TODO: optimize insert perf
-                    if (LoadContext.ReverseOrder)
+                    foreach (Entry item in source)
                     {
-                        foreach (EntryViewModel item in source)
-                        {
-                            destination.Insert(0, item);
-                        }
-                    }
-                    else
-                    {
-                        foreach (EntryViewModel item in source)
-                        {
-                            destination.Add(item);
-                        }
+                        destination.Add(item);
                     }
                 }
             }

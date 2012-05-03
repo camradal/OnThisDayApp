@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -18,7 +19,6 @@ using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
 using Utilities;
-using System.Collections.ObjectModel;
 
 namespace OnThisDayApp
 {
@@ -89,6 +89,20 @@ namespace OnThisDayApp
                 loadContext,
                 vm =>
                 {
+                    if (App.ReloadRequired)
+                    {
+                        App.ReloadRequired = false;
+                    }
+
+                    if (App.ReverseRequired)
+                    {
+                        vm.Highlights = new ObservableCollection<Entry>(vm.Highlights.Reverse());
+                        vm.Events.Events = new ObservableCollection<Entry>(vm.Events.Events.Reverse());
+                        vm.Events.Births = new ObservableCollection<Entry>(vm.Events.Births.Reverse());
+                        vm.Events.Deaths = new ObservableCollection<Entry>(vm.Events.Deaths.Reverse());
+                        App.ReverseRequired = false;
+                    }
+
                     if (!App.IsMemoryLimited && App.FirstLoad)
                     {
                         SetUpLiveTile(numberOfStarts);
@@ -208,7 +222,7 @@ namespace OnThisDayApp
 
             // navigate to the new page
             FrameworkElement root = Application.Current.RootVisual as FrameworkElement;
-            var selectedItem = (EntryViewModel)listBox.SelectedItem;
+            var selectedItem = (Entry)listBox.SelectedItem;
             root.DataContext = selectedItem;
 
             OpenDetailsPage(selectedItem.Link);
@@ -293,23 +307,10 @@ namespace OnThisDayApp
                 page = null;
                 LoadData();
             }
-            else
-            {
-                if (App.ReverseRequired)
-                {
-                    var model = (DayViewModel)DataContext;
-                    model.Highlights = new ObservableCollection<EntryViewModel>(model.Highlights.Reverse());
-                    model.Events.Events = new ObservableCollection<EntryViewModel>(model.Events.Events.Reverse());
-                    model.Events.Births = new ObservableCollection<EntryViewModel>(model.Events.Births.Reverse());
-                    model.Events.Deaths = new ObservableCollection<EntryViewModel>(model.Events.Deaths.Reverse());
-                    App.ReverseRequired = false;
-                }
-                if (App.ReloadRequired)
+            else if (App.ReverseRequired || App.ReloadRequired)
                 {
                     LoadData();
-                    App.ReloadRequired = false;
                 }
-            }
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
@@ -347,7 +348,7 @@ namespace OnThisDayApp
 
             string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
 
-            EntryViewModel model = (EntryViewModel)menu.DataContext;
+            Entry model = (Entry)menu.DataContext;
             Dictionary<string, string> links = model.Links;
 
             foreach (KeyValuePair<string, string> link in links)
@@ -393,7 +394,7 @@ namespace OnThisDayApp
             if (menu.ItemContainerGenerator == null)
                 return;
 
-            EntryViewModel model = (EntryViewModel)menu.DataContext;
+            Entry model = (Entry)menu.DataContext;
             Dictionary<string, string> links = model.Links;
 
             foreach (KeyValuePair<string, string> link in links)
