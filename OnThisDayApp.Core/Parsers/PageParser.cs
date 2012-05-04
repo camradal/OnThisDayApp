@@ -81,7 +81,7 @@ namespace OnThisDayApp.Parsers
             {
                 Entry entry = new Entry();
 
-                string innerText = node.InnerText;
+                string innerText = HttpUtility.HtmlDecode(node.InnerText);
 
                 // assumption - there is always a space around the separator
                 // otherwise some string truncation will occur
@@ -89,8 +89,8 @@ namespace OnThisDayApp.Parsers
                 string secondPart = innerText.Substring(splitIndex + 1);
                 string firstPart = innerText.Substring(0, splitIndex);
 
-                entry.Year = HttpUtility.HtmlDecode(firstPart).Trim();
-                entry.Description = HttpUtility.HtmlDecode(secondPart).Trim();
+                entry.Year = firstPart.Trim();
+                entry.Description = secondPart.Trim();
                 entry.Links = ExtractAllLinksFromHtmlNode(node);
                 entry.Link = ExtractFirstLink(node, entry);
 
@@ -149,10 +149,11 @@ namespace OnThisDayApp.Parsers
             // put sublists into a description
             if (node.HasChildNodes)
             {
+                // TODO: redo this as node parsing
                 HtmlNode extraListNode = node.Descendants("ul").FirstOrDefault();
                 if (extraListNode != null)
                 {
-                    entry.Description = HttpUtility.HtmlDecode(extraListNode.InnerText.Trim());
+                    entry.Description = HttpUtility.HtmlDecode(extraListNode.InnerText).Trim();
                     node.RemoveChild(extraListNode);
                 }
             }
@@ -165,17 +166,27 @@ namespace OnThisDayApp.Parsers
         private static List<Entry> ExtractById(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
-            var list = otd.ParentNode.NextSibling.NextSibling;
-            var entries = list.Descendants("li");
+            var parentNode = otd.ParentNode;
+            var currentNode = parentNode.NextSibling;
+            while (currentNode != null && currentNode.Name != "ul")
+            {
+                currentNode = currentNode.NextSibling;
+            }
 
+            var entries = currentNode.Descendants("li");
             return entries.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
         }
 
         private static List<Entry> ExtractHolidays(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
-            var list = otd.ParentNode.NextSibling.NextSibling;
-            var entries = list.ChildNodes.Where(node => node.Name == "li");
+            var parentNode = otd.ParentNode;
+            var currentNode = parentNode.NextSibling;
+            while (currentNode != null && currentNode.Name != "ul")
+            {
+                currentNode = currentNode.NextSibling;
+            }
+            var entries = currentNode.ChildNodes.Where(node => node.Name == "li");
 
             List<Entry> events = new List<Entry>();
             foreach (var entry in entries)
