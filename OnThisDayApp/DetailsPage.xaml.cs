@@ -2,7 +2,6 @@
 using System.Net;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Advertising;
 using Microsoft.Phone.Controls;
 using OnThisDayApp.Resources;
 using Utilities;
@@ -21,10 +20,6 @@ namespace OnThisDayApp
 
             webBrowser1.Navigated += webBrowser1_Navigated;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
-
-            // ads
-            AdBox.ErrorOccurred += new EventHandler<AdErrorEventArgs>(AdBox_ErrorOccurred);
-            AdBox.AdRefreshed += new EventHandler(AdBox_AdRefreshed);
         }
 
         #region Navigation
@@ -80,28 +75,6 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
             }
             navigating = false;
-        }
-
-        #endregion
-
-        #region Ads
-
-        void AdBox_AdRefreshed(object sender, EventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdDuplexAdControl.Visibility = Visibility.Collapsed;
-                AdBox.Visibility = Visibility.Visible;
-            });
-        }
-
-        void AdBox_ErrorOccurred(object sender, Microsoft.Advertising.AdErrorEventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdBox.Visibility = Visibility.Collapsed;
-                AdDuplexAdControl.Visibility = Visibility.Visible;
-            });
         }
 
         #endregion

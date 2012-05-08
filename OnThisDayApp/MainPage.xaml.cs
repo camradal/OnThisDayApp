@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using AgFx;
 using BugSense;
-using Microsoft.Advertising;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -70,10 +69,6 @@ namespace OnThisDayApp
             LoadData();
             SetApplicationBarLocalizedStrings();
             ShowReviewPane();
-
-            // ads
-            AdBox.ErrorOccurred += new EventHandler<AdErrorEventArgs>(AdBox_ErrorOccurred);
-            AdBox.AdRefreshed += new EventHandler(AdBox_AdRefreshed);
         }
 
         /// <summary>
@@ -454,28 +449,6 @@ namespace OnThisDayApp
                 buffer.Append(lastLine);
             }
             return buffer.ToString();
-        }
-
-        #endregion
-
-        #region Ads
-
-        void AdBox_AdRefreshed(object sender, EventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdDuplexAdControl.Visibility = Visibility.Collapsed;
-                AdBox.Visibility = Visibility.Visible;
-            });
-        }
-
-        void AdBox_ErrorOccurred(object sender, Microsoft.Advertising.AdErrorEventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdBox.Visibility = Visibility.Collapsed;
-                AdDuplexAdControl.Visibility = Visibility.Visible;
-            });
         }
 
         #endregion
