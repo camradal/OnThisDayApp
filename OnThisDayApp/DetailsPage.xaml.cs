@@ -52,6 +52,12 @@ namespace OnThisDayApp
         {
             base.OnNavigatedFrom(e);
 
+            if (navigating)
+            {
+                GlobalLoading.Instance.IsLoading = false;
+                navigating = false;
+            }
+
             if (e.NavigationMode != NavigationMode.Back)
             {
                 //State["SourceUrl"] = sourceUrl;

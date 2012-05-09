@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using Microsoft.Phone.Controls;
@@ -7,11 +8,36 @@ using OnThisDayApp.Resources;
 
 namespace OnThisDayApp
 {
+    public class NewItem
+    {
+        public string Version { get; set; }
+        public string Description { get; set; }
+    }
+
     public partial class AboutPage : PhoneApplicationPage
     {
+        public List<NewItem> NewItems
+        {
+            get
+            {
+                return new List<NewItem>()
+                {
+                    new NewItem() { Version = "", Description = "We develop based on your feedback, please drop us a line with any suggestions." },
+                    new NewItem() { Version = "1.8", Description = "Added a setting to increase font size (thanks to RNStargazer)" },
+                    new NewItem() { Version = "1.7", Description = "Added a setting to sort the events by newest or oldest\nAd-free version is available (thanks to adam morden, Dota 74)\nAdded a button to reset local data" },
+                    new NewItem() { Version = "1.5", Description = "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter (thanks to ScuBa Steve lim,  Scot13208, xboxyp, Sailorboi88)\nA lot of optimizations for best experience on Tango phones" },
+                    new NewItem() { Version = "1.3", Description = "Major improvements to the live tile, it will now display interesting facts on the front (thanks to FoxpawCruiser)" },
+                    new NewItem() { Version = "1.2", Description = "Live tile now displays interesting events. Pin it to your start screen for daily historical highlights (thanks to giomarchioro 7)" },
+                    new NewItem() { Version = "1.1", Description = "Displaying holidays\nDisplaying images in highlights" },
+                    new NewItem() { Version = "1.0", Description = "On This Day... is released!" }
+                };
+            }
+        }
+
         public AboutPage()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)

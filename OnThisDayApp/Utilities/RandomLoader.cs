@@ -10,6 +10,8 @@ namespace Utilities
                                                    {
                                                        "Tap any entry to jump to wiki",
                                                        "Hold any entry for context menu",
+                                                       "Hold any entry to share share",
+                                                       "Check the about page to see what's new",
                                                        "Pin the live tile for updates",
                                                        "Comments? Send us your thoughts",
                                                        "Like this app? Please rate it",
