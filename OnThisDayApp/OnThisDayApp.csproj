@@ -85,6 +85,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\FontSizeConverter.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -93,7 +94,7 @@
     </Compile>
     <Compile Include="Utilities\AppSettings.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
-    <Compile Include="Utilities\InverseConverter.cs" />
+    <Compile Include="Converters\InverseConverter.cs" />
     <Compile Include="Utilities\LowMemoryHelper.cs" />
     <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
@@ -108,7 +109,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\GlobalLoading.cs" />
-    <Compile Include="Utilities\SortOrderConverter.cs" />
+    <Compile Include="Converters\SortOrderConverter.cs" />
     <Compile Include="Utilities\StringProvider.cs" />
   </ItemGroup>
   <ItemGroup>

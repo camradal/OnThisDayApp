@@ -48,6 +48,16 @@
                 <toolkit:ListPickerItem Content="{Binding Source={StaticResource Strings}, Path=Resources.SettingShowNewestFirst}"/>
             </toolkit:ListPicker>
 
+            <toolkit:ListPicker x:Name="FontSizeListPicker" Margin="12,0,12,24"
+                                Header="{Binding Source={StaticResource Strings}, Path=Resources.SettingFontSize}"
+                                SelectedIndex="{Binding Path=DisplayFontSize, Mode=TwoWay}" SelectionChanged="FontSizeListPicker_SelectionChanged">
+                <toolkit:ListPickerItem Content="{Binding Source={StaticResource Strings}, Path=Resources.SettingFontSizeNormal}"/>
+                <toolkit:ListPickerItem Content="{Binding Source={StaticResource Strings}, Path=Resources.SettingFontSizeLarger}"/>
+            </toolkit:ListPicker>
+
+            <TextBlock x:Name="SupportTheDevelopersTextBox" Text="Support the developers, disable the ads..." Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}"  TextWrapping="Wrap"/>
+            <Button x:Name="BuyAddFreeVersionButton" Content="buy ad-free version" Margin="0,0,0,12" Click="BuyAddFreeVersionButton_Click"/>
+            
             <TextBlock x:Name="ClearSavedDataTextBox" Text="If you have trouble viewing any of the events, try clearing the saved data" Margin="12,0" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap"/>
             <Button x:Name="ClearSavedDataButton" Content="clear saved data"  Margin="0,0,0,12" Click="ClearSavedDataButton_Click"/>
         </StackPanel>
