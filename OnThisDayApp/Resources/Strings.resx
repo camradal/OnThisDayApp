@@ -225,6 +225,15 @@
   <data name="Rate" xml:space="preserve">
     <value>Please rate and comment on this app in Marketplace</value>
   </data>
+  <data name="SettingFontSize" xml:space="preserve">
+    <value>Entry font size</value>
+  </data>
+  <data name="SettingFontSizeLarger" xml:space="preserve">
+    <value>large</value>
+  </data>
+  <data name="SettingFontSizeNormal" xml:space="preserve">
+    <value>normal</value>
+  </data>
   <data name="SettingLiveTile" xml:space="preserve">
     <value>Live tile</value>
   </data>

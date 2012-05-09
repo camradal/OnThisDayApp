@@ -6,6 +6,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.ViewModels;
 using Utilities;
+using System.Windows;
 
 namespace OnThisDayApp
 {
@@ -30,6 +31,18 @@ namespace OnThisDayApp
             {
                 AppSettings.ShowNewestItemsFirst = value;
                 App.ReverseRequired = true;
+            }
+        }
+
+        public int DisplayFontSize
+        {
+            get
+            {
+                return AppSettings.DisplayFontSize;
+            }
+            set
+            {
+                AppSettings.DisplayFontSize = value;
             }
         }
 
@@ -83,6 +96,15 @@ namespace OnThisDayApp
             {
                 Thread.CurrentThread.Join(250);
                 GlobalLoading.Instance.IsLoading = false;
+            }
+        }
+
+        private void FontSizeListPicker_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
+            {
+                //MessageBox.Show("Please restart the app for the display font size to take effect.");
+                App.DataCleared = true;
             }
         }
     }

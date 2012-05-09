@@ -385,6 +385,33 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entry font size.
+        /// </summary>
+        public static string SettingFontSize {
+            get {
+                return ResourceManager.GetString("SettingFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to large.
+        /// </summary>
+        public static string SettingFontSizeLarger {
+            get {
+                return ResourceManager.GetString("SettingFontSizeLarger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to normal.
+        /// </summary>
+        public static string SettingFontSizeNormal {
+            get {
+                return ResourceManager.GetString("SettingFontSizeNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Live tile.
         /// </summary>
         public static string SettingLiveTile {

@@ -21,6 +21,7 @@ namespace OnThisDayApp
         public static bool IsMemoryLimited { get; set; }
         public static bool ReloadRequired { get; set; }
         public static bool ReverseRequired { get; set; }
+        public static bool DataCleared { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.

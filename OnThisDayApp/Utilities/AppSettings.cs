@@ -18,6 +18,7 @@ namespace Utilities
         private const string ContentLanguageKeyName = "ContentLanguage";
         private const string LiveTileDisabledKeyName = "LiveTileDisabled";
         private const string ShowNewestItemsFirstKeyName = "ShowNewestItemsFirst";
+        private const string DisplayFontSizeKeyName = "DisplayFontSize";
 
         private const int NumberOfStartsDefault = 0;
         private const bool FirstStartDefault = false;
@@ -25,6 +26,7 @@ namespace Utilities
         private const string ContentLanguageDefault = "en";
         private const bool LiveTileDisabledDefault = false;
         private const bool ShowNewestItemsFirstDefault = false;
+        private const int DisplayFontSizeDefault = 0;
 
         #endregion
 
@@ -134,6 +136,21 @@ namespace Utilities
             set
             {
                 if (AddOrUpdateValue(ShowNewestItemsFirstKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public static int DisplayFontSize
+        {
+            get
+            {
+                return GetValueOrDefault<int>(DisplayFontSizeKeyName, DisplayFontSizeDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(DisplayFontSizeKeyName, value))
                 {
                     Save();
                 }

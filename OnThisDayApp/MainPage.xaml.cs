@@ -308,9 +308,15 @@ namespace OnThisDayApp
                 LoadData();
             }
             else if (App.ReverseRequired || App.ReloadRequired)
-                {
-                    LoadData();
-                }
+            {
+                LoadData();
+            }
+            else if (App.DataCleared)
+            {
+                var model = (DayViewModel)this.DataContext;
+                model.Refresh();
+                model.Events.Refresh();
+            }
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
