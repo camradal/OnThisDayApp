@@ -50,7 +50,11 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <Image Grid.Column="0" Grid.Row="1" Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
+                                <Image Grid.Column="0" Grid.Row="1" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding ImageUrl}" CreateOptions="BackgroundCreation"/>
+                                    </Image.Source>
+                                </Image>
                                 <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
