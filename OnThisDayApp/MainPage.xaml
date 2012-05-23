@@ -77,11 +77,10 @@
 
             <!--Pivot highlights-->
             <controls:PivotItem Name="highlightsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHighlights}">
-                <toolkit:LongListSelector
+                <ListBox
                     x:Name="MainListBox"
                     ItemTemplate="{StaticResource HightlightsTemplate}"
                     ItemsSource="{Binding Highlights}"
-                    IsFlatList="True"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,0,-12,0"/>
             </controls:PivotItem>
