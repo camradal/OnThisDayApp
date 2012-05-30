@@ -28,7 +28,7 @@
         <controls:Pivot Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
             <!--Pivot item one-->
             <controls:PivotItem Header="{Binding Resources.PageTitleAbout, Source={StaticResource Strings}}">
-                <StackPanel Grid.Row="1" Margin="12,0,12,12">
+                <StackPanel Grid.Row="1" Margin="0">
                     <StackPanel Orientation="Horizontal">
                         <Canvas Margin="12,0,12,12" Height="173" Width="173" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{StaticResource PhoneAccentBrush}">
                             <Image Name="imageLogo" Stretch="Fill" Source="/icons/Application_Icon_173.png" />
@@ -69,7 +69,7 @@
                         <DataTemplate>
                             <StackPanel Margin="12,0,6,12">
                                 <TextBlock Text="{Binding Version}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
-using System.Diagnostics;
 
 namespace OnThisDayApp.DataAccess
 {

@@ -33,9 +33,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
                 <Image Grid.Column="0" Grid.Row="1" Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
                 </toolkit:ContextMenuService.ContextMenu>
@@ -44,7 +44,7 @@
         <DataTemplate x:Key="HolidaysTemplate">
             <StackPanel Margin="12,0,6,12">
                 <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
-                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
+                <TextBlock Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
                 </toolkit:ContextMenuService.ContextMenu>
@@ -56,8 +56,8 @@
                     <ColumnDefinition Width="105"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
+                <TextBlock Grid.Column="0" Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
                 </toolkit:ContextMenuService.ContextMenu>
