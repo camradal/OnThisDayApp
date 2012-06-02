@@ -97,9 +97,9 @@ namespace OnThisDayApp
                     if (App.ReverseRequired)
                     {
                         vm.Highlights = new ObservableCollection<Entry>(vm.Highlights.Reverse());
-                        vm.Events.Events = new ObservableCollection<Entry>(vm.Events.Events.Reverse());
-                        vm.Events.Births = new ObservableCollection<Entry>(vm.Events.Births.Reverse());
-                        vm.Events.Deaths = new ObservableCollection<Entry>(vm.Events.Deaths.Reverse());
+                        vm.Events.Events = new ObservableCollection<GroupedEntries>(vm.Events.Events.Reverse());
+                        vm.Events.Births = new ObservableCollection<GroupedEntries>(vm.Events.Births.Reverse());
+                        vm.Events.Deaths = new ObservableCollection<GroupedEntries>(vm.Events.Deaths.Reverse());
                         App.ReverseRequired = false;
                     }
 
@@ -169,6 +169,9 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
                 App.FirstLoad = false;
             }
+
+            App.Watch.Stop();
+            GlobalLoading.Instance.LoadingText = "Elapsed: " + App.Watch.Elapsed;
         }
 
         private void SetUpLiveTile(int numberOfStarts)
@@ -212,23 +215,23 @@ namespace OnThisDayApp
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox listBox = (ListBox)sender;
+            var listBox = (LongListSelector)sender;
 
-            // if selected index is -1 (no selection) do nothing
-            if (listBox.SelectedIndex == -1)
+            // if selected index is null (no selection) do nothing
+            var selectedItem = listBox.SelectedItem as Entry;
+            if (selectedItem == null)
             {
                 return;
             }
 
             // navigate to the new page
             FrameworkElement root = Application.Current.RootVisual as FrameworkElement;
-            var selectedItem = (Entry)listBox.SelectedItem;
             root.DataContext = selectedItem;
 
             OpenDetailsPage(selectedItem.Link);
 
-            // reset selected index to -1 (no selection)
-            listBox.SelectedIndex = -1;
+            // reset selected index to null (no selection)
+            listBox.SelectedItem = null;
         }
 
         #endregion

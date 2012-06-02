@@ -22,6 +22,7 @@ namespace OnThisDayApp
         public static bool ReloadRequired { get; set; }
         public static bool ReverseRequired { get; set; }
         public static bool DataCleared { get; set; }
+        public static Stopwatch Watch { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -34,6 +35,9 @@ namespace OnThisDayApp
         /// </summary>
         public App()
         {
+            Watch = new Stopwatch();
+            Watch.Start();
+
             var overridenOptions = BugSenseHandler.Instance.GetDefaultOptions();
             overridenOptions.Title = "Oops! Something is wrong";
             overridenOptions.Text = "We've noticed an error has occurred. We've logged it and will fix it in the next update.";

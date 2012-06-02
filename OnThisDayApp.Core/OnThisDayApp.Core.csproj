@@ -68,6 +68,7 @@
     <Compile Include="ViewModels\DayViewModel.cs" />
     <Compile Include="ViewModels\Entry.cs" />
     <Compile Include="ViewModels\EventsViewModel.cs" />
+    <Compile Include="ViewModels\GroupedEntries.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
