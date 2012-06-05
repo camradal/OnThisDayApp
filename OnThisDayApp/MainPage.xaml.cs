@@ -135,8 +135,9 @@ namespace OnThisDayApp
 
             // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemMyEvents;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemSettings;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -167,7 +168,6 @@ namespace OnThisDayApp
             }
 
             App.Watch.Stop();
-            GlobalLoading.Instance.LoadingText = "Elapsed: " + App.Watch.Elapsed;
         }
 
         private void SetUpLiveTile(int numberOfStarts)
@@ -247,7 +247,7 @@ namespace OnThisDayApp
             }
         }
 
-        private void MyEventsMenuItems_Click(object sender, EventArgs e)
+        private void MyEventsMenuItem_Click(object sender, EventArgs e)
         {
             // use dispatcher to prevent jumping elements on the screen
             Deployment.Current.Dispatcher.BeginInvoke(() =>

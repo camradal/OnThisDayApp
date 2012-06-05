@@ -189,6 +189,9 @@
   <data name="MenuItemEnableLiveTile" xml:space="preserve">
     <value>enable live tile</value>
   </data>
+  <data name="MenuItemMyEvents" xml:space="preserve">
+    <value>calendar and birthdays</value>
+  </data>
   <data name="MenuItemRateThisApp" xml:space="preserve">
     <value>rate this app</value>
   </data>
@@ -207,8 +210,14 @@
   <data name="PageTitleSettings" xml:space="preserve">
     <value>settings</value>
   </data>
+  <data name="PivotTitleBirthdays" xml:space="preserve">
+    <value>birthdays</value>
+  </data>
   <data name="PivotTitleBirths" xml:space="preserve">
     <value>births</value>
+  </data>
+  <data name="PivotTitleCalendar" xml:space="preserve">
+    <value>calendar</value>
   </data>
   <data name="PivotTitleDeaths" xml:space="preserve">
     <value>deaths</value>
@@ -226,7 +235,7 @@
     <value>Please rate and comment on this app in Marketplace</value>
   </data>
   <data name="SettingFontSize" xml:space="preserve">
-    <value>Entry font size</value>
+    <value>Font size for descriptions</value>
   </data>
   <data name="SettingFontSizeLarger" xml:space="preserve">
     <value>large</value>

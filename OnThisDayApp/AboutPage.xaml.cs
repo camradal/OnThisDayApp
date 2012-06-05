@@ -23,7 +23,7 @@ namespace OnThisDayApp
                 return new List<NewItem>()
                 {
                     new NewItem() { Version = "", Description = "We develop based on your feedback, please drop us a line with any suggestions." },
-                    new NewItem() { Version = "1.8", Description = "Added a setting to increase font size" },
+                    new NewItem() { Version = "1.8", Description = "Group and filter events by centuries and decades\nCheck what happened on events and birthdays from your calendar\nAdded a setting to increase font size" },
                     new NewItem() { Version = "1.7", Description = "Added a setting to sort the events by newest or oldest\nAd-free version is available\nAdded a button to reset local data" },
                     new NewItem() { Version = "1.5", Description = "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter\nA lot of optimizations for best experience on Tango phones" },
                     new NewItem() { Version = "1.3", Description = "Major improvements to the live tile, it will now display interesting facts on the front" },

@@ -22,7 +22,7 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <controls:Pivot Title="{Binding Source={StaticResource Strings}, Path=Resources.AppTitleCapitalized}">
-            <controls:PivotItem Header="calendar">
+            <controls:PivotItem Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleCalendar}">
                 <ListBox x:Name="CalendarListBox" Margin="0,-6,-12,0" SelectionChanged="CalendarListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -34,7 +34,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="birthdays">
+            <controls:PivotItem Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirthdays}">
                 <ListBox x:Name="BirthdaysListBox" Margin="0,-6,-12,0" SelectionChanged="CalendarListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
