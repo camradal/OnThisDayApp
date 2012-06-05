@@ -2,14 +2,12 @@
 using System.Net;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Advertising;
-using Microsoft.Phone.Controls;
 using OnThisDayApp.Resources;
 using Utilities;
 
 namespace OnThisDayApp
 {
-    public partial class DetailsPage : PhoneApplicationPage
+    public partial class DetailsPage
     {
         private bool navigating;
         private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
@@ -23,8 +21,8 @@ namespace OnThisDayApp
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
 
             // ads
-            AdBox.ErrorOccurred += new EventHandler<AdErrorEventArgs>(AdBox_ErrorOccurred);
-            AdBox.AdRefreshed += new EventHandler(AdBox_AdRefreshed);
+            AdBox.ErrorOccurred += AdBox_ErrorOccurred;
+            AdBox.AdRefreshed += AdBox_AdRefreshed;
         }
 
         #region Navigation
@@ -55,6 +53,7 @@ namespace OnThisDayApp
             if (navigating)
             {
                 GlobalLoading.Instance.IsLoading = false;
+                GlobalLoading.Instance.LoadingText = null;
                 navigating = false;
             }
 

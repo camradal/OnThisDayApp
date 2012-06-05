@@ -5,12 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using AgFx;
 using BugSense;
-using Microsoft.Advertising;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -31,8 +29,7 @@ namespace OnThisDayApp
         /// </summary>
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
-        private BackgroundAgent backgroundAgent = new BackgroundAgent();
-        private ManualResetEvent loadEvent = new ManualResetEvent(false);
+        private readonly BackgroundAgent backgroundAgent = new BackgroundAgent();
 
         #endregion
 
@@ -68,12 +65,11 @@ namespace OnThisDayApp
         {
             InitializeComponent();
             LoadData();
-            SetApplicationBarLocalizedStrings();
             ShowReviewPane();
 
             // ads
-            AdBox.ErrorOccurred += new EventHandler<AdErrorEventArgs>(AdBox_ErrorOccurred);
-            AdBox.AdRefreshed += new EventHandler(AdBox_AdRefreshed);
+            AdBox.ErrorOccurred += AdBox_ErrorOccurred;
+            AdBox.AdRefreshed += AdBox_AdRefreshed;
         }
 
         /// <summary>
@@ -107,7 +103,7 @@ namespace OnThisDayApp
                     {
                         SetUpLiveTile(numberOfStarts);
                     }
-
+                     
                     IndicateStoppedLoading();
                 },
                 ex =>
@@ -251,6 +247,15 @@ namespace OnThisDayApp
             }
         }
 
+        private void MyEventsMenuItems_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/MyEventsPage.xaml", UriKind.Relative));
+            });
+        }
+
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
             // use dispatcher to prevent jumping elements on the screen
@@ -308,6 +313,12 @@ namespace OnThisDayApp
             {
                 currentDate = page.Value.Value;
                 page = null;
+                LoadData();
+            }
+            else if (App.MyDateTimeSet)
+            {
+                currentDate = App.MyDateTime;
+                App.MyDateTimeSet = false;
                 LoadData();
             }
             else if (App.ReverseRequired || App.ReloadRequired)

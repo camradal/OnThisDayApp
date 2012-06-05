@@ -29,13 +29,11 @@
                     <ColumnDefinition Width="105"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
-                <Image Grid.Column="0" Grid.Row="1" Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
-                <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
+                    <Image Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
                 </toolkit:ContextMenuService.ContextMenu>
@@ -64,13 +62,13 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="EventsHeaderTemplate">
-            <Border Margin="12,6,6,6" Background="{StaticResource PhoneAccentBrush}" Width="115" HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Left"/>
+            <Border Margin="12,6,6,6" Padding="3" Background="{StaticResource PhoneAccentBrush}" Width="115" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White" HorizontalAlignment="Left"/>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="EventsGroupTemplate">
             <Border Padding="{StaticResource PhoneTouchTargetOverhang}" Margin="{StaticResource PhoneTouchTargetOverhang}" Background="{StaticResource PhoneAccentBrush}" Height="125" Width="125">
-                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextGroupHeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextGroupHeaderStyle}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
@@ -181,6 +179,7 @@
             <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
+                <shell:ApplicationBarMenuItem x:Name="MyEventsMenuItems" Text="calendar and birthdays" Click="MyEventsMenuItems_Click" />
                 <shell:ApplicationBarMenuItem x:Name="SettingsMenuItem" Text="settings" Click="SettingsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

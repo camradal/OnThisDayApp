@@ -5,21 +5,21 @@ using OnThisDayApp.DataAccess;
 
 namespace OnThisDayApp.ViewModels
 {
-    [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
+    [CachePolicy(CachePolicy.Forever, 60 * 60 * 24)]
     [DataLoader(typeof(EventsPageLoader))]
     public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
     {
         private readonly BatchObservableCollection<GroupedEntries> births =
-            new BatchObservableCollection<GroupedEntries>();
+            new BatchObservableCollection<GroupedEntries>(7);
 
         private readonly BatchObservableCollection<GroupedEntries> deaths =
-            new BatchObservableCollection<GroupedEntries>();
+            new BatchObservableCollection<GroupedEntries>(7);
 
         private readonly BatchObservableCollection<GroupedEntries> events =
-            new BatchObservableCollection<GroupedEntries>();
+            new BatchObservableCollection<GroupedEntries>(7);
 
         private readonly BatchObservableCollection<Entry> holidays =
-            new BatchObservableCollection<Entry>();
+            new BatchObservableCollection<Entry>(7);
 
         #region Properties
 

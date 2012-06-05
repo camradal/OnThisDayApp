@@ -22,6 +22,10 @@ namespace OnThisDayApp
         public static bool ReloadRequired { get; set; }
         public static bool ReverseRequired { get; set; }
         public static bool DataCleared { get; set; }
+        
+        public static bool MyDateTimeSet { get; set; }
+        public static DateTime MyDateTime { get; set; }
+        
         public static Stopwatch Watch { get; set; }
 
         /// <summary>
