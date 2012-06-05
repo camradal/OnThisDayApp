@@ -5,25 +5,25 @@ using OnThisDayApp.DataAccess;
 
 namespace OnThisDayApp.ViewModels
 {
-    [CachePolicy(CachePolicy.CacheThenRefresh, 60 * 60 * 24)]
+    [CachePolicy(CachePolicy.Forever, 60 * 60 * 24)]
     [DataLoader(typeof(EventsPageLoader))]
     public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<Entry> births =
-            new BatchObservableCollection<Entry>();
+        private readonly BatchObservableCollection<GroupedEntries> births =
+            new BatchObservableCollection<GroupedEntries>(7);
 
-        private readonly BatchObservableCollection<Entry> deaths =
-            new BatchObservableCollection<Entry>();
+        private readonly BatchObservableCollection<GroupedEntries> deaths =
+            new BatchObservableCollection<GroupedEntries>(7);
 
-        private readonly BatchObservableCollection<Entry> events =
-            new BatchObservableCollection<Entry>();
+        private readonly BatchObservableCollection<GroupedEntries> events =
+            new BatchObservableCollection<GroupedEntries>(7);
 
         private readonly BatchObservableCollection<Entry> holidays =
-            new BatchObservableCollection<Entry>();
+            new BatchObservableCollection<Entry>(7);
 
         #region Properties
 
-        public ObservableCollection<Entry> Events
+        public ObservableCollection<GroupedEntries> Events
         {
             get { return events; }
             set
@@ -33,7 +33,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public ObservableCollection<Entry> Births
+        public ObservableCollection<GroupedEntries> Births
         {
             get { return births; }
             set
@@ -43,7 +43,7 @@ namespace OnThisDayApp.ViewModels
             }
         }
 
-        public ObservableCollection<Entry> Deaths
+        public ObservableCollection<GroupedEntries> Deaths
         {
             get { return deaths; }
             set
@@ -78,9 +78,7 @@ namespace OnThisDayApp.ViewModels
 
         #endregion
 
-        private void SetCollection(
-            IEnumerable<Entry> source,
-            ObservableCollection<Entry> destination)
+        private void SetCollection(IEnumerable<Entry> source, ICollection<Entry> destination)
         {
             if (destination != null)
             {
@@ -89,6 +87,22 @@ namespace OnThisDayApp.ViewModels
                 if (source != null)
                 {
                     foreach (Entry item in source)
+                    {
+                        destination.Add(item);
+                    }
+                }
+            }
+        }
+
+        private void SetCollection(IEnumerable<GroupedEntries> source, ICollection<GroupedEntries> destination)
+        {
+            if (destination != null)
+            {
+                destination.Clear();
+
+                if (source != null)
+                {
+                    foreach (GroupedEntries item in source)
                     {
                         destination.Add(item);
                     }

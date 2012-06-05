@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using AgFx;
 using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
-using System.Diagnostics;
 
 namespace OnThisDayApp.DataAccess
 {
@@ -37,22 +39,58 @@ namespace OnThisDayApp.DataAccess
                 viewModel.Holidays.Add(entry);
             }
 
-            foreach (Entry entry in entries["Births"])
+            var groupings = entries["Births"].GroupBy(GroupByYear());
+            foreach (IGrouping<string, Entry> grouping in groupings)
             {
-                viewModel.Births.Add(entry);
+                var displayGroup = new GroupedEntries
+                {
+                    Name = grouping.Key,
+                    Entries = grouping.ToList()
+                };
+                viewModel.Births.Add(displayGroup);
             }
 
-            foreach (Entry entry in entries["Events"])
+            groupings = entries["Events"].GroupBy(GroupByYear());
+            foreach (IGrouping<string, Entry> grouping in groupings)
             {
-                viewModel.Events.Add(entry);
+                var displayGroup = new GroupedEntries
+                {
+                    Name = grouping.Key,
+                    Entries = grouping.ToList()
+                };
+                viewModel.Events.Add(displayGroup);
             }
 
-            foreach (Entry entry in entries["Deaths"])
+            groupings = entries["Deaths"].GroupBy(GroupByYear());
+            foreach (IGrouping<string, Entry> grouping in groupings)
             {
-                viewModel.Deaths.Add(entry);
+                var displayGroup = new GroupedEntries
+                {
+                    Name = grouping.Key,
+                    Entries = grouping.ToList()
+                };
+                viewModel.Deaths.Add(displayGroup);
             }
 
             return viewModel;
+        }
+
+        private static Func<Entry, string> GroupByYear()
+        {
+            return item =>
+                   {
+                       if (item.Year.Length == 4)
+                       {
+                           return item.Year.StartsWith("19")
+                                      ? item.Year.Substring(0, 3) + "0s"
+                                      : item.Year.Substring(0, 2) + "00s";
+                       }
+                       if (item.Year.Length == 3)
+                       {
+                           return item.Year.Substring(0, 1) + "00s";
+                       }
+                       return item.Year.Length == 2 ? "AD" : "BC";
+                   };
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using AgFx;
-using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.DataAccess

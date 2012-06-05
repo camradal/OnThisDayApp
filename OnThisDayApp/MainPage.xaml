@@ -21,6 +21,54 @@
     <phone:PhoneApplicationPage.Resources>
         <utilities:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
+        <DataTemplate x:Key="HightlightsTemplate">
+            <Grid Margin="0,0,6,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
+                    <Image Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
+                </toolkit:ContextMenuService.ContextMenu>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="HolidaysTemplate">
+            <StackPanel Margin="12,0,6,12">
+                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
+                <TextBlock Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
+                </toolkit:ContextMenuService.ContextMenu>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="EventsTemplate">
+            <Grid Margin="0,0,6,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
+                </toolkit:ContextMenuService.ContextMenu>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="EventsHeaderTemplate">
+            <Border Margin="12,6,6,6" Padding="3" Background="{StaticResource PhoneAccentBrush}" Width="115" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White" HorizontalAlignment="Left"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="EventsGroupTemplate">
+            <Border Padding="{StaticResource PhoneTouchTargetOverhang}" Margin="{StaticResource PhoneTouchTargetOverhang}" Background="{StaticResource PhoneAccentBrush}" Height="125" Width="125">
+                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextGroupHeaderStyle}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+        </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -35,108 +83,78 @@
 
             <!--Pivot highlights-->
             <controls:PivotItem Name="highlightsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHighlights}">
-                <ListBox x:Name="MainListBox" ItemsSource="{Binding Highlights}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,6,6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="105"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <Image Grid.Column="0" Grid.Row="1" Source="{Binding ImageUrl}" Stretch="Uniform" Margin="12,0,12,0" VerticalAlignment="Top"/>
-                                <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <toolkit:LongListSelector
+                    x:Name="MainListBox"
+                    IsFlatList="True"
+                    ItemTemplate="{StaticResource HightlightsTemplate}"
+                    ItemsSource="{Binding Highlights}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0"/>
             </controls:PivotItem>
 
             <!--Pivot holidays-->
             <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
-                <ListBox x:Name="HolidaysListBox" ItemsSource="{Binding Events.Holidays}"  SelectionChanged="ListBox_SelectionChanged" Margin="0,-6,-12,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="12,0,6,12">
-                                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <toolkit:LongListSelector
+                    x:Name="HolidaysListBox"
+                    IsFlatList="True"
+                    ItemTemplate="{StaticResource HolidaysTemplate}"
+                    ItemsSource="{Binding Events.Holidays}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,-6,-12,0"/>
             </controls:PivotItem>
 
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleEvents}" Visibility="Collapsed">
-                <ListBox x:Name="EventsListBox" ItemsSource="{Binding Events.Events}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,6,6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="105"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <toolkit:LongListSelector
+                    x:Name="EventsListBox"
+                    ItemTemplate="{StaticResource EventsTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
+                    ItemsSource="{Binding Events.Events}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0">
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                </toolkit:LongListSelector>
             </controls:PivotItem>
 
             <!--Pivot deaths-->
             <controls:PivotItem Name="deathsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleDeaths}" Visibility="Collapsed">
-                <ListBox x:Name="DeathsListBox" ItemsSource="{Binding Events.Deaths}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,6,6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="105"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" Tag="died" />
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <toolkit:LongListSelector
+                    x:Name="DeathsListBox"
+                    ItemTemplate="{StaticResource EventsTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
+                    ItemsSource="{Binding Events.Deaths}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0">
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                </toolkit:LongListSelector>
             </controls:PivotItem>
 
             <!--Pivot births-->
             <controls:PivotItem Name="birthsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirths}" Visibility="Collapsed">
-                <ListBox x:Name="BirthsListBox" ItemsSource="{Binding Events.Births}" SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-12,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,6,6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="105"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Year}" TextWrapping="Wrap" FontFamily="Times New Roman" FontSize="40" Margin="12,0,12,0" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}" Margin="0"/>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" Tag="was born" />
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <toolkit:LongListSelector
+                    x:Name="BirthsListBox"
+                    ItemTemplate="{StaticResource EventsTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
+                    ItemsSource="{Binding Events.Births}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0">
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                </toolkit:LongListSelector>
             </controls:PivotItem>
 
         </controls:Pivot>
@@ -151,6 +169,7 @@
             <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
+                <shell:ApplicationBarMenuItem x:Name="MyEventsMenuItem" Text="calendar and birthdays" Click="MyEventsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="SettingsMenuItem" Text="settings" Click="SettingsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

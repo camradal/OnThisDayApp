@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using AgFx;
@@ -30,8 +29,7 @@ namespace OnThisDayApp
         /// </summary>
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
-        private BackgroundAgent backgroundAgent = new BackgroundAgent();
-        private ManualResetEvent loadEvent = new ManualResetEvent(false);
+        private readonly BackgroundAgent backgroundAgent = new BackgroundAgent();
 
         #endregion
 
@@ -67,7 +65,6 @@ namespace OnThisDayApp
         {
             InitializeComponent();
             LoadData();
-            SetApplicationBarLocalizedStrings();
             ShowReviewPane();
         }
 
@@ -92,9 +89,9 @@ namespace OnThisDayApp
                     if (App.ReverseRequired)
                     {
                         vm.Highlights = new ObservableCollection<Entry>(vm.Highlights.Reverse());
-                        vm.Events.Events = new ObservableCollection<Entry>(vm.Events.Events.Reverse());
-                        vm.Events.Births = new ObservableCollection<Entry>(vm.Events.Births.Reverse());
-                        vm.Events.Deaths = new ObservableCollection<Entry>(vm.Events.Deaths.Reverse());
+                        vm.Events.Events = new ObservableCollection<GroupedEntries>(vm.Events.Events.Reverse());
+                        vm.Events.Births = new ObservableCollection<GroupedEntries>(vm.Events.Births.Reverse());
+                        vm.Events.Deaths = new ObservableCollection<GroupedEntries>(vm.Events.Deaths.Reverse());
                         App.ReverseRequired = false;
                     }
 
@@ -102,7 +99,7 @@ namespace OnThisDayApp
                     {
                         SetUpLiveTile(numberOfStarts);
                     }
-
+                     
                     IndicateStoppedLoading();
                 },
                 ex =>
@@ -134,8 +131,9 @@ namespace OnThisDayApp
 
             // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemAbout;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemMyEvents;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemSettings;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -164,6 +162,8 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
                 App.FirstLoad = false;
             }
+
+            App.Watch.Stop();
         }
 
         private void SetUpLiveTile(int numberOfStarts)
@@ -207,23 +207,23 @@ namespace OnThisDayApp
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox listBox = (ListBox)sender;
+            var listBox = (LongListSelector)sender;
 
-            // if selected index is -1 (no selection) do nothing
-            if (listBox.SelectedIndex == -1)
+            // if selected index is null (no selection) do nothing
+            var selectedItem = listBox.SelectedItem as Entry;
+            if (selectedItem == null)
             {
                 return;
             }
 
             // navigate to the new page
             FrameworkElement root = Application.Current.RootVisual as FrameworkElement;
-            var selectedItem = (Entry)listBox.SelectedItem;
             root.DataContext = selectedItem;
 
             OpenDetailsPage(selectedItem.Link);
 
-            // reset selected index to -1 (no selection)
-            listBox.SelectedIndex = -1;
+            // reset selected index to null (no selection)
+            listBox.SelectedItem = null;
         }
 
         #endregion
@@ -241,6 +241,15 @@ namespace OnThisDayApp
             {
                 // prevent exceptions from double-click
             }
+        }
+
+        private void MyEventsMenuItem_Click(object sender, EventArgs e)
+        {
+            // use dispatcher to prevent jumping elements on the screen
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/MyEventsPage.xaml", UriKind.Relative));
+            });
         }
 
         private void SettingsMenuItem_Click(object sender, EventArgs e)
@@ -300,6 +309,12 @@ namespace OnThisDayApp
             {
                 currentDate = page.Value.Value;
                 page = null;
+                LoadData();
+            }
+            else if (App.MyDateTimeSet)
+            {
+                currentDate = App.MyDateTime;
+                App.MyDateTimeSet = false;
                 LoadData();
             }
             else if (App.ReverseRequired || App.ReloadRequired)

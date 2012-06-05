@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using AgFx;
 using OnThisDayApp.DataAccess;
-using System;
 
 namespace OnThisDayApp.ViewModels
 {
@@ -13,7 +12,7 @@ namespace OnThisDayApp.ViewModels
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
         private readonly BatchObservableCollection<Entry> highlights =
-            new BatchObservableCollection<Entry>();
+            new BatchObservableCollection<Entry>(7);
 
         public DayViewModel()
         {

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
 using OnThisDayApp.Resources;
 using Utilities;
 
 namespace OnThisDayApp
 {
-    public partial class DetailsPage : PhoneApplicationPage
+    public partial class DetailsPage
     {
         private bool navigating;
         private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
@@ -46,6 +44,13 @@ namespace OnThisDayApp
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+
+            if (navigating)
+            {
+                GlobalLoading.Instance.IsLoading = false;
+                GlobalLoading.Instance.LoadingText = null;
+                navigating = false;
+            }
 
             if (e.NavigationMode != NavigationMode.Back)
             {
