@@ -4,7 +4,6 @@ using System.Windows;
 using AgFx;
 using Microsoft.Phone.Scheduler;
 using OnThisDayApp.ViewModels;
-using Microsoft.Phone.Info;
 
 namespace OnThisDayApp.LiveTileScheduledTask
 {
@@ -72,18 +71,28 @@ namespace OnThisDayApp.LiveTileScheduledTask
                 CurrentDateForWiki,
                 vm =>
                 {
-                    int index = new Random().Next(vm.Highlights.Count);
-                    Entry entry = vm.Highlights[index];
+                    try
+                    {
+                        if (vm.Highlights.Count == 0)
+                        {
+                            return;
+                        }
 
-                    string title = entry.Year;
-                    string content = entry.Description;
+                        int index = new Random().Next(vm.Highlights.Count);
+                        Entry entry = vm.Highlights[index];
 
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
+                        string title = entry.Year;
+                        string content = entry.Description;
 
-                    LiveTile.UpdateLiveTile(title, content);
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
 
-                    NotifyComplete();
+                        LiveTile.UpdateLiveTile(title, content);
+                    }
+                    finally
+                    {
+                        NotifyComplete();                        
+                    }
                 },
                 ex =>
                 {
