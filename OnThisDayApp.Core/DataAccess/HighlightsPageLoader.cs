@@ -21,18 +21,21 @@ namespace OnThisDayApp.DataAccess
         public override object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
             List<Entry> entries = PageParser.ExtractHighlightEntriesFromHtml(stream);
-            DayViewModel viewModel = new DayViewModel(loadContext);
+            var viewModel = new DayViewModel(loadContext);
 
-            // TODO: get rid of this and use backwards for loop
             if (loadContext.ReverseOrder)
             {
-                entries.Reverse();
+                for (int i = entries.Count - 1; i >= 0; i--)
+                {
+                    viewModel.Highlights.Add(entries[i]);
+                }
             }
-
-            // push in the values
-            foreach (Entry entry in entries)
+            else
             {
-                viewModel.Highlights.Add(entry);
+                foreach (Entry entry in entries)
+                {
+                    viewModel.Highlights.Add(entry);
+                }
             }
 
             return viewModel;
