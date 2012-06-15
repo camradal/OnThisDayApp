@@ -48,5 +48,18 @@ namespace OnThisDayApp.ViewModels
         {
             get { return DataManager.Current.Load<EventsViewModel>(LoadContext); }
         }
+
+        public void UpdateLayout()
+        {
+            for (int i = 0; i < highlights.Count; i++)
+            {
+                var entry = highlights[i];
+                highlights[i] = null;
+                highlights[i] = entry;
+            }
+
+            RaisePropertyChanged("Highlights");
+            Events.UpdateLayout();
+        }
     }
 }

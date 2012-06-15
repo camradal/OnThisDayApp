@@ -23,8 +23,11 @@ namespace OnThisDayApp.DataAccess
         /// </summary>
         public override object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
             Dictionary<string, List<Entry>> entries = PageParser.ExtractEventEntriesFromHtml(stream);
-            EventsViewModel viewModel = new EventsViewModel(loadContext);
+            var viewModel = new EventsViewModel(loadContext);
 
             // TODO: get rid of this and use backwards for loop
             if (loadContext.ReverseOrder)
@@ -90,7 +93,11 @@ namespace OnThisDayApp.DataAccess
                        {
                            return item.Year.Substring(0, 1) + "00s";
                        }
-                       return length == 2 ? "AD" : "BC";
+                       if (item.Year.EndsWith("BC") || item.Year.EndsWith("BCE"))
+                       {
+                           return "BC";
+                       }
+                       return "AD";
                    };
         }
     }

@@ -9,7 +9,7 @@ namespace OnThisDayApp
 {
     public partial class DetailsPage
     {
-        private bool navigating;
+        private volatile bool navigating;
         private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
         private Uri sourceUrl;
 

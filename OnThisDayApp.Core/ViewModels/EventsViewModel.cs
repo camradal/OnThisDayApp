@@ -109,5 +109,37 @@ namespace OnThisDayApp.ViewModels
                 }
             }
         }
+
+        public void UpdateLayout()
+        {
+            UpdateLayout(events);
+            UpdateLayout(deaths);
+            UpdateLayout(births);
+            UpdateLayout(holidays);
+            RaisePropertyChanged("Events");
+            RaisePropertyChanged("Births");
+            RaisePropertyChanged("Deaths");
+            RaisePropertyChanged("Holidays");
+        }
+
+        private  void UpdateLayout(BatchObservableCollection<GroupedEntries> collection)
+        {
+            for (int i = 0; i < collection.Count; i++)
+            {
+                var entry = collection[i];
+                collection[i] = null;
+                collection[i] = entry;
+            }
+        }
+
+        private void UpdateLayout(BatchObservableCollection<Entry> collection)
+        {
+            for (int i = 0; i < collection.Count; i++)
+            {
+                var entry = collection[i];
+                collection[i] = null;
+                collection[i] = entry;
+            }
+        }
     }
 }

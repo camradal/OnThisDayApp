@@ -20,6 +20,9 @@ namespace OnThisDayApp.DataAccess
         /// </summary>
         public override object Deserialize(DayLoadContext loadContext, Type objectType, Stream stream)
         {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
             List<Entry> entries = PageParser.ExtractHighlightEntriesFromHtml(stream);
             var viewModel = new DayViewModel(loadContext);
 

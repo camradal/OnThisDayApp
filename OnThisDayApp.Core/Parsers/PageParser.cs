@@ -14,20 +14,10 @@ namespace OnThisDayApp.Parsers
 
         public static List<Entry> ExtractHighlightEntriesFromHtml(Stream stream)
         {
-            if (stream == null)
-            {
-                return new List<Entry>();
-            }
-
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
-            if (listNode == null)
-            {
-                return new List<Entry>();
-            }
-
             List<Entry> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
 
@@ -51,11 +41,6 @@ namespace OnThisDayApp.Parsers
 
         public static Dictionary<string, List<Entry>> ExtractEventEntriesFromHtml(Stream stream)
         {
-            if (stream == null)
-            {
-                return new Dictionary<string, List<Entry>>();
-            }
-
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
@@ -180,11 +165,6 @@ namespace OnThisDayApp.Parsers
         private static List<Entry> ExtractById(HtmlDocument htmlDoc, string id)
         {
             var otd = htmlDoc.GetElementbyId(id);
-            if (otd == null)
-            {
-                return new List<Entry>();
-            }
-
             var parentNode = otd.ParentNode;
             var currentNode = parentNode.NextSibling;
             while (currentNode != null && currentNode.Name != "ul")
@@ -192,13 +172,8 @@ namespace OnThisDayApp.Parsers
                 currentNode = currentNode.NextSibling;
             }
 
-            if (currentNode != null)
-            {
-                var entries = currentNode.Descendants("li");
-                return entries.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
-            }
-
-            return new List<Entry>();
+            var entries = currentNode.Descendants("li");
+            return entries.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
         }
 
         private static List<Entry> ExtractHolidays(HtmlDocument htmlDoc, string id)

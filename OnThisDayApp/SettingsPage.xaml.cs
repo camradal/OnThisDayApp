@@ -103,8 +103,7 @@ namespace OnThisDayApp
         {
             if (e.AddedItems.Count == 1 && e.RemovedItems.Count == 1)
             {
-                //MessageBox.Show("Please restart the app for the display font size to take effect.");
-                App.DataCleared = true;
+                App.FontSizeChanged = true;
             }
         }
     }

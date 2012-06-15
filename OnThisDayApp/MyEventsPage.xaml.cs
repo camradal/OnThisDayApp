@@ -4,25 +4,27 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.UserData;
-using OnThisDayApp.ViewModels;
 using Utilities;
 
 namespace OnThisDayApp
 {
     public partial class MyEventsPage : PhoneApplicationPage
     {
-        private bool isLoading;
+        private volatile bool loading;
         private readonly Appointments appointments = new Appointments();
         private readonly Contacts contacts = new Contacts();
 
         public MyEventsPage()
         {
             InitializeComponent();
-            isLoading = true;
+
+            loading = true;
             GlobalLoading.Instance.IsLoading = true;
             GlobalLoading.Instance.LoadingText = "Checking the calendar...";
+
             appointments.SearchCompleted += appointments_SearchCompleted;
             appointments.SearchAsync(DateTime.Now.AddMonths(-3), DateTime.Now.AddMonths(9), null);
+
             contacts.SearchCompleted += contacts_SearchCompleted;
             contacts.SearchAsync(string.Empty, FilterKind.None, null);
         }
@@ -38,9 +40,13 @@ namespace OnThisDayApp
             {
                 var items = e.Results.Select(i => new DateDisplay { StartTime = i.StartTime, Subject = i.Subject });
                 CalendarListBox.ItemsSource = items;
-                GlobalLoading.Instance.IsLoading = false;
-                GlobalLoading.Instance.LoadingText = null;
-                isLoading = false;
+
+                if (loading)
+                {
+                    GlobalLoading.Instance.IsLoading = false;
+                    GlobalLoading.Instance.LoadingText = null;
+                    loading = false;
+                }
             }
         }
 
@@ -64,10 +70,11 @@ namespace OnThisDayApp
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            if (isLoading)
+            if (loading)
             {
                 GlobalLoading.Instance.IsLoading = false;
                 GlobalLoading.Instance.LoadingText = null;
+                loading = false;
             }
 
             base.OnNavigatedFrom(e);

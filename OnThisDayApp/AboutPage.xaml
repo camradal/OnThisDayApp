@@ -69,7 +69,13 @@
                         <DataTemplate>
                             <StackPanel Margin="12,0,6,12">
                                 <TextBlock Text="{Binding Version}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0"/>
+                                <ListBox ItemsSource="{Binding Description}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="0,0,0,9"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
