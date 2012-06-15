@@ -30,7 +30,7 @@ namespace OnThisDayApp
                         }},
                     new NewItem
                     {
-                        Version = "1.8",
+                        Version = "2.0",
                         Description = new[]
                         {
                             "Group and filter events, births and deaths by centuries and decades",
