@@ -11,7 +11,7 @@ namespace OnThisDayApp
     public class NewItem
     {
         public string Version { get; set; }
-        public string Description { get; set; }
+        public string[] Description { get; set; }
     }
 
     public partial class AboutPage : PhoneApplicationPage
@@ -22,14 +22,74 @@ namespace OnThisDayApp
             {
                 return new List<NewItem>()
                 {
-                    new NewItem() { Version = "", Description = "We develop based on your feedback, please drop us a line with any suggestions." },
-                    new NewItem() { Version = "1.8", Description = "Group and filter events by centuries and decades\nCheck what happened on events and birthdays from your calendar\nAdded a setting to increase font size" },
-                    new NewItem() { Version = "1.7", Description = "Added a setting to sort the events by newest or oldest\nAd-free version is available\nAdded a button to reset local data" },
-                    new NewItem() { Version = "1.5", Description = "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter\nA lot of optimizations for best experience on Tango phones" },
-                    new NewItem() { Version = "1.3", Description = "Major improvements to the live tile, it will now display interesting facts on the front" },
-                    new NewItem() { Version = "1.2", Description = "Live tile now displays interesting events. Pin it to your start screen for daily historical highlights" },
-                    new NewItem() { Version = "1.1", Description = "Displaying holidays\nDisplaying images in highlights" },
-                    new NewItem() { Version = "1.0", Description = "On This Day... is released!" }
+                    new NewItem {
+                        Version = "",
+                        Description = new[]
+                        {
+                            "We develop based on your feedback, please drop us a line with any suggestions."
+                        }},
+                    new NewItem
+                    {
+                        Version = "2.0",
+                        Description = new[]
+                        {
+                            "Group and filter events, births and deaths by centuries and decades",
+                            "Check what happened on any birthdays or event from your calendar",
+                            "New setting to increase font size"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.7",
+                        Description = new[]
+                        {
+                            "Added a setting to sort the events by newest or oldest",
+                            "Ad-free version is available",
+                            "Added a button to reset local data"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.5",
+                        Description = new[]
+                        {
+                            "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter",
+                            "A lot of optimizations for best experience on Tango phones"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.3",
+                        Description = new[]
+                        {
+                            "Major improvements to the live tile, it will now display interesting facts on the front"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.2",
+                        Description = new[]
+                        {
+                            "Live tile now displays interesting events. Pin it to your start screen for daily historical highlights"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.1",
+                        Description = new[]
+                        {
+                            "Displaying holidays",
+                            "Displaying images in highlights"
+                        }
+                    },
+                    new NewItem
+                    {
+                        Version = "1.0",
+                        Description = new[]
+                        {
+                            "On This Day... is released!"
+                        }
+                    }
                 };
             }
         }

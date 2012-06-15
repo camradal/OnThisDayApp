@@ -14,7 +14,7 @@ namespace OnThisDayApp.Parsers
 
         public static List<Entry> ExtractHighlightEntriesFromHtml(Stream stream)
         {
-            HtmlDocument htmlDoc = new HtmlDocument();
+            var htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
@@ -41,7 +41,7 @@ namespace OnThisDayApp.Parsers
 
         public static Dictionary<string, List<Entry>> ExtractEventEntriesFromHtml(Stream stream)
         {
-            HtmlDocument htmlDoc = new HtmlDocument();
+            var htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
 
             List<Entry> events = ExtractById(htmlDoc, "Events");
@@ -55,9 +55,8 @@ namespace OnThisDayApp.Parsers
             }
             catch (Exception)
             {
-                Entry entry = new Entry();
-                entry.Year = "Can't find any holidays for this day";
-                holidays = new List<Entry>() { entry };
+                var entry = new Entry { Year = "Can't find any holidays for this day" };
+                holidays = new List<Entry> { entry };
             }
 
             var result = new Dictionary<string, List<Entry>>
@@ -142,7 +141,7 @@ namespace OnThisDayApp.Parsers
 
         private static Entry ExtractHolidayFromNode(HtmlNode node)
         {
-            Entry entry = new Entry();
+            var entry = new Entry();
             entry.Links = ExtractAllLinksFromHtmlNode(node);
             entry.Link = ExtractFirstLink(node, entry);
 
@@ -188,7 +187,7 @@ namespace OnThisDayApp.Parsers
             }
             var entries = currentNode.ChildNodes.Where(node => node.Name == "li");
 
-            List<Entry> events = new List<Entry>();
+            var events = new List<Entry>();
             foreach (var entry in entries)
             {
                 try

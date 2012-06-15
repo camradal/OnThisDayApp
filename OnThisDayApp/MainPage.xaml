@@ -168,8 +168,8 @@
             <shell:ApplicationBarIconButton x:Name="AppBarButtonPrevDay" IconUri="/icons/appbar.back.rest.png" Text="previous" Click="AppBarButtonPrevDay_Click" />
             <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="MyEventsMenuItem" Text="calendar and birthdays" Click="MyEventsMenuItem_Click" />
+                <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="SettingsMenuItem" Text="settings" Click="SettingsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>
