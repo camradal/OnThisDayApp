@@ -183,6 +183,9 @@
   <data name="MenuItemAbout" xml:space="preserve">
     <value>about</value>
   </data>
+  <data name="MenuItemBuyAdFreeVersion" xml:space="preserve">
+    <value>buy ad-free version</value>
+  </data>
   <data name="MenuItemDisableLiveTile" xml:space="preserve">
     <value>disable live tile</value>
   </data>

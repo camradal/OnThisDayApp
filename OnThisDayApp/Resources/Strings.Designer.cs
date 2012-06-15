@@ -259,6 +259,15 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to buy ad-free version.
+        /// </summary>
+        public static string MenuItemBuyAdFreeVersion {
+            get {
+                return ResourceManager.GetString("MenuItemBuyAdFreeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to disable live tile.
         /// </summary>
         public static string MenuItemDisableLiveTile {
