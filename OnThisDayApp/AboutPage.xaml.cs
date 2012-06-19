@@ -26,7 +26,7 @@ namespace OnThisDayApp
                         Version = "",
                         Description = new[]
                         {
-                            "We develop based on your feedback, please drop us a line with any suggestions."
+                            "We read all emails, please drop us a line with any suggestions."
                         }},
                     new NewItem
                     {
@@ -34,7 +34,7 @@ namespace OnThisDayApp
                         Description = new[]
                         {
                             "Group and filter events, births and deaths by centuries and decades",
-                            "Check what happened on any birthdays or event from your calendar",
+                            "Check what happened on any birthday or event from your calendar",
                             "New setting to increase font size"
                         }
                     },
