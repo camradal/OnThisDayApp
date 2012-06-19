@@ -33,20 +33,20 @@ namespace OnThisDayApp
         {
             if (!e.Results.Any())
             {
-                var items = new { StartTime = "Add some events to your calendar to see them here...", Subject = string.Empty };
+                var items = new DateStringDisplay { StartTime = "Add some events to your calendar to see them here...", Subject = string.Empty };
                 CalendarListBox.ItemsSource = new[] { items };
             }
             else
             {
                 var items = e.Results.Select(i => new DateDisplay { StartTime = i.StartTime, Subject = i.Subject });
                 CalendarListBox.ItemsSource = items;
+            }
 
-                if (loading)
-                {
-                    GlobalLoading.Instance.IsLoading = false;
-                    GlobalLoading.Instance.LoadingText = null;
-                    loading = false;
-                }
+            if (loading)
+            {
+                GlobalLoading.Instance.IsLoading = false;
+                GlobalLoading.Instance.LoadingText = null;
+                loading = false;
             }
         }
 
@@ -54,17 +54,25 @@ namespace OnThisDayApp
         {
             if (!e.Results.Any())
             {
-                var items = new { StartTime = "Add birthdays to your contacts to see them here...", Subject = string.Empty };
+                var items = new DateStringDisplay { StartTime = "Add birthdays to your contacts to see them here...", Subject = string.Empty };
                 BirthdaysListBox.ItemsSource = new[] { items };
             }
             else
             {
                 var birthdays =
-                    from contact in e.Results
+                    (from contact in e.Results
                     let birthday = contact.Birthdays.FirstOrDefault()
                     where birthday != DateTime.MinValue
-                    select new DateDisplay { StartTime = birthday, Subject = contact.DisplayName };
-                BirthdaysListBox.ItemsSource = birthdays;
+                    select new DateDisplay { StartTime = birthday, Subject = contact.DisplayName }).ToList();
+                if (birthdays.Count > 0)
+                {
+                    BirthdaysListBox.ItemsSource = birthdays;
+                }
+                else
+                {
+                    var items = new DateStringDisplay { StartTime = "Add birthdays to your contacts to see them here...", Subject = string.Empty };
+                    BirthdaysListBox.ItemsSource = new[] { items };
+                }
             }
         }
 
@@ -110,6 +118,12 @@ namespace OnThisDayApp
     public class DateDisplay
     {
         public DateTime StartTime { get; set; }
+        public string Subject { get; set; }
+    }
+
+    public class DateStringDisplay
+    {
+        public string StartTime { get; set; }
         public string Subject { get; set; }
     }
 }
