@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day..." RuntimeType="Silverlight" Version="2.0.0.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
+  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day... Pro" RuntimeType="Silverlight" Version="2.0.0.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
     <IconPath IsRelative="true" IsResource="false">icons\Application_Icon_62.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
@@ -32,7 +32,7 @@
         <TemplateType5>
           <BackgroundImageURI IsRelative="true" IsResource="false">icons\Application_Icon_173.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>On This Day...</Title>
+          <Title>On This Day... Pro</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>
