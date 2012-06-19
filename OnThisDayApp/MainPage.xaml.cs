@@ -136,10 +136,9 @@ namespace OnThisDayApp
 
             // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemMyEvents;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemBuyAdFreeVersion;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[4]).Text = Strings.MenuItemAbout;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemRateThisApp;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemSettings;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
