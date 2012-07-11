@@ -17,11 +17,12 @@ namespace OnThisDayApp
         public MyEventsPage()
         {
             InitializeComponent();
-            Loaded += MyEventsPage_Loaded;
         }
 
-        void MyEventsPage_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
             loading = true;
             GlobalLoading.Instance.IsLoading = true;
             GlobalLoading.Instance.LoadingText = "Checking the calendar...";
