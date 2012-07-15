@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows;
-using AgFx;
 using Microsoft.Phone.Info;
 using Microsoft.Phone.Scheduler;
 using OnThisDayApp.Parsers;
@@ -98,8 +96,6 @@ namespace OnThisDayApp.LiveTileScheduledTask
 
         void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            try
-            {
                 Debug.WriteLine("Current memory - request complete: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
                 List<Entry> entries = PageParser.ExtractHighlightEntriesFromHtml(e.Result);
@@ -119,13 +115,12 @@ namespace OnThisDayApp.LiveTileScheduledTask
                 string title = entry.Year;
                 string content = entry.Description;
 
-                Deployment.Current.Dispatcher.BeginInvoke(() => LiveTile.UpdateLiveTile(title, content));
-                Debug.WriteLine("Current memory - updated: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-            }
-            finally
-            {
-                NotifyComplete();
-            }
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    LiveTile.UpdateLiveTile(title, content);
+                    Debug.WriteLine("Current memory - updated: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
+                    NotifyComplete();
+                });
         }
 
         #endregion
