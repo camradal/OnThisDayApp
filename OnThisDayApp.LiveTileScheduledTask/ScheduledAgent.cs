@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Threading;
 using System.Windows;
 using AgFx;
 using Microsoft.Phone.Info;
 using Microsoft.Phone.Scheduler;
+using OnThisDayApp.Parsers;
 using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.LiveTileScheduledTask
@@ -12,6 +17,7 @@ namespace OnThisDayApp.LiveTileScheduledTask
     public class ScheduledAgent : ScheduledTaskAgent
     {
         private static volatile bool _classInitialized;
+        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Wikipedia:Selected_anniversaries/{0}";
 
         #region Properties
 
@@ -69,42 +75,51 @@ namespace OnThisDayApp.LiveTileScheduledTask
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
+            var loaded = new ManualResetEvent(false);
+         
             Debug.WriteLine("Current memory - initial: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
-            DataManager.Current.Load<DayViewModel>(
-                CurrentDateForWiki,
-                vm =>
+            string uriString = string.Format(sourceUriFormat, CurrentDateForWiki);
+            var uri = new Uri(uriString, UriKind.Absolute);
+
+            var client = new WebClient();
+            client.DownloadStringAsync(uri);
+            client.DownloadStringCompleted += client_DownloadStringCompleted;
+
+            loaded.WaitOne(25 * 1000);
+            NotifyComplete();
+        }
+
+        void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                Debug.WriteLine("Current memory - request complete: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
+
+                List<Entry> entries = PageParser.ExtractHighlightEntriesFromHtml(e.Result);
+                if (entries.Count == 0)
                 {
-                    Debug.WriteLine("Current memory - loaded: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-                    try
-                    {
-                        if (vm.Highlights.Count == 0)
-                        {
-                            return;
-                        }
+                    return;
+                }
 
-                        int index = new Random().Next(vm.Highlights.Count);
-                        Entry entry = vm.Highlights[index];
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
-                        string title = entry.Year;
-                        string content = entry.Description;
+                Debug.WriteLine("Current memory - loaded: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
+                int index = new Random().Next(entries.Count);
+                Entry entry = entries[index];
 
-                        LiveTile.UpdateLiveTile(title, content);
-                        Debug.WriteLine("Current memory - updated: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-                    }
-                    finally
-                    {
-                        NotifyComplete();                        
-                    }
-                },
-                ex =>
-                {
-                    // TODO: report error using bugsense
-                    NotifyComplete();
-                });
+                string title = entry.Year;
+                string content = entry.Description;
+
+                Deployment.Current.Dispatcher.BeginInvoke(() => LiveTile.UpdateLiveTile(title, content));
+                Debug.WriteLine("Current memory - updated: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
+            }
+            finally
+            {
+                NotifyComplete();
+            }
         }
 
         #endregion

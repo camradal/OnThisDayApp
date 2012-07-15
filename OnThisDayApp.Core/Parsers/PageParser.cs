@@ -8,7 +8,7 @@ using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.Parsers
 {
-    internal static class PageParser
+    public static class PageParser
     {
         #region Public Methods
 
@@ -16,6 +16,18 @@ namespace OnThisDayApp.Parsers
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(stream);
+
+            HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
+            List<Entry> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
+            AttachPictureToNode(htmlDoc, entries);
+
+            return entries;
+        }
+
+        public static List<Entry> ExtractHighlightEntriesFromHtml(string html)
+        {
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
 
             HtmlNode listNode = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='mw-content-ltr']/ul");
             List<Entry> entries = listNode.Descendants("li").Select(ExtractEntryFromNode).Where(e => e != null).ToList();
