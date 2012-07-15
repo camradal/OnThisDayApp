@@ -76,18 +76,24 @@ namespace OnThisDayApp.LiveTileScheduledTask
         protected override void OnInvoke(ScheduledTask task)
         {
             var loaded = new ManualResetEvent(false);
-         
-            Debug.WriteLine("Current memory - initial: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
-            string uriString = string.Format(sourceUriFormat, CurrentDateForWiki);
-            var uri = new Uri(uriString, UriKind.Absolute);
+            try
+            {
+                Debug.WriteLine("Current memory - initial: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
-            var client = new WebClient();
-            client.DownloadStringAsync(uri);
-            client.DownloadStringCompleted += client_DownloadStringCompleted;
+                string uriString = string.Format(sourceUriFormat, CurrentDateForWiki);
+                var uri = new Uri(uriString, UriKind.Absolute);
 
-            loaded.WaitOne(25 * 1000);
-            NotifyComplete();
+                var client = new WebClient();
+                client.DownloadStringAsync(uri);
+                client.DownloadStringCompleted += client_DownloadStringCompleted;
+
+                loaded.WaitOne(25 * 1000);
+            }
+            finally
+            {
+                NotifyComplete();
+            }
         }
 
         void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
