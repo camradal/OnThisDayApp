@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using AgFx;
+using Microsoft.Phone.Info;
 using Microsoft.Phone.Scheduler;
 using OnThisDayApp.ViewModels;
 
@@ -67,10 +69,13 @@ namespace OnThisDayApp.LiveTileScheduledTask
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
+            Debug.WriteLine("Current memory - initial: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
+
             DataManager.Current.Load<DayViewModel>(
                 CurrentDateForWiki,
                 vm =>
                 {
+                    Debug.WriteLine("Current memory - loaded: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
                     try
                     {
                         if (vm.Highlights.Count == 0)
@@ -88,6 +93,7 @@ namespace OnThisDayApp.LiveTileScheduledTask
                         GC.WaitForPendingFinalizers();
 
                         LiveTile.UpdateLiveTile(title, content);
+                        Debug.WriteLine("Current memory - updated: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
                     }
                     finally
                     {
