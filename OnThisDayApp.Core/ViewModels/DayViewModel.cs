@@ -49,6 +49,21 @@ namespace OnThisDayApp.ViewModels
             get { return DataManager.Current.Load<EventsViewModel>(LoadContext); }
         }
 
+        public BirthsViewModel Births
+        {
+            get { return DataManager.Current.Load<BirthsViewModel>(LoadContext); }
+        }
+
+        public DeathsViewModel Deaths
+        {
+            get { return DataManager.Current.Load<DeathsViewModel>(LoadContext); }
+        }
+
+        public HolidaysViewModel Holidays
+        {
+            get { return DataManager.Current.Load<HolidaysViewModel>(LoadContext); }
+        }
+
         public void UpdateLayout()
         {
             for (int i = 0; i < highlights.Count; i++)
