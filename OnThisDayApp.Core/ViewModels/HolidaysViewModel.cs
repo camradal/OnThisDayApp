@@ -6,32 +6,32 @@ using OnThisDayApp.DataAccess;
 namespace OnThisDayApp.ViewModels
 {
     [CachePolicy(CachePolicy.Forever, 60 * 60 * 24)]
-    [DataLoader(typeof(EventsPageLoader))]
-    public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
+    [DataLoader(typeof(HolidaysPageLoader))]
+    public sealed class HolidaysViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<GroupedEntries> events =
-            new BatchObservableCollection<GroupedEntries>(7);
+        private readonly BatchObservableCollection<Entry> holidays =
+            new BatchObservableCollection<Entry>(7);
 
-        public ObservableCollection<GroupedEntries> Events
+        public ObservableCollection<Entry> Holidays
         {
-            get { return events; }
+            get { return holidays; }
             set
             {
-                SetCollection(value, events);
-                RaisePropertyChanged("Events");
+                SetCollection(value, holidays);
+                RaisePropertyChanged("Holidays");
             }
         }
 
-        public EventsViewModel()
+        public HolidaysViewModel()
         {
         }
 
-        public EventsViewModel(DayLoadContext loadContext)
+        public HolidaysViewModel(DayLoadContext loadContext)
             : base(loadContext)
         {
         }
 
-        private void SetCollection(IEnumerable<GroupedEntries> source, ICollection<GroupedEntries> destination)
+        private void SetCollection(IEnumerable<Entry> source, ICollection<Entry> destination)
         {
             if (destination != null)
             {
@@ -39,7 +39,7 @@ namespace OnThisDayApp.ViewModels
 
                 if (source != null)
                 {
-                    foreach (GroupedEntries item in source)
+                    foreach (Entry item in source)
                     {
                         destination.Add(item);
                     }
@@ -49,11 +49,11 @@ namespace OnThisDayApp.ViewModels
 
         public void UpdateLayout()
         {
-            UpdateLayout(events);
-            RaisePropertyChanged("Events");
+            UpdateLayout(holidays);
+            RaisePropertyChanged("Holidays");
         }
 
-        private  void UpdateLayout(BatchObservableCollection<GroupedEntries> collection)
+        private void UpdateLayout(BatchObservableCollection<Entry> collection)
         {
             for (int i = 0; i < collection.Count; i++)
             {

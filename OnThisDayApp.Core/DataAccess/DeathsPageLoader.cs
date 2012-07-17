@@ -6,9 +6,9 @@ using OnThisDayApp.ViewModels;
 
 namespace OnThisDayApp.DataAccess
 {
-    public sealed class EventsPageLoader : PageLoaderBase
+    public sealed class DeathsPageLoader : PageLoaderBase
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/w/api.php?action=parse&prop=text&page={0}&section=1&format=xml";
+        private const string sourceUriFormat = @"http://en.wikipedia.org/w/api.php?action=parse&prop=text&page={0}&section=3&format=xml";
 
         protected override string SourceUriFormat
         {
@@ -25,7 +25,7 @@ namespace OnThisDayApp.DataAccess
 
             string html = PageParser.GetHtml(stream);
             var entries = PageParser.ExtractEntriesFromHtml(html, "/ul[1]/li");
-            var viewModel = new EventsViewModel(loadContext);
+            var viewModel = new DeathsViewModel(loadContext);
 
             if (loadContext.ReverseOrder)
             {
@@ -40,7 +40,7 @@ namespace OnThisDayApp.DataAccess
                     Name = grouping.Key,
                     Entries = grouping.ToList()
                 };
-                viewModel.Events.Add(displayGroup);
+                viewModel.Deaths.Add(displayGroup);
             }
 
             return viewModel;

@@ -6,27 +6,27 @@ using OnThisDayApp.DataAccess;
 namespace OnThisDayApp.ViewModels
 {
     [CachePolicy(CachePolicy.Forever, 60 * 60 * 24)]
-    [DataLoader(typeof(EventsPageLoader))]
-    public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
+    [DataLoader(typeof(DeathsPageLoader))]
+    public sealed class DeathsViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<GroupedEntries> events =
+        private readonly BatchObservableCollection<GroupedEntries> deaths =
             new BatchObservableCollection<GroupedEntries>(7);
 
-        public ObservableCollection<GroupedEntries> Events
+        public ObservableCollection<GroupedEntries> Deaths
         {
-            get { return events; }
+            get { return deaths; }
             set
             {
-                SetCollection(value, events);
-                RaisePropertyChanged("Events");
+                SetCollection(value, deaths);
+                RaisePropertyChanged("Deaths");
             }
         }
 
-        public EventsViewModel()
+        public DeathsViewModel()
         {
         }
 
-        public EventsViewModel(DayLoadContext loadContext)
+        public DeathsViewModel(DayLoadContext loadContext)
             : base(loadContext)
         {
         }
@@ -49,8 +49,8 @@ namespace OnThisDayApp.ViewModels
 
         public void UpdateLayout()
         {
-            UpdateLayout(events);
-            RaisePropertyChanged("Events");
+            UpdateLayout(deaths);
+            RaisePropertyChanged("Deaths");
         }
 
         private  void UpdateLayout(BatchObservableCollection<GroupedEntries> collection)

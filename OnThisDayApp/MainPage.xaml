@@ -100,7 +100,7 @@
                     x:Name="HolidaysListBox"
                     IsFlatList="True"
                     ItemTemplate="{StaticResource HolidaysTemplate}"
-                    ItemsSource="{Binding Events.Holidays}"
+                    ItemsSource="{Binding Holidays.Holidays}"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,-6,-12,0"/>
             </controls:PivotItem>
@@ -130,7 +130,7 @@
                     ItemTemplate="{StaticResource EventsTemplate}"
                     GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
                     GroupItemTemplate="{StaticResource EventsGroupTemplate}"
-                    ItemsSource="{Binding Events.Deaths}"
+                    ItemsSource="{Binding Deaths.Deaths}"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,0,-12,0">
                     <toolkit:LongListSelector.GroupItemsPanel>
@@ -148,7 +148,7 @@
                     ItemTemplate="{StaticResource EventsTemplate}"
                     GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
                     GroupItemTemplate="{StaticResource EventsGroupTemplate}"
-                    ItemsSource="{Binding Events.Births}"
+                    ItemsSource="{Binding Births.Births}"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,0,-12,0">
                     <toolkit:LongListSelector.GroupItemsPanel>

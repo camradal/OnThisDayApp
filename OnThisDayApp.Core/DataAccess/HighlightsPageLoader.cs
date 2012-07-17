@@ -8,7 +8,7 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class HighlightsPageLoader : PageLoaderBase
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/wiki/Wikipedia:Selected_anniversaries/{0}";
+        private const string sourceUriFormat = @"http://en.wikipedia.org/w/api.php?action=parse&prop=text&section=3&page=Wikipedia:Selected_anniversaries/{0}&format=xml";
 
         protected override string SourceUriFormat
         {
@@ -23,7 +23,9 @@ namespace OnThisDayApp.DataAccess
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            List<Entry> entries = PageParser.ExtractHighlightEntriesFromHtml(stream);
+            string html = PageParser.GetHtml(stream);
+
+            List<Entry> entries = PageParser.ExtractEntriesFromHtml(html, "/ul[2]/li");
             var viewModel = new DayViewModel(loadContext);
 
             if (loadContext.ReverseOrder)

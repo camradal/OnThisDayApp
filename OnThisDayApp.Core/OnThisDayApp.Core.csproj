@@ -56,16 +56,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\DeathsPageLoader.cs" />
+    <Compile Include="DataAccess\BirthsPageLoader.cs" />
+    <Compile Include="DataAccess\HolidaysPageLoader.cs" />
     <Compile Include="DataAccess\EventsPageLoader.cs" />
     <Compile Include="DataAccess\HighlightsPageLoader.cs" />
     <Compile Include="DataAccess\PageLoaderBase.cs" />
     <Compile Include="Tiles\LiveTile.cs" />
     <Compile Include="Parsers\PageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BirthsViewModel.cs" />
+    <Compile Include="ViewModels\DeathsViewModel.cs" />
+    <Compile Include="ViewModels\EventsViewModel.cs" />
     <Compile Include="ViewModels\DayLoadContext.cs" />
     <Compile Include="ViewModels\DayViewModel.cs" />
     <Compile Include="ViewModels\Entry.cs" />
-    <Compile Include="ViewModels\EventsViewModel.cs" />
+    <Compile Include="ViewModels\HolidaysViewModel.cs" />
     <Compile Include="ViewModels\GroupedEntries.cs" />
   </ItemGroup>
   <ItemGroup>
