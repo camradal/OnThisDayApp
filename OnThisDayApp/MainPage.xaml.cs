@@ -78,6 +78,7 @@ namespace OnThisDayApp
         private void LoadData()
         {
             int numberOfStarts =  AppSettings.NumberOfStarts;
+            UpdateDataModel(numberOfStarts);
             IndicateStartedLoading(numberOfStarts);
 
             var loadContext = new DayLoadContext(CurrentDateForWiki, AppSettings.ShowNewestItemsFirst);
@@ -128,6 +129,15 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
+        }
+
+        private void UpdateDataModel(int numberOfStarts)
+        {
+            if (numberOfStarts > 0 && !AppSettings.DataStoreUpdate21)
+            {
+                DataManager.Current.DeleteCache();
+                AppSettings.DataStoreUpdate21 = true;
+            }
         }
 
         private void SetApplicationBarLocalizedStrings()
