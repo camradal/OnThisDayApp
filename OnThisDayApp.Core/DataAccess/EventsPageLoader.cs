@@ -24,7 +24,7 @@ namespace OnThisDayApp.DataAccess
                 throw new ArgumentNullException("stream");
 
             string html = PageParser.GetHtml(stream);
-            var entries = PageParser.ExtractEntriesFromHtml(html, "/ul[1]/li");
+            var entries = PageParser.ExtractEntriesFromHtml(html, "/ul[1]/li", "/ul[1]/li");
             var viewModel = new EventsViewModel(loadContext);
 
             if (loadContext.ReverseOrder)

@@ -25,7 +25,7 @@ namespace OnThisDayApp.DataAccess
 
             string html = PageParser.GetHtml(stream);
 
-            List<Entry> entries = PageParser.ExtractEntriesFromHtml(html, "/ul[2]/li");
+            List<Entry> entries = PageParser.ExtractEntriesFromHtml(html, "/ul[2]/li", "/ul[1]/li");
             var viewModel = new DayViewModel(loadContext);
 
             if (loadContext.ReverseOrder)

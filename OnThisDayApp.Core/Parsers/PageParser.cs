@@ -30,12 +30,15 @@ namespace OnThisDayApp.Parsers
             return html;
         }
 
-        public static List<Entry> ExtractEntriesFromHtml(string html, string xPath)
+        public static List<Entry> ExtractEntriesFromHtml(string html, string xPath, string secondaryPath)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
 
-            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(xPath);
+            // have a fallback path
+            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(xPath) ??
+                                       htmlDoc.DocumentNode.SelectNodes(secondaryPath);
+
             List<Entry> entries = nodes.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
 
