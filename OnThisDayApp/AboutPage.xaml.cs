@@ -97,12 +97,14 @@ namespace OnThisDayApp
         public AboutPage()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
             ReadVersionFromManifest();
+            DataContext = this;
         }
 
         private void feedbackButton_Click(object sender, RoutedEventArgs e)

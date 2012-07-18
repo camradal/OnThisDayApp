@@ -12,6 +12,7 @@ namespace Utilities
 
         private static readonly IsolatedStorageSettings settings;
 
+        private const string DataStoreUpdate21KeyName = "DataStoreUpdate21";
         private const string NumberOfStartsKeyName = "NumberOfStarts";
         private const string FirstStartKeyName = "FirstStart";
         private const string InterfaceLanguageKeyName = "InterfaceLanguage";
@@ -20,6 +21,7 @@ namespace Utilities
         private const string ShowNewestItemsFirstKeyName = "ShowNewestItemsFirst";
         private const string DisplayFontSizeKeyName = "DisplayFontSize";
 
+        private const bool DataStoreUpdate21Default = false;
         private const int NumberOfStartsDefault = 0;
         private const bool FirstStartDefault = false;
         private const string InterfaceLanguageDefault = "en";
@@ -31,6 +33,21 @@ namespace Utilities
         #endregion
 
         #region Properties
+
+        public static bool DataStoreUpdate21
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(DataStoreUpdate21KeyName, DataStoreUpdate21Default);
+            }
+            set
+            {
+                if (AddOrUpdateValue(DataStoreUpdate21KeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
 
         public static int NumberOfStarts
         {

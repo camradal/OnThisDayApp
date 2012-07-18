@@ -74,6 +74,7 @@ namespace OnThisDayApp
         private void LoadData()
         {
             int numberOfStarts =  AppSettings.NumberOfStarts;
+            UpdateDataModel(numberOfStarts);
             IndicateStartedLoading(numberOfStarts);
 
             var loadContext = new DayLoadContext(CurrentDateForWiki, AppSettings.ShowNewestItemsFirst);
@@ -95,8 +96,8 @@ namespace OnThisDayApp
                     {
                         vm.Highlights = new ObservableCollection<Entry>(vm.Highlights.Reverse());
                         vm.Events.Events = new ObservableCollection<GroupedEntries>(vm.Events.Events.Reverse());
-                        vm.Events.Births = new ObservableCollection<GroupedEntries>(vm.Events.Births.Reverse());
-                        vm.Events.Deaths = new ObservableCollection<GroupedEntries>(vm.Events.Deaths.Reverse());
+                        vm.Births.Births = new ObservableCollection<GroupedEntries>(vm.Births.Births.Reverse());
+                        vm.Deaths.Deaths = new ObservableCollection<GroupedEntries>(vm.Deaths.Deaths.Reverse());
                         App.ReverseRequired = false;
                     }
 
@@ -124,6 +125,15 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
+        }
+
+        private void UpdateDataModel(int numberOfStarts)
+        {
+            if (numberOfStarts > 0 && !AppSettings.DataStoreUpdate21)
+            {
+                DataManager.Current.DeleteCache();
+                AppSettings.DataStoreUpdate21 = true;
+            }
         }
 
         private void SetApplicationBarLocalizedStrings()

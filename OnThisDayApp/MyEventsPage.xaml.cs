@@ -17,6 +17,11 @@ namespace OnThisDayApp
         public MyEventsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
             loading = true;
             GlobalLoading.Instance.IsLoading = true;
@@ -78,14 +83,14 @@ namespace OnThisDayApp
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
+            base.OnNavigatedFrom(e);
+
             if (loading)
             {
                 GlobalLoading.Instance.IsLoading = false;
                 GlobalLoading.Instance.LoadingText = null;
                 loading = false;
             }
-
-            base.OnNavigatedFrom(e);
         }
 
         private void CalendarListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

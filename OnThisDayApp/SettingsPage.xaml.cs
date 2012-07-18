@@ -48,8 +48,13 @@ namespace OnThisDayApp
 
         public SettingsPage()
         {
-            DataContext = this;
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            DataContext = this;
         }
 
         private void LiveTileToggle_Click(object sender, System.Windows.RoutedEventArgs e)
