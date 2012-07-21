@@ -370,11 +370,19 @@ namespace OnThisDayApp
         private void OpenDetailsPage(string url)
         {
             string encodedUri = HttpUtility.HtmlEncode(url);
-            Uri uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+            var uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
             Dispatcher.BeginInvoke(() =>
-            {
-                NavigationService.Navigate(uri);
-            });
+                                   {
+                                       try
+                                       {
+                                           NavigationService.Navigate(uri);
+                                       }
+                                       catch (Exception)
+                                       {
+                                           // prevent double-click errors
+                                       }
+                                   });
+
         }
 
         #endregion

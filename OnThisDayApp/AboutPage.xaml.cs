@@ -30,6 +30,15 @@ namespace OnThisDayApp
                         }},
                     new NewItem
                     {
+                        Version = "2.1",
+                        Description = new[]
+                        {
+                            "Major performance improvements - events load twice as fast",
+                            "Live tile updates more reliably now"
+                        }
+                    },
+                    new NewItem
+                    {
                         Version = "2.0",
                         Description = new[]
                         {
