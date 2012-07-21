@@ -196,7 +196,7 @@
                 <ControlTemplate TargetType="adduplex:AdControl">
                     <Border BorderThickness="0">
                         <Border.Resources>
-                            <Storyboard x:Name="AdAnimation2" RepeatBehavior="Forever">
+                            <Storyboard x:Name="AdAnimation1" RepeatBehavior="Forever">
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
                                     <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="1"/>
                                     <EasingDoubleKeyFrame KeyTime="0:0:5" Value="0"/>
