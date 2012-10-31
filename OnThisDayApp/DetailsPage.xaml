@@ -6,8 +6,8 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pubcenter="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"  
-    xmlns:adduplex="clr-namespace:AdDuplex;assembly=AdDuplex.AdControl.Silverlight"
+    xmlns:pubcenter="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:AdDuplex="clr-namespace:AdDuplex;assembly=AdDuplex.WindowsPhone"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -29,7 +29,7 @@
         <!--<Image Grid.Row="1" Source="/icons/ad.png" Width="480" Height="80"/>-->
         <StackPanel Grid.Row="1" Height="80" Background="White">
             <pubcenter:AdControl x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle1}"/>
-            <adduplex:AdControl x:Name="AdDuplexAdControl" AppId="8627" Margin="0" Width="480" Height="80" Visibility="Collapsed" Style="{StaticResource AdControlStyle4}"/>
+            <AdDuplex:AdControl x:Name="AdDuplexAdControl" AppId="8627" Margin="0" Width="480" Height="80" Visibility="Collapsed" Style="{StaticResource AdControlStyle4}"/>
         </StackPanel>
     </Grid>
  
