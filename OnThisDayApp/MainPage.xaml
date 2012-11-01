@@ -23,7 +23,7 @@
         <utilities:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
         <DataTemplate x:Key="HightlightsTemplate">
-            <Grid Margin="0,0,6,6">
+            <Grid Margin="0,0,6,12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="105"/>
                     <ColumnDefinition Width="*"/>
@@ -40,7 +40,7 @@
         </DataTemplate>
         <DataTemplate x:Key="HolidaysTemplate">
             <StackPanel Margin="12,0,6,12">
-                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
+                <TextBlock Text="{Binding Year}" Style="{StaticResource TextBlockStyleHolidays}"/>
                 <TextBlock Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />

@@ -37,4 +37,10 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
 
+    <Style x:Key="TextBlockStyleHolidays" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="26.667"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+    </Style>
+
 </ResourceDictionary>
