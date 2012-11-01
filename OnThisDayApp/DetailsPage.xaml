@@ -29,7 +29,7 @@
         <!--<Image Grid.Row="1" Source="/icons/ad.png" Width="480" Height="80"/>-->
         <StackPanel Grid.Row="1" Height="80" Background="White">
             <pubcenter:AdControl x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle1}"/>
-            <AdDuplex:AdControl x:Name="AdDuplexAdControl" AppId="8627" Margin="0" Width="480" Height="80" Visibility="Collapsed" Style="{StaticResource AdControlStyle4}"/>
+            <AdDuplex:AdControl x:Name="AdDuplexAdControl" AppId="8627" Margin="0" Width="480" Height="80" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
  
