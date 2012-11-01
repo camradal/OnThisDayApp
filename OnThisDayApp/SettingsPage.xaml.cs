@@ -97,6 +97,10 @@ namespace OnThisDayApp
                 DataManager.Current.DeleteCache();
                 App.ReloadRequired = true;
             }
+            catch
+            {
+                // deleting cache - best effort
+            }
             finally
             {
                 Thread.CurrentThread.Join(250);
