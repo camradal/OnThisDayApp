@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.Phone.Shell;
+using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Phone.Shell;
 
 namespace OnThisDayApp
 {
@@ -21,20 +20,28 @@ namespace OnThisDayApp
         public static void UpdateLiveTile(string title, string content)
         {
             // application tile is always the first tile, even if it is not pinned
-            ShellTile tile = ShellTile.ActiveTiles.First();
-
-            if (tile != null)
+            var tiles = ShellTile.ActiveTiles;
+            foreach (var tile in tiles)
             {
-                string fileName = WriteTileToDisk(title, content);
-                StandardTileData data = new StandardTileData()
+                if (tile != null)
                 {
-                    Title = title,
-                    BackTitle = "On This Day...",
-                    BackgroundImage = new Uri("isostore:" + fileName),
-                    BackBackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative)
-                };
-                tile.Update(data);
+                    var data = GetTile(title, content);
+                    tile.Update(data);
+                }
             }
+        }
+
+        public static StandardTileData GetTile(string title, string content)
+        {
+            string fileName = WriteTileToDisk(title, content);
+            var data = new StandardTileData()
+            {
+                Title = title,
+                BackTitle = "On This Day...",
+                BackgroundImage = new Uri("isostore:" + fileName),
+                BackBackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative)
+            };
+            return data;
         }
 
         #region Helper Methods

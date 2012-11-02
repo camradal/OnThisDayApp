@@ -295,6 +295,15 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pin live tile.
+        /// </summary>
+        public static string MenuItemPinLiveTile {
+            get {
+                return ResourceManager.GetString("MenuItemPinLiveTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to rate this app.
         /// </summary>
         public static string MenuItemRateThisApp {

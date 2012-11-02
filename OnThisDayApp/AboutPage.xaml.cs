@@ -30,6 +30,16 @@ namespace OnThisDayApp
                         }},
                     new NewItem
                     {
+                        Version = "2.2",
+                        Description = new[]
+                        {
+                            "Visual update, new animations",
+                            "Pin live tile from the app",
+                            "Bugs fixed"
+                        }
+                    },
+                    new NewItem
+                    {
                         Version = "2.1",
                         Description = new[]
                         {
