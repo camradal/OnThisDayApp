@@ -52,11 +52,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdDuplex.AdControl.Silverlight">
+      <HintPath>..\packages\adduplex-sl-v.1.2.3\AdDuplex.AdControl.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="AdDuplex.WindowsPhone">
+      <HintPath>..\packages\AdDuplexWP7.2.7.0.2\lib\sl4-windowsphone71\AdDuplex.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="AgFx">
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
+    </Reference>
+    <Reference Include="AgFx.Controls">
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="BugSense">
       <HintPath>..\packages\BugSense.WP7.0.9.9.1\lib\sl3-wp\BugSense.dll</HintPath>
     </Reference>
     <Reference Include="FlurryWP7SDK">
-      <HintPath>..\packages\Flurry\FlurryWP7SDK.dll</HintPath>
+      <HintPath>..\..\libs\flurry\FlurryWP7SDK.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
@@ -174,10 +186,6 @@
     <Content Include="icons\appbar.calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AgFx\AgFx\AgFx.csproj">
-      <Project>{3ED37B15-A664-4E31-ABD3-CD3522B35E27}</Project>
-      <Name>AgFx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OnThisDayApp.Core\OnThisDayApp.Core.csproj">
       <Project>{1E8E96FD-B82D-44D5-A62C-A62AE223D912}</Project>
       <Name>OnThisDayApp.Core</Name>

@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AgFx, Version=1.1.0.1101, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
+    </Reference>
+    <Reference Include="AgFx.Controls, Version=1.1.0.1101, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.5\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
@@ -73,12 +81,6 @@
     <Compile Include="ViewModels\Entry.cs" />
     <Compile Include="ViewModels\HolidaysViewModel.cs" />
     <Compile Include="ViewModels\GroupedEntries.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\AgFx\AgFx\AgFx.csproj">
-      <Project>{3ED37B15-A664-4E31-ABD3-CD3522B35E27}</Project>
-      <Name>AgFx</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

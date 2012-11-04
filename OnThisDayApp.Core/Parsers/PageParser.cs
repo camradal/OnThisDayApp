@@ -21,8 +21,13 @@ namespace OnThisDayApp.Parsers
             using (var reader = new StreamReader(stream))
             {
                 var text = reader.ReadToEnd();
-                int startIndex = text.IndexOf(startToken, StringComparison.Ordinal) + startToken.Length;
-                int endIndex = text.IndexOf(endToken, startIndex, StringComparison.Ordinal);
+                int startIndex = text.IndexOf(startToken, StringComparison.OrdinalIgnoreCase) + startToken.Length;
+                int endIndex = text.IndexOf(endToken, startIndex, StringComparison.OrdinalIgnoreCase);
+                if (startIndex == -1 || endIndex == -1)
+                {
+                    throw new Exception(text);
+                }
+
                 html = text.Substring(startIndex, endIndex - startIndex);
                 html = HttpUtility.HtmlDecode(html);
             }
@@ -30,28 +35,26 @@ namespace OnThisDayApp.Parsers
             return html;
         }
 
-        public static List<Entry> ExtractEntriesFromHtml(string html, string xPath, string secondaryPath)
+        public static List<Entry> ExtractEntriesFromHtml(string html, bool selectLastListOnly)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
 
-            // have a fallback path
-            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(xPath) ??
-                                       htmlDoc.DocumentNode.SelectNodes(secondaryPath);
-
+            IEnumerable<HtmlNode> nodes = selectLastListOnly ?
+                htmlDoc.DocumentNode.Descendants("ul").Last().Descendants("li") :
+                htmlDoc.DocumentNode.Descendants("ul").SelectMany(u => u.Descendants("li"));
             List<Entry> entries = nodes.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
 
             return entries;
         }
 
-        public static List<Entry> ExtractHolidaysFromHtml(string html, string xPath)
+        public static List<Entry> ExtractHolidaysFromHtml(string html)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
 
-            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(xPath);
-
+            var nodes = htmlDoc.DocumentNode.Descendants("ul").SelectMany(u => u.Descendants("li"));
             var events = new List<Entry>();
             foreach (var node  in nodes)
             {

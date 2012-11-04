@@ -5,11 +5,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:utilities="clr-namespace:Utilities"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -22,7 +18,7 @@
         <utilities:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
         <DataTemplate x:Key="HightlightsTemplate">
-            <Grid Margin="0,0,6,6">
+            <Grid Margin="0,0,6,9">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="105"/>
                     <ColumnDefinition Width="*"/>
@@ -39,7 +35,7 @@
         </DataTemplate>
         <DataTemplate x:Key="HolidaysTemplate">
             <StackPanel Margin="12,0,6,12">
-                <TextBlock Text="{Binding Year}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
+                <TextBlock Text="{Binding Year}" Style="{StaticResource TextBlockStyleHolidays}"/>
                 <TextBlock Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
@@ -92,17 +88,6 @@
                     Margin="0,0,-12,0"/>
             </controls:PivotItem>
 
-            <!--Pivot holidays-->
-            <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
-                <toolkit:LongListSelector
-                    x:Name="HolidaysListBox"
-                    IsFlatList="True"
-                    ItemTemplate="{StaticResource HolidaysTemplate}"
-                    ItemsSource="{Binding Holidays.Holidays}"
-                    SelectionChanged="ListBox_SelectionChanged"
-                    Margin="0,-6,-12,0"/>
-            </controls:PivotItem>
-
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleEvents}" Visibility="Collapsed">
                 <toolkit:LongListSelector
@@ -111,24 +96,6 @@
                     GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
                     GroupItemTemplate="{StaticResource EventsGroupTemplate}"
                     ItemsSource="{Binding Events.Events}"
-                    SelectionChanged="ListBox_SelectionChanged"
-                    Margin="0,0,-12,0">
-                    <toolkit:LongListSelector.GroupItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </toolkit:LongListSelector.GroupItemsPanel>
-                </toolkit:LongListSelector>
-            </controls:PivotItem>
-
-            <!--Pivot deaths-->
-            <controls:PivotItem Name="deathsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleDeaths}" Visibility="Collapsed">
-                <toolkit:LongListSelector
-                    x:Name="DeathsListBox"
-                    ItemTemplate="{StaticResource EventsTemplate}"
-                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
-                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
-                    ItemsSource="{Binding Deaths.Deaths}"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,0,-12,0">
                     <toolkit:LongListSelector.GroupItemsPanel>
@@ -157,6 +124,35 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
+            <!--Pivot deaths-->
+            <controls:PivotItem Name="deathsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleDeaths}" Visibility="Collapsed">
+                <toolkit:LongListSelector
+                    x:Name="DeathsListBox"
+                    ItemTemplate="{StaticResource EventsTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
+                    ItemsSource="{Binding Deaths.Deaths}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0">
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                </toolkit:LongListSelector>
+            </controls:PivotItem>
+
+            <!--Pivot holidays-->
+            <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
+                <toolkit:LongListSelector
+                    x:Name="HolidaysListBox"
+                    IsFlatList="True"
+                    ItemTemplate="{StaticResource HolidaysTemplate}"
+                    ItemsSource="{Binding Holidays.Holidays}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,-6,-12,0"/>
+            </controls:PivotItem>
+
         </controls:Pivot>
     </Grid>
 
@@ -169,6 +165,7 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="MyEventsMenuItem" Text="calendar and birthdays" Click="MyEventsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
+                <shell:ApplicationBarMenuItem x:Name="PinLiveTileMenuItem" Text="pin live tile" Click="PinLiveTileMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="SettingsMenuItem" Text="settings" Click="SettingsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="AboutMenuItem" Text="about" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

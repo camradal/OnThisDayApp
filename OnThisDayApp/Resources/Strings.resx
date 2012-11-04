@@ -195,6 +195,9 @@
   <data name="MenuItemMyEvents" xml:space="preserve">
     <value>calendar and birthdays</value>
   </data>
+  <data name="MenuItemPinLiveTile" xml:space="preserve">
+    <value>pin live tile</value>
+  </data>
   <data name="MenuItemRateThisApp" xml:space="preserve">
     <value>rate this app</value>
   </data>

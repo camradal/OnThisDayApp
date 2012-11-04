@@ -71,10 +71,9 @@ namespace OnThisDayApp
         /// <summary>
         /// Load either from the cache on internet
         /// </summary>
-        private void LoadData()
+        private void LoadData(ITransition transition = null)
         {
             int numberOfStarts =  AppSettings.NumberOfStarts;
-            UpdateDataModel(numberOfStarts);
             IndicateStartedLoading(numberOfStarts);
 
             var loadContext = new DayLoadContext(CurrentDateForWiki, AppSettings.ShowNewestItemsFirst);
@@ -105,8 +104,18 @@ namespace OnThisDayApp
                     {
                         SetUpLiveTile(numberOfStarts);
                     }
+
+                    if (App.IsMemoryLimited)
+                    {
+                        ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).IsEnabled = false;
+                    }
                      
                     IndicateStoppedLoading();
+
+                    if (transition != null)
+                    {
+                        transition.Begin();
+                    }
                 },
                 ex =>
                 {
@@ -115,7 +124,7 @@ namespace OnThisDayApp
 
                     if (NetworkInterface.GetIsNetworkAvailable())
                     {
-                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki);
+                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki + ex.Message);
                     }
                     else
                     {
@@ -125,15 +134,6 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
-        }
-
-        private void UpdateDataModel(int numberOfStarts)
-        {
-            if (numberOfStarts > 0 && !AppSettings.DataStoreUpdate21)
-            {
-                DataManager.Current.DeleteCache();
-                AppSettings.DataStoreUpdate21 = true;
-            }
         }
 
         private void SetApplicationBarLocalizedStrings()
@@ -147,8 +147,9 @@ namespace OnThisDayApp
             // menu bar
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemMyEvents;
             ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemAbout;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemPinLiveTile;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemSettings;
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[4]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -258,16 +259,34 @@ namespace OnThisDayApp
             }
         }
 
-        private void BuyAdFreeVersionMenuItem_Click(object sender, EventArgs e)
+        private void PinLiveTileMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            bool agentStarted = backgroundAgent.StartIfEnabled();
+            if (agentStarted)
             {
-                var task = new MarketplaceDetailTask { ContentIdentifier = "60070dfd-ac08-4018-b6cf-9ccda9806158" };
-                task.Show();
-            }
-            catch
-            {
-                // prevent exceptions from double-click
+                AppSettings.LiveTileEnabled = true;
+
+                ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains("DefaultTitle=Highlights"));
+                if (tile != null)
+                {
+                    tile.Delete();                    
+                }
+                
+                var data = (DayViewModel)this.DataContext;
+                if (data != null && data.Highlights != null && data.Highlights.Count > 0)
+                {
+                    GlobalLoading.Instance.IsLoading = true;
+                    string title = data.Highlights[0].Year;
+                    string description = data.Highlights[0].Description;
+                    var tileData = LiveTile.GetTile(title, description);
+                    foreach (var currentTile in ShellTile.ActiveTiles.Where(t => t != null))
+                    {
+                        currentTile.Update(tileData);
+                    }
+                    GlobalLoading.Instance.IsLoading = false;
+
+                    ShellTile.Create(new Uri("/MainPage.xaml?DefaultTitle=Highlights", UriKind.Relative), tileData);
+                }
             }
         }
 
@@ -314,14 +333,32 @@ namespace OnThisDayApp
 
         private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
         {
-            currentDate = currentDate.AddDays(-1);
-            LoadData();
+            
+
+            var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+            var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
+            var pivotItem = (PivotItem)MainPivot.SelectedItem;
+            var tran = transitionOut.GetTransition(pivotItem);
+            tran.Completed += (o, args) =>
+            {
+                currentDate = currentDate.AddDays(-1);
+                LoadData(transitionIn.GetTransition(pivotItem));
+            };
+            tran.Begin();
         }
 
         private void AppBarButtonNextDay_Click(object sender, EventArgs e)
         {
-            currentDate = currentDate.AddDays(1);
-            LoadData();
+            var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+            var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            var pivotItem = (PivotItem)MainPivot.SelectedItem;
+            var tran = transitionOut.GetTransition(pivotItem);
+            tran.Completed += (o, args) =>
+            {
+                currentDate = currentDate.AddDays(1);
+                LoadData(transitionIn.GetTransition(pivotItem));
+            };
+            tran.Begin();
         }
 
         #endregion
