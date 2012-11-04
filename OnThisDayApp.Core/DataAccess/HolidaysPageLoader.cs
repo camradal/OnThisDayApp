@@ -23,7 +23,7 @@ namespace OnThisDayApp.DataAccess
                 throw new ArgumentNullException("stream");
 
             string html = PageParser.GetHtml(stream);
-            var holidays = PageParser.ExtractHolidaysFromHtml(html, "/ul[1]/li");
+            var holidays = PageParser.ExtractHolidaysFromHtml(html);
             var viewModel = new HolidaysViewModel(loadContext);
 
             foreach (Entry entry in holidays)

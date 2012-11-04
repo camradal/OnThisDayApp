@@ -5,12 +5,9 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:pubcenter="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
     xmlns:utilities="clr-namespace:Utilities" xmlns:AdDuplex="clr-namespace:AdDuplex;assembly=AdDuplex.WindowsPhone"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -23,7 +20,7 @@
         <utilities:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
         <DataTemplate x:Key="HightlightsTemplate">
-            <Grid Margin="0,0,6,12">
+            <Grid Margin="0,0,6,9">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="105"/>
                     <ColumnDefinition Width="*"/>
@@ -93,17 +90,6 @@
                     Margin="0,0,-12,0"/>
             </controls:PivotItem>
 
-            <!--Pivot holidays-->
-            <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
-                <toolkit:LongListSelector
-                    x:Name="HolidaysListBox"
-                    IsFlatList="True"
-                    ItemTemplate="{StaticResource HolidaysTemplate}"
-                    ItemsSource="{Binding Holidays.Holidays}"
-                    SelectionChanged="ListBox_SelectionChanged"
-                    Margin="0,-6,-12,0"/>
-            </controls:PivotItem>
-
             <!--Pivot events-->
             <controls:PivotItem Name="eventsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleEvents}" Visibility="Collapsed">
                 <toolkit:LongListSelector
@@ -112,6 +98,24 @@
                     GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
                     GroupItemTemplate="{StaticResource EventsGroupTemplate}"
                     ItemsSource="{Binding Events.Events}"
+                    SelectionChanged="ListBox_SelectionChanged"
+                    Margin="0,0,-12,0">
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                </toolkit:LongListSelector>
+            </controls:PivotItem>
+
+            <!--Pivot births-->
+            <controls:PivotItem Name="birthsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirths}" Visibility="Collapsed">
+                <toolkit:LongListSelector
+                    x:Name="BirthsListBox"
+                    ItemTemplate="{StaticResource EventsTemplate}"
+                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
+                    ItemsSource="{Binding Births.Births}"
                     SelectionChanged="ListBox_SelectionChanged"
                     Margin="0,0,-12,0">
                     <toolkit:LongListSelector.GroupItemsPanel>
@@ -140,22 +144,15 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <!--Pivot births-->
-            <controls:PivotItem Name="birthsPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleBirths}" Visibility="Collapsed">
+            <!--Pivot holidays-->
+            <controls:PivotItem Name="holidaysPivotItem" Header="{Binding Source={StaticResource Strings}, Path=Resources.PivotTitleHolidays}">
                 <toolkit:LongListSelector
-                    x:Name="BirthsListBox"
-                    ItemTemplate="{StaticResource EventsTemplate}"
-                    GroupHeaderTemplate="{StaticResource EventsHeaderTemplate}"
-                    GroupItemTemplate="{StaticResource EventsGroupTemplate}"
-                    ItemsSource="{Binding Births.Births}"
+                    x:Name="HolidaysListBox"
+                    IsFlatList="True"
+                    ItemTemplate="{StaticResource HolidaysTemplate}"
+                    ItemsSource="{Binding Holidays.Holidays}"
                     SelectionChanged="ListBox_SelectionChanged"
-                    Margin="0,0,-12,0">
-                    <toolkit:LongListSelector.GroupItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </toolkit:LongListSelector.GroupItemsPanel>
-                </toolkit:LongListSelector>
+                    Margin="0,-6,-12,0"/>
             </controls:PivotItem>
 
         </controls:Pivot>
