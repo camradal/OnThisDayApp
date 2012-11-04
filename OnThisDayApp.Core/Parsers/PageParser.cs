@@ -21,8 +21,13 @@ namespace OnThisDayApp.Parsers
             using (var reader = new StreamReader(stream))
             {
                 var text = reader.ReadToEnd();
-                int startIndex = text.IndexOf(startToken, StringComparison.Ordinal) + startToken.Length;
-                int endIndex = text.IndexOf(endToken, startIndex, StringComparison.Ordinal);
+                int startIndex = text.IndexOf(startToken, StringComparison.OrdinalIgnoreCase) + startToken.Length;
+                int endIndex = text.IndexOf(endToken, startIndex, StringComparison.OrdinalIgnoreCase);
+                if (startIndex == -1 || endIndex == -1)
+                {
+                    throw new Exception(text);
+                }
+
                 html = text.Substring(startIndex, endIndex - startIndex);
                 html = HttpUtility.HtmlDecode(html);
             }

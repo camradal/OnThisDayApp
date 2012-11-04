@@ -128,7 +128,7 @@ namespace OnThisDayApp
 
                     if (NetworkInterface.GetIsNetworkAvailable())
                     {
-                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki);
+                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki + ex.Message);
                     }
                     else
                     {
