@@ -323,8 +323,28 @@ namespace OnThisDayApp
 
         private void AppBarButtonToday_Click(object sender, EventArgs e)
         {
-            currentDate = DateTime.Now;
-            LoadData();
+            SlideTransition transitionOut;
+            SlideTransition transitionIn;
+
+            if (currentDate > DateTime.Now)
+            {
+                transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+                transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
+            }
+            else
+            {
+                transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+                transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            }
+
+            var pivotItem = (PivotItem)MainPivot.SelectedItem;
+            var tran = transitionOut.GetTransition(pivotItem);
+            tran.Completed += (o, args) =>
+            {
+                currentDate = DateTime.Now;
+                LoadData(transitionIn.GetTransition(pivotItem));
+            };
+            tran.Begin();
         }
 
         private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
@@ -337,8 +357,6 @@ namespace OnThisDayApp
 
         private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
         {
-            
-
             var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
             var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
             var pivotItem = (PivotItem)MainPivot.SelectedItem;
@@ -432,9 +450,8 @@ namespace OnThisDayApp
 
         private void mainMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-
-            if (menu.ItemContainerGenerator == null)
+            var menu = sender as ContextMenu;
+            if (menu != null && menu.ItemContainerGenerator == null)
                 return;
 
             string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
@@ -480,9 +497,8 @@ namespace OnThisDayApp
 
         private void mainMenuHolidays_Loaded(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = (ContextMenu)sender;
-
-            if (menu.ItemContainerGenerator == null)
+            var menu = sender as ContextMenu;
+            if (menu != null && menu.ItemContainerGenerator == null)
                 return;
 
             Entry model = (Entry)menu.DataContext;
