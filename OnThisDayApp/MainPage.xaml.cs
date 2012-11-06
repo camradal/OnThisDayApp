@@ -30,6 +30,8 @@ namespace OnThisDayApp
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
         private readonly BackgroundAgent backgroundAgent = new BackgroundAgent();
+        private NavigationOutTransition oldOut;
+        private NavigationInTransition oldIn;
 
         #endregion
 
@@ -120,6 +122,8 @@ namespace OnThisDayApp
                     {
                         transition.Begin();
                     }
+
+                    AdPanel.Opacity = 100;
                 },
                 ex =>
                 {
@@ -351,6 +355,17 @@ namespace OnThisDayApp
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
+                var frame = (PhoneApplicationFrame)Application.Current.RootVisual;
+                var currentPage = (PhoneApplicationPage)frame.Content;
+
+                // Save the transitions
+                oldIn = TransitionService.GetNavigationInTransition(currentPage);
+                oldOut = TransitionService.GetNavigationOutTransition(currentPage);
+
+                // Clear the transitions
+                TransitionService.SetNavigationInTransition(currentPage, null);
+                TransitionService.SetNavigationOutTransition(currentPage, null);
+
                 NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
             });
         }
@@ -390,6 +405,16 @@ namespace OnThisDayApp
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if (page != null)
+            {
+                var frame = (PhoneApplicationFrame)Application.Current.RootVisual;
+                var currentPage = (PhoneApplicationPage)frame.Content;
+
+                // Restore the transitions
+                TransitionService.SetNavigationInTransition(currentPage, oldIn);
+                TransitionService.SetNavigationOutTransition(currentPage, oldOut);
+            }
 
             // restore from datetime picker page
             if (page != null && page.Value.HasValue)
