@@ -30,6 +30,15 @@ namespace OnThisDayApp
                         }},
                     new NewItem
                     {
+                        Version = "2.3",
+                        Description = new[]
+                        {
+                            "Windows Phone 8 compatibility updates",
+                            "Low-memory phones improvements",
+                            "Bugs fixed"
+                        }
+                    },new NewItem
+                    {
                         Version = "2.2",
                         Description = new[]
                         {
@@ -116,12 +125,6 @@ namespace OnThisDayApp
         public AboutPage()
         {
             InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
             ReadVersionFromManifest();
             DataContext = this;
         }

@@ -8,7 +8,7 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class EventsPageLoader : PageLoaderBase
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/w/api.php?action=parse&prop=text&page={0}&section=1&format=xml";
+        private const string sourceUriFormat = @"https://en.wikipedia.org/w/api.php?action=parse&prop=text&page={0}&section=1&format=xml";
 
         protected override string SourceUriFormat
         {
