@@ -124,12 +124,20 @@ namespace OnThisDayApp.Parsers
                     HttpUtility.HtmlDecode(_.InnerText).ToLower(),
                     _.Attributes["href"].Value));
 
-            var result = new Dictionary<string, string>() { { "share...", String.Empty } };
+            var result = new Dictionary<string, string>
+            {
+                { "share...", string.Empty },
+                { "email...", string.Empty }
+            };
             foreach (KeyValuePair<string, string> hyperlink in hyperlinks)
             {
                 if (!result.ContainsKey(hyperlink.Key))
                 {
-                    result.Add(hyperlink.Key, hyperlink.Value);
+                    int year;
+                    if (!int.TryParse(hyperlink.Key, out year))
+                    {
+                        result.Add(hyperlink.Key, hyperlink.Value);
+                    }
                 }
             }
 

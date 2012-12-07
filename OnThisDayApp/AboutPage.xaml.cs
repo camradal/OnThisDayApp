@@ -33,6 +33,7 @@ namespace OnThisDayApp
                         Description =
                             "Windows Phone 8 compatibility updates\n" + 
                             "Low-memory phones improvements\n" + 
+                            "Share historical events via email\n" +
                             "Bugs fixed"
                     },new NewItem
                     {

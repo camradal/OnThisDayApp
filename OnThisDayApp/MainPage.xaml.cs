@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using AgFx;
+﻿using AgFx;
 using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
@@ -16,6 +7,15 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using Utilities;
 
 namespace OnThisDayApp
@@ -476,7 +476,7 @@ namespace OnThisDayApp
         private void mainMenu_Loaded(object sender, RoutedEventArgs e)
         {
             var menu = sender as ContextMenu;
-            if (menu != null && menu.ItemContainerGenerator == null)
+            if (menu == null || menu.ItemContainerGenerator == null)
                 return;
 
             string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
@@ -488,18 +488,38 @@ namespace OnThisDayApp
             {
                 MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
 
-                if (string.Equals(link.Key, "share...", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(link.Key, "share...", StringComparison.OrdinalIgnoreCase))
                 {
                     container.Click += (obj, args) =>
                     {
                         string title = "On this day in " + model.Year;
                         try
                         {
-                            ShareLinkTask task = new ShareLinkTask()
+                            var task = new ShareLinkTask()
                             {
                                 Title = title,
                                 Message = title + ": " + model.Description + suffix,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else if (string.Equals(link.Key, "email...", StringComparison.OrdinalIgnoreCase))
+                {
+                    container.Click += (o, args) =>
+                    {
+                        string title = "On this day in " + model.Year;
+                        try
+                        {
+                            var task = new EmailComposeTask
+                            {
+                                Subject = title,
+                                Body = model.Description + suffix + "\n\n" + @"http://en.wikipedia.org" + model.Link
                             };
                             task.Show();
                         }
