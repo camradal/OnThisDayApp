@@ -488,7 +488,7 @@ namespace OnThisDayApp
             {
                 MenuItem container = (MenuItem)menu.ItemContainerGenerator.ContainerFromItem(link.Key);
 
-                if (string.Equals(link.Key, "share...", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(link.Key, "share...", StringComparison.InvariantCultureIgnoreCase))
                 {
                     container.Click += (obj, args) =>
                     {
@@ -509,7 +509,7 @@ namespace OnThisDayApp
                         }
                     };
                 }
-                else if (string.Equals(link.Key, "email...", StringComparison.OrdinalIgnoreCase))
+                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
                 {
                     container.Click += (o, args) =>
                     {
@@ -566,6 +566,27 @@ namespace OnThisDayApp
                                 Title = title,
                                 Message = title + buffer,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    container.Click += (o, args) =>
+                    {
+                        string title = "Today is " + model.Year;
+                        try
+                        {
+                            string buffer = ReformatDescriptionForHolidays(model.Description);
+                            var task = new EmailComposeTask
+                            {
+                                Subject = title,
+                                Body = title + buffer + "\n\n" + @"http://en.wikipedia.org" + model.Link
                             };
                             task.Show();
                         }

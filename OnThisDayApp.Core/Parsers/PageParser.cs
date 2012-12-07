@@ -148,7 +148,7 @@ namespace OnThisDayApp.Parsers
         {
             // assumption - there is always one link besides a year
             int value;
-            string firstLink = entry.Links.FirstOrDefault(e => !Int32.TryParse(e.Key, out value) && e.Key != "share...").Value;
+            string firstLink = entry.Links.FirstOrDefault(e => !Int32.TryParse(e.Key, out value) && e.Key != "share..." && e.Key != "email...").Value;
 
             HtmlNode firstBoldItem = node.Descendants("b").FirstOrDefault();
             if (firstBoldItem != null)
