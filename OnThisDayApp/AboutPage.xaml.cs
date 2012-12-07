@@ -11,7 +11,7 @@ namespace OnThisDayApp
     public class NewItem
     {
         public string Version { get; set; }
-        public string[] Description { get; set; }
+        public string Description { get; set; }
     }
 
     public partial class AboutPage : PhoneApplicationPage
@@ -22,101 +22,80 @@ namespace OnThisDayApp
             {
                 return new List<NewItem>()
                 {
-                    new NewItem {
+                    new NewItem
+                    {
                         Version = "",
-                        Description = new[]
-                        {
-                            "We read all emails, please drop us a line with any suggestions."
-                        }},
+                        Description = "We read all emails, please drop us a line with any suggestions."
+                    },
                     new NewItem
                     {
                         Version = "2.3",
-                        Description = new[]
-                        {
-                            "Windows Phone 8 compatibility updates",
-                            "Low-memory phones improvements",
+                        Description =
+                            "Windows Phone 8 compatibility updates\n" + 
+                            "Low-memory phones improvements\n" + 
                             "Bugs fixed"
-                        }
                     },new NewItem
                     {
                         Version = "2.2",
-                        Description = new[]
-                        {
-                            "Visual update, new animations",
-                            "Pin live tile from the app",
+                        Description =
+                            "Visual update, new animations\n" + 
+                            "Pin live tile from the app\n" + 
                             "Bugs fixed"
-                        }
                     },
                     new NewItem
                     {
                         Version = "2.1",
-                        Description = new[]
-                        {
-                            "Major performance improvements - events load twice as fast",
+                        Description =
+                            "Major performance improvements - events load twice as fast\n" + 
                             "Live tile updates more reliably now"
-                        }
                     },
                     new NewItem
                     {
                         Version = "2.0",
-                        Description = new[]
-                        {
-                            "Group and filter events, births and deaths by centuries and decades",
-                            "Check what happened on any birthday or event from your calendar",
+                        Description =
+                            "Group and filter events, births and deaths by centuries and decades\n" + 
+                            "Check what happened on any birthday or event from your calendar\n" + 
                             "New setting to increase font size"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.7",
-                        Description = new[]
-                        {
-                            "Added a setting to sort the events by newest or oldest",
-                            "Ad-free version is available",
+                        Description =
+                            "Added a setting to sort the events by newest or oldest\n" + 
+                            "Ad-free version is available\n" + 
                             "Added a button to reset local data"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.5",
-                        Description = new[]
-                        {
-                            "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter",
+                        Description =
+                            "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter\n" + 
                             "A lot of optimizations for best experience on Tango phones"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.3",
-                        Description = new[]
-                        {
+                        Description =
                             "Major improvements to the live tile, it will now display interesting facts on the front"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.2",
-                        Description = new[]
-                        {
+                        Description =
                             "Live tile now displays interesting events. Pin it to your start screen for daily historical highlights"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.1",
-                        Description = new[]
-                        {
-                            "Displaying holidays",
+                        Description =
+                            "Displaying holidays\n" + 
                             "Displaying images in highlights"
-                        }
                     },
                     new NewItem
                     {
                         Version = "1.0",
-                        Description = new[]
-                        {
+                        Description =
                             "On This Day... is released!"
-                        }
                     }
                 };
             }
