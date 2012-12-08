@@ -8,7 +8,7 @@ namespace OnThisDayApp.DataAccess
 {
     public sealed class HighlightsPageLoader : PageLoaderBase
     {
-        private const string sourceUriFormat = @"http://en.wikipedia.org/w/api.php?action=parse&prop=text&page=Wikipedia:Selected_anniversaries/{0}&format=xml";
+        private const string sourceUriFormat = @"https://en.wikipedia.org/w/api.php?action=parse&prop=text&page=Wikipedia:Selected_anniversaries/{0}&format=xml";
 
         protected override string SourceUriFormat
         {

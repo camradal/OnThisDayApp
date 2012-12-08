@@ -76,7 +76,6 @@ namespace OnThisDayApp
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -161,10 +160,17 @@ namespace OnThisDayApp
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new TransitionFrame()
+            if (LowMemoryHelper.IsLowMemDevice)
             {
-                Background = new SolidColorBrush(Colors.Transparent)
-            };
+                RootFrame = new PhoneApplicationFrame();
+            }
+            else
+            {
+                RootFrame = new TransitionFrame()
+                {
+                    Background = new SolidColorBrush(Colors.Transparent)
+                };
+            }
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures

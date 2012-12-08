@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using AgFx;
+﻿using AgFx;
 using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
@@ -16,6 +7,15 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.Resources;
 using OnThisDayApp.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using Utilities;
 
 namespace OnThisDayApp
@@ -30,6 +30,8 @@ namespace OnThisDayApp
         private IDateTimePickerPage page;
         private DateTime currentDate = DateTime.Now;
         private readonly BackgroundAgent backgroundAgent = new BackgroundAgent();
+        private NavigationOutTransition oldOut;
+        private NavigationInTransition oldIn;
 
         #endregion
 
@@ -319,22 +321,51 @@ namespace OnThisDayApp
 
         private void AppBarButtonToday_Click(object sender, EventArgs e)
         {
-            currentDate = DateTime.Now;
-            LoadData();
+            SlideTransition transitionOut;
+            SlideTransition transitionIn;
+
+            if (currentDate > DateTime.Now)
+            {
+                transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+                transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
+            }
+            else
+            {
+                transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+                transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            }
+
+            var pivotItem = (PivotItem)MainPivot.SelectedItem;
+            var tran = transitionOut.GetTransition(pivotItem);
+            tran.Completed += (o, args) =>
+            {
+                currentDate = DateTime.Now;
+                LoadData(transitionIn.GetTransition(pivotItem));
+            };
+            tran.Begin();
         }
 
         private void AppBarButtonChooseDate_Click(object sender, EventArgs e)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
+                var frame = (PhoneApplicationFrame)Application.Current.RootVisual;
+                var currentPage = (PhoneApplicationPage)frame.Content;
+
+                // Save the transitions
+                oldIn = TransitionService.GetNavigationInTransition(currentPage);
+                oldOut = TransitionService.GetNavigationOutTransition(currentPage);
+
+                // Clear the transitions
+                TransitionService.SetNavigationInTransition(currentPage, null);
+                TransitionService.SetNavigationOutTransition(currentPage, null);
+
                 NavigationService.Navigate(new Uri("/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml", UriKind.Relative));
             });
         }
 
         private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
         {
-            
-
             var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
             var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
             var pivotItem = (PivotItem)MainPivot.SelectedItem;
@@ -368,6 +399,16 @@ namespace OnThisDayApp
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if (page != null)
+            {
+                var frame = (PhoneApplicationFrame)Application.Current.RootVisual;
+                var currentPage = (PhoneApplicationPage)frame.Content;
+
+                // Restore the transitions
+                TransitionService.SetNavigationInTransition(currentPage, oldIn);
+                TransitionService.SetNavigationOutTransition(currentPage, oldOut);
+            }
 
             // restore from datetime picker page
             if (page != null && page.Value.HasValue)
@@ -428,9 +469,8 @@ namespace OnThisDayApp
 
         private void mainMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-
-            if (menu.ItemContainerGenerator == null)
+            var menu = sender as ContextMenu;
+            if (menu == null || menu.ItemContainerGenerator == null)
                 return;
 
             string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
@@ -449,11 +489,31 @@ namespace OnThisDayApp
                         string title = "On this day in " + model.Year;
                         try
                         {
-                            ShareLinkTask task = new ShareLinkTask()
+                            var task = new ShareLinkTask()
                             {
                                 Title = title,
                                 Message = title + ": " + model.Description + suffix,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    container.Click += (o, args) =>
+                    {
+                        string title = "On this day in " + model.Year;
+                        try
+                        {
+                            var task = new EmailComposeTask
+                            {
+                                Subject = title,
+                                Body = model.Description + suffix + "\n\n" + @"http://en.wikipedia.org" + model.Link
                             };
                             task.Show();
                         }
@@ -476,9 +536,8 @@ namespace OnThisDayApp
 
         private void mainMenuHolidays_Loaded(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = (ContextMenu)sender;
-
-            if (menu.ItemContainerGenerator == null)
+            var menu = sender as ContextMenu;
+            if (menu != null && menu.ItemContainerGenerator == null)
                 return;
 
             Entry model = (Entry)menu.DataContext;
@@ -501,6 +560,27 @@ namespace OnThisDayApp
                                 Title = title,
                                 Message = title + buffer,
                                 LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
+                            };
+                            task.Show();
+                        }
+                        catch (Exception)
+                        {
+                            // fast-clicking can result in exception, so we just handle it
+                        }
+                    };
+                }
+                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    container.Click += (o, args) =>
+                    {
+                        string title = "Today is " + model.Year;
+                        try
+                        {
+                            string buffer = ReformatDescriptionForHolidays(model.Description);
+                            var task = new EmailComposeTask
+                            {
+                                Subject = title,
+                                Body = title + buffer + "\n\n" + @"http://en.wikipedia.org" + model.Link
                             };
                             task.Show();
                         }
