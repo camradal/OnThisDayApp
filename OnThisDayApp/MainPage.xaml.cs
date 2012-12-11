@@ -121,8 +121,6 @@ namespace OnThisDayApp
                         transition.Begin();
                         transition.Completed += (sender, args) => inTransition = false;
                     }
-
-                    AdPanel.Opacity = 100;
                 },
                 ex =>
                 {
