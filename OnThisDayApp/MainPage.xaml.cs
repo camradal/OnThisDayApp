@@ -548,7 +548,7 @@ namespace OnThisDayApp
         private void mainMenuHolidays_Loaded(object sender, RoutedEventArgs e)
         {
             var menu = sender as ContextMenu;
-            if (menu != null && menu.ItemContainerGenerator == null)
+            if (menu == null || menu.ItemContainerGenerator == null)
                 return;
 
             Entry model = (Entry)menu.DataContext;
