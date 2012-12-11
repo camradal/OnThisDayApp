@@ -144,6 +144,12 @@ namespace OnThisDayApp
                         MessageBox.Show(Strings.ErrorInternetConnection);
                     }
 
+                    if (!inTransition && transition != null)
+                    {
+                        inTransition = true;
+                        transition.Begin();
+                        transition.Completed += (sender, args) => inTransition = false;
+                    }
                 });
 
             SetPivotTitle();
