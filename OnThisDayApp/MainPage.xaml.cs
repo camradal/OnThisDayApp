@@ -32,6 +32,7 @@ namespace OnThisDayApp
         private readonly BackgroundAgent backgroundAgent = new BackgroundAgent();
         private NavigationOutTransition oldOut;
         private NavigationInTransition oldIn;
+        private volatile bool inTransition = false;
 
         #endregion
 
@@ -114,10 +115,14 @@ namespace OnThisDayApp
                      
                     IndicateStoppedLoading();
 
-                    if (transition != null)
+                    if (!inTransition && transition != null)
                     {
+                        inTransition = true;
                         transition.Begin();
+                        transition.Completed += (sender, args) => inTransition = false;
                     }
+
+                    AdPanel.Opacity = 100;
                 },
                 ex =>
                 {
@@ -324,7 +329,13 @@ namespace OnThisDayApp
             SlideTransition transitionOut;
             SlideTransition transitionIn;
 
-            if (currentDate > DateTime.Now)
+            if (currentDate.DayOfYear == DateTime.Now.DayOfYear)
+            {
+                LoadData();
+                return;
+            }
+            
+            if (currentDate.DayOfYear > DateTime.Now.DayOfYear)
             {
                 transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
                 transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
