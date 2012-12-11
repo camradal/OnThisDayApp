@@ -4,20 +4,18 @@ using OnThisDayApp.Resources;
 
 namespace Utilities
 {
-    public sealed class ReviewThisAppTask
+    public sealed class BuyThisAppTask
     {
-        private const int numberOfStartsThreshold = 5;
-        private const int numberOfStartsModulo = 50;
+        private const int numberOfStartsThreshold = 9;
 
         public void ShowAfterThreshold()
         {
             int starts = AppSettings.NumberOfStarts;
-            if ((starts == numberOfStartsThreshold || starts % numberOfStartsModulo == 0) &&
-                GetMessageBoxResult() == MessageBoxResult.OK)
+            if ((starts == numberOfStartsThreshold) && GetMessageBoxResult() == MessageBoxResult.OK)
             {
                 try
                 {
-                    var task = new MarketplaceReviewTask();
+                    var task = new MarketplaceDetailTask { ContentIdentifier = "60070dfd-ac08-4018-b6cf-9ccda9806158" };
                     task.Show();
                 }
                 catch
@@ -29,8 +27,8 @@ namespace Utilities
         private MessageBoxResult GetMessageBoxResult()
         {
             return MessageBox.Show(
-                Strings.MessageBoxRateThisAppSummary,
-                Strings.MessageBoxRateThisAppTitle,
+                Strings.MessageBoxBuyThisAppSummary,
+                Strings.MessageBoxBuyThisAppTitle,
                 MessageBoxButton.OKCancel);
         }
     }

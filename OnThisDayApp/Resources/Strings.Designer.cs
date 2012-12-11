@@ -322,6 +322,24 @@ namespace OnThisDayApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please buy an ad-free version to support the developers. Thank you for using On This Day....
+        /// </summary>
+        public static string MessageBoxBuyThisAppSummary {
+            get {
+                return ResourceManager.GetString("MessageBoxBuyThisAppSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ad-free version is available.
+        /// </summary>
+        public static string MessageBoxBuyThisAppTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxBuyThisAppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please take a moment to rate or review this app. We&apos;d love to hear from you..
         /// </summary>
         public static string MessageBoxRateThisAppSummary {
