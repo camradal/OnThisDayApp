@@ -31,72 +31,72 @@ namespace OnThisDayApp
                     {
                         Version = "2.3",
                         Description =
-                            "Windows Phone 8 compatibility updates\n" + 
-                            "Low-memory phones improvements\n" + 
-                            "Share historical events via email\n" +
-                            "Bugs fixed"
+                            "- Windows Phone 8 compatibility updates\n" + 
+                            "- Low-memory phones improvements\n" + 
+                            "- Share historical events via email\n" +
+                            "- Bugs fixed"
                     },new NewItem
                     {
                         Version = "2.2",
                         Description =
-                            "Visual update, new animations\n" + 
-                            "Pin live tile from the app\n" + 
-                            "Bugs fixed"
+                            "- Visual update, new animations\n" + 
+                            "- Pin live tile from the app\n" + 
+                            "- Bugs fixed"
                     },
                     new NewItem
                     {
                         Version = "2.1",
                         Description =
-                            "Major performance improvements - events load twice as fast\n" + 
-                            "Live tile updates more reliably now"
+                            "- Major performance improvements - events load twice as fast\n" + 
+                            "- Live tile updates more reliably now"
                     },
                     new NewItem
                     {
                         Version = "2.0",
                         Description =
-                            "Group and filter events, births and deaths by centuries and decades\n" + 
-                            "Check what happened on any birthday or event from your calendar\n" + 
-                            "New setting to increase font size"
+                            "- Group and filter events, births and deaths by centuries and decades\n" + 
+                            "- Check what happened on any birthday or event from your calendar\n" + 
+                            "- New setting to increase font size"
                     },
                     new NewItem
                     {
                         Version = "1.7",
                         Description =
-                            "Added a setting to sort the events by newest or oldest\n" + 
-                            "Ad-free version is available\n" + 
-                            "Added a button to reset local data"
+                            "- Added a setting to sort the events by newest or oldest\n" + 
+                            "- Ad-free version is available\n" + 
+                            "- Added a button to reset local data"
                     },
                     new NewItem
                     {
                         Version = "1.5",
                         Description =
-                            "Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter\n" + 
-                            "A lot of optimizations for best experience on Tango phones"
+                            "- Sharing functionality is now available, tap and hold any entry to share on Facebook or Twitter\n" + 
+                            "- A lot of optimizations for best experience on Tango phones"
                     },
                     new NewItem
                     {
                         Version = "1.3",
                         Description =
-                            "Major improvements to the live tile, it will now display interesting facts on the front"
+                            "- Major improvements to the live tile, it will now display interesting facts on the front"
                     },
                     new NewItem
                     {
                         Version = "1.2",
                         Description =
-                            "Live tile now displays interesting events. Pin it to your start screen for daily historical highlights"
+                            "- Live tile now displays interesting events. Pin it to your start screen for daily historical highlights"
                     },
                     new NewItem
                     {
                         Version = "1.1",
                         Description =
-                            "Displaying holidays\n" + 
-                            "Displaying images in highlights"
+                            "- Displaying holidays\n" + 
+                            "- Displaying images in highlights"
                     },
                     new NewItem
                     {
                         Version = "1.0",
                         Description =
-                            "On This Day... is released!"
+                            "- On This Day... is released!"
                     }
                 };
             }
