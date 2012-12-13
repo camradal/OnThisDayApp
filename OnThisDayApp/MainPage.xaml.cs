@@ -125,7 +125,6 @@ namespace OnThisDayApp
                     {
                         inTransition = true;
                         transition.Begin();
-                        transition.Completed += (sender, args) => inTransition = false;
                     }
 
                     AdPanel.Opacity = 100;
@@ -148,7 +147,6 @@ namespace OnThisDayApp
                     {
                         inTransition = true;
                         transition.Begin();
-                        transition.Completed += (sender, args) => inTransition = false;
                     }
                 });
 
@@ -344,6 +342,7 @@ namespace OnThisDayApp
 
         private void AppBarButtonToday_Click(object sender, EventArgs e)
         {
+            inTransition = false;
             SlideTransition transitionOut;
             SlideTransition transitionIn;
 
@@ -395,6 +394,7 @@ namespace OnThisDayApp
 
         private void AppBarButtonPrevDay_Click(object sender, EventArgs e)
         {
+            inTransition = false;
             var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
             var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
             var pivotItem = (PivotItem)MainPivot.SelectedItem;
@@ -409,6 +409,7 @@ namespace OnThisDayApp
 
         private void AppBarButtonNextDay_Click(object sender, EventArgs e)
         {
+            inTransition = false;
             var transitionOut = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
             var transitionIn = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
             var pivotItem = (PivotItem)MainPivot.SelectedItem;
