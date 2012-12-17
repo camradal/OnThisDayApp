@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day..." RuntimeType="Silverlight" Version="2.3.0.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
-    <IconPath IsRelative="true" IsResource="false">icons\Application_Icon_62.png</IconPath>
+  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day..." RuntimeType="Silverlight" Version="2.4.0.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
+    <IconPath IsRelative="true" IsResource="false">icons\Application_Icon_159.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
@@ -21,16 +21,13 @@
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
       <ExtendedTask Name="BackgroundTask">
-        <BackgroundServiceAgent Specifier="ScheduledTaskAgent"
-                                Name="OnThisDayApp.LiveTileScheduledTask"
-                                Source="OnThisDayApp.LiveTileScheduledTask"
-                                Type="OnThisDayApp.LiveTileScheduledTask.ScheduledAgent" />
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="OnThisDayApp.LiveTileScheduledTask" Source="OnThisDayApp.LiveTileScheduledTask" Type="OnThisDayApp.LiveTileScheduledTask.ScheduledAgent" />
       </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="OnThisDayAppToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">icons\Application_Icon_173.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">icons\Application_Icon_336.png</BackgroundImageURI>
           <Count>0</Count>
           <Title>On This Day...</Title>
         </TemplateType5>

@@ -29,13 +29,21 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.4",
+                        Description =
+                            "- High-resolution and large tiles for Windows Phone 8\n" +
+                            "- Bugs fixed"
+                    },
+                    new NewItem
+                    {
                         Version = "2.3",
                         Description =
                             "- Windows Phone 8 compatibility updates\n" + 
                             "- Low-memory phones improvements\n" + 
                             "- Share historical events via email\n" +
                             "- Bugs fixed"
-                    },new NewItem
+                    },
+                    new NewItem
                     {
                         Version = "2.2",
                         Description =
