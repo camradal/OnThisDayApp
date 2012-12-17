@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Shell;
+﻿using Microsoft.Phone.Info;
+using Microsoft.Phone.Shell;
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -19,28 +20,37 @@ namespace OnThisDayApp
 
         public static void UpdateLiveTile(string title, string content)
         {
-            // application tile is always the first tile, even if it is not pinned
-            var tiles = ShellTile.ActiveTiles;
-            foreach (var tile in tiles)
+            //application tile is always the first tile, even if it is not pinned
+            if (!IsTargetedVersion)
             {
-                if (tile != null)
+                var tiles = ShellTile.ActiveTiles;
+                foreach (var tile in tiles)
                 {
-                    var data = GetTile(title, content);
-                    tile.Update(data);
+                    if (tile != null)
+                    {
+                        var data = GetTile(title, content);
+                        tile.Update(data);
+                    }
                 }
             }
+            else
+            {
+                string fontSize = Application.Current.Resources["PhoneFontSizeLarge"].ToString();
+                string fileNameMed = WriteTileToDisk(title, content, 336, 336, fontSize, new Thickness(19, 19, 19, 32));
+                string fileNameBig = WriteTileToDisk(title, content, 691, 336, fontSize, new Thickness(19, 19, 19, 32));
 
-            UpdateFlipTile(
-                title,
-                "On This Day...",
-                string.Empty,
-                string.Empty,
-                0,
-                new Uri("/icons/Application_Icon_159.png", UriKind.Relative),
-                null,
-                null,
-                null,
-                null);
+                UpdateFlipTile(
+                    title,
+                    "On This Day...",
+                    string.Empty,
+                    string.Empty,
+                    0,
+                    new Uri("/icons/Application_Icon_159.png", UriKind.Relative),
+                    new Uri("isostore:" + fileNameMed),
+                    new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
+                    new Uri("isostore:" + fileNameBig),
+                    new Uri("/icons/Application_Icon_691.png", UriKind.Relative));
+            }
         }
 
         public static StandardTileData GetTile(string title, string content)

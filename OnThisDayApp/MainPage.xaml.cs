@@ -68,6 +68,7 @@ namespace OnThisDayApp
         {
             InitializeComponent();
             LoadData();
+            AppSettings.NumberOfStarts++;
             ShowReviewPane();
         }
 
@@ -216,7 +217,7 @@ namespace OnThisDayApp
 
         private void ShowReviewPane()
         {
-            ReviewThisAppTask rate = new ReviewThisAppTask();
+            var rate = new ReviewThisAppTask();
             rate.ShowAfterThreshold();
         }
 

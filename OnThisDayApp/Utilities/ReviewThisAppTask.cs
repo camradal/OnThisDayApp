@@ -9,11 +9,6 @@ namespace Utilities
         private const int numberOfStartsThreshold = 5;
         private const int numberOfStartsModulo = 50;
 
-        public ReviewThisAppTask()
-        {
-            AppSettings.NumberOfStarts++;
-        }
-
         public void ShowAfterThreshold()
         {
             int starts = AppSettings.NumberOfStarts;
@@ -22,7 +17,7 @@ namespace Utilities
             {
                 try
                 {
-                    MarketplaceReviewTask task = new MarketplaceReviewTask();
+                    var task = new MarketplaceReviewTask();
                     task.Show();
                 }
                 catch
