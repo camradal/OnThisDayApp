@@ -64,6 +64,7 @@ namespace OnThisDayApp.LiveTileScheduledTask
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
+            Debug.WriteLine("Memory limit: {0}", DeviceStatus.ApplicationMemoryUsageLimit);
             Debug.WriteLine("Current memory - initial: {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
             DataManager.Current.Load<DayViewModel>(

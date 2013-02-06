@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -37,6 +36,9 @@ namespace OnThisDayApp
                 string fontSize = Application.Current.Resources["PhoneFontSizeLarge"].ToString();
                 string fileNameMed = WriteTileToDisk(title, content, 336, 336, fontSize, new Thickness(19, 19, 19, 32));
                 string fileNameBig = WriteTileToDisk(title, content, 691, 336, fontSize, new Thickness(19, 19, 19, 32));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
                 UpdateFlipTile(
                     title,
@@ -116,7 +118,7 @@ namespace OnThisDayApp
 
         #region Windows Phone 8 Tile
 
-        private static readonly Version TargetedVersion = new Version(8, 0);
+        private static readonly Version TargetedVersion = new Version(7, 10, 8858);
 
         public static bool IsTargetedVersion
         {
