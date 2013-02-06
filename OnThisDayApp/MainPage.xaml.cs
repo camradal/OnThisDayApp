@@ -300,7 +300,7 @@ namespace OnThisDayApp
                 {
                     string title = data.Highlights[0].Year;
                     string description = data.Highlights[0].Description;
-                    LiveTile.CreateLiveTile(title, description);
+                    LiveTileCreator.CreateLiveTile(title, description);
                 }
             }
         }
