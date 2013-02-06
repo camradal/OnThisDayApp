@@ -285,17 +285,9 @@ namespace OnThisDayApp
                 var data = (DayViewModel)this.DataContext;
                 if (data != null && data.Highlights != null && data.Highlights.Count > 0)
                 {
-                    GlobalLoading.Instance.IsLoading = true;
                     string title = data.Highlights[0].Year;
                     string description = data.Highlights[0].Description;
-                    var tileData = LiveTile.GetTile(title, description);
-                    foreach (var currentTile in ShellTile.ActiveTiles.Where(t => t != null))
-                    {
-                        currentTile.Update(tileData);
-                    }
-                    GlobalLoading.Instance.IsLoading = false;
-
-                    ShellTile.Create(new Uri("/MainPage.xaml?DefaultTitle=Highlights", UriKind.Relative), tileData);
+                    LiveTile.CreateLiveTile(title, description);
                 }
             }
         }
