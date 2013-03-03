@@ -34,8 +34,8 @@ namespace OnThisDayApp
             else
             {
                 string fontSize = Application.Current.Resources["PhoneFontSizeLarge"].ToString();
-                string fileNameMed = WriteTileToDisk(title, content, 336, 336, fontSize, new Thickness(19, 12, 12, 38));
-                string fileNameBig = WriteTileToDisk(title, content, 691, 336, fontSize, new Thickness(19, 12, 12, 38));
+                string fileNameMed = WriteTileToDisk(title, content, 336, 336, fontSize, new Thickness(19, 13, 13, 38));
+                string fileNameBig = WriteTileToDisk(title, content, 691, 336, fontSize, new Thickness(19, 13, 13, 38));
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
