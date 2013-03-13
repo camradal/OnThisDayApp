@@ -177,8 +177,6 @@
     <Content Include="icons\appbar.share.rest.png" />
     <Content Include="icons\Application_Icon_159.png" />
     <Content Include="icons\Application_Icon_336.png" />
-    <Content Include="icons\Application_Icon_62.png" />
-    <Content Include="icons\Application_Icon_173.png" />
     <Content Include="icons\Application_Icon_691.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />

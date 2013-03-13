@@ -46,7 +46,7 @@ namespace OnThisDayApp
                     string.Empty,
                     string.Empty,
                     0,
-                    new Uri("/icons/Application_Icon_159.png", UriKind.Relative),
+                    new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
                     new Uri("isostore:" + fileNameMed),
                     new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
                     new Uri("isostore:" + fileNameBig),
@@ -63,7 +63,7 @@ namespace OnThisDayApp
                 Title = title,
                 BackTitle = "On This Day...",
                 BackgroundImage = new Uri("isostore:" + fileName),
-                BackBackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative)
+                BackBackgroundImage = new Uri("/icons/Application_Icon_336.png", UriKind.Relative)
             };
             return data;
         }
