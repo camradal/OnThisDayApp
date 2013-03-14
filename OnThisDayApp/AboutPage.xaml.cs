@@ -29,6 +29,12 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.6",
+                        Description =
+                            "- Fix reported bugs"
+                    },
+                    new NewItem
+                    {
                         Version = "2.5",
                         Description =
                             "- Support for Windows Phone 7.8\n" +
@@ -155,7 +161,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.5";
+            versionText.Text = "2.6";
         }
     }
 }
