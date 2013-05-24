@@ -188,8 +188,6 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
                 App.FirstLoad = false;
             }
-
-            App.Watch.Stop();
         }
 
         private void SetUpLiveTile(int numberOfStarts)
@@ -456,20 +454,34 @@ namespace OnThisDayApp
 
         private void OpenDetailsPage(string url)
         {
-            string encodedUri = HttpUtility.HtmlEncode(url);
-            var uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
-            Dispatcher.BeginInvoke(() =>
-                                   {
-                                       try
-                                       {
-                                           NavigationService.Navigate(uri);
-                                       }
-                                       catch (Exception)
-                                       {
-                                           // prevent double-click errors
-                                       }
-                                   });
-
+            if (AppSettings.BrowserSelection)
+            {
+                try
+                {
+                    var uri = new Uri(@"http://en.wikipedia.org" + url, UriKind.Absolute);
+                    var webBrowserTask = new WebBrowserTask { Uri = uri };
+                    webBrowserTask.Show();
+                }
+                catch
+                {
+                }
+            }
+            else
+            {
+                string encodedUri = HttpUtility.HtmlEncode(url);
+                var uri = new Uri("/DetailsPage.xaml?uri=" + encodedUri, UriKind.Relative);
+                Dispatcher.BeginInvoke(() =>
+                {
+                    try
+                    {
+                        NavigationService.Navigate(uri);
+                    }
+                    catch (Exception)
+                    {
+                        // prevent double-click errors
+                    }
+                });
+            }
         }
 
         #endregion
@@ -496,40 +508,24 @@ namespace OnThisDayApp
                     container.Click += (obj, args) =>
                     {
                         string title = "On this day in " + model.Year;
-                        try
+                        string description = title + ": " + model.Description + suffix;
+                        App.ShareViewModel = new ShareModel
                         {
-                            var task = new ShareLinkTask()
+                            Title = title,
+                            Description = description,
+                            Link = model.Link
+                        };
+                        Dispatcher.BeginInvoke(() =>
+                        {
+                            try
                             {
-                                Title = title,
-                                Message = title + ": " + model.Description + suffix,
-                                LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
-                            };
-                            task.Show();
-                        }
-                        catch (Exception)
-                        {
-                            // fast-clicking can result in exception, so we just handle it
-                        }
-                    };
-                }
-                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    container.Click += (o, args) =>
-                    {
-                        string title = "On this day in " + model.Year;
-                        try
-                        {
-                            var task = new EmailComposeTask
+                                NavigationService.Navigate(new Uri("/SharePage.xaml", UriKind.Relative));
+                            }
+                            catch (Exception)
                             {
-                                Subject = title,
-                                Body = model.Description + suffix + "\n\n" + @"http://en.wikipedia.org" + model.Link
-                            };
-                            task.Show();
-                        }
-                        catch (Exception)
-                        {
-                            // fast-clicking can result in exception, so we just handle it
-                        }
+                                // prevent double-click errors
+                            }
+                        });
                     };
                 }
                 else
@@ -561,42 +557,24 @@ namespace OnThisDayApp
                     container.Click += (obj, args) =>
                     {
                         string title = "Today is " + model.Year;
-                        try
+                        string description = title + ReformatDescriptionForHolidays(model.Description);
+                        App.ShareViewModel = new ShareModel
                         {
-                            string buffer = ReformatDescriptionForHolidays(model.Description);
-                            ShareLinkTask task = new ShareLinkTask()
+                            Title = title,
+                            Description = description,
+                            Link = model.Link
+                        };
+                        Dispatcher.BeginInvoke(() =>
+                        {
+                            try
                             {
-                                Title = title,
-                                Message = title + buffer,
-                                LinkUri = new Uri(@"http://en.wikipedia.org" + model.Link, UriKind.Absolute)
-                            };
-                            task.Show();
-                        }
-                        catch (Exception)
-                        {
-                            // fast-clicking can result in exception, so we just handle it
-                        }
-                    };
-                }
-                else if (string.Equals(link.Key, "email...", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    container.Click += (o, args) =>
-                    {
-                        string title = "Today is " + model.Year;
-                        try
-                        {
-                            string buffer = ReformatDescriptionForHolidays(model.Description);
-                            var task = new EmailComposeTask
+                                NavigationService.Navigate(new Uri("/SharePage.xaml", UriKind.Relative));
+                            }
+                            catch (Exception)
                             {
-                                Subject = title,
-                                Body = title + buffer + "\n\n" + @"http://en.wikipedia.org" + model.Link
-                            };
-                            task.Show();
-                        }
-                        catch (Exception)
-                        {
-                            // fast-clicking can result in exception, so we just handle it
-                        }
+                                // prevent double-click errors
+                            }
+                        });
                     };
                 }
                 else

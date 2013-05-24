@@ -126,8 +126,7 @@ namespace OnThisDayApp.Parsers
 
             var result = new Dictionary<string, string>
             {
-                { "share...", string.Empty },
-                { "email...", string.Empty }
+                { "share...", string.Empty }
             };
             foreach (KeyValuePair<string, string> hyperlink in hyperlinks)
             {
@@ -148,7 +147,7 @@ namespace OnThisDayApp.Parsers
         {
             // assumption - there is always one link besides a year
             int value;
-            string firstLink = entry.Links.FirstOrDefault(e => !Int32.TryParse(e.Key, out value) && e.Key != "share..." && e.Key != "email...").Value;
+            string firstLink = entry.Links.FirstOrDefault(e => !Int32.TryParse(e.Key, out value) && e.Key != "share...").Value;
 
             HtmlNode firstBoldItem = node.Descendants("b").FirstOrDefault();
             if (firstBoldItem != null)

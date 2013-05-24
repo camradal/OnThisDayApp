@@ -9,6 +9,7 @@ using AgFx;
 using BugSense;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using OnThisDayApp.ViewModels;
 using Utilities;
 
 namespace OnThisDayApp
@@ -25,9 +26,9 @@ namespace OnThisDayApp
         
         public static bool MyDateTimeSet { get; set; }
         public static DateTime MyDateTime { get; set; }
-        
-        public static Stopwatch Watch { get; set; }
 
+        public static ShareModel ShareViewModel { get; set; }
+        
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -39,8 +40,6 @@ namespace OnThisDayApp
         /// </summary>
         public App()
         {
-            Watch = new Stopwatch();
-            Watch.Start();
 
             var overridenOptions = BugSenseHandler.Instance.GetDefaultOptions();
             overridenOptions.Title = "Oops! Something is wrong";

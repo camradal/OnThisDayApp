@@ -6,7 +6,9 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:utilities="clr-namespace:Utilities" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    xmlns:utilities="clr-namespace:Utilities"
+    xmlns:utilities2="clr-namespace:Utilities;assembly=OnThisDayApp.Core"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
@@ -15,7 +17,7 @@
     toolkit:TiltEffect.IsTiltEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <utilities:AppSettings x:Key="appSettings" />
+        <utilities2:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
         <DataTemplate x:Key="HightlightsTemplate">
             <Grid Margin="0,0,6,9">

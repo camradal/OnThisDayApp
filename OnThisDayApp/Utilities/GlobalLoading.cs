@@ -33,7 +33,6 @@ namespace Utilities
             }
             set
             {
-                bool loading = IsLoading;
                 if (value)
                 {
                     ++loadingCount;

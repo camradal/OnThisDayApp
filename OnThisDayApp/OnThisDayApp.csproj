@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -100,11 +100,13 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShareHelper.cs" />
+    <Compile Include="SharePage.xaml.cs">
+      <DependentUpon>SharePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tiles\LiveTileCreator.cs" />
-    <Compile Include="Utilities\AppSettings.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
     <Compile Include="Converters\InverseConverter.cs" />
-    <Compile Include="Utilities\LowMemoryHelper.cs" />
     <Compile Include="Utilities\RandomLoader.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
     <Compile Include="Utilities\ReviewThisAppTask.cs" />
@@ -146,6 +148,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SharePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\Ads.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -176,8 +182,6 @@
     <Content Include="icons\appbar.share.rest.png" />
     <Content Include="icons\Application_Icon_159.png" />
     <Content Include="icons\Application_Icon_336.png" />
-    <Content Include="icons\Application_Icon_62.png" />
-    <Content Include="icons\Application_Icon_173.png" />
     <Content Include="icons\Application_Icon_691.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />

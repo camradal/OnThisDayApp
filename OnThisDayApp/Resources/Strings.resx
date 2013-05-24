@@ -216,6 +216,9 @@
   <data name="PageTitleSettings" xml:space="preserve">
     <value>settings</value>
   </data>
+  <data name="PageTitleShare" xml:space="preserve">
+    <value>SHARE</value>
+  </data>
   <data name="PivotTitleBirthdays" xml:space="preserve">
     <value>birthdays</value>
   </data>
@@ -240,6 +243,12 @@
   <data name="Rate" xml:space="preserve">
     <value>Please rate and comment on this app in Marketplace</value>
   </data>
+  <data name="SettingBrowserSelection" xml:space="preserve">
+    <value>Browser selection</value>
+  </data>
+  <data name="SettingBuiltInBrowser" xml:space="preserve">
+    <value>built-in browser</value>
+  </data>
   <data name="SettingFontSize" xml:space="preserve">
     <value>Font size for descriptions</value>
   </data>
@@ -248,6 +257,9 @@
   </data>
   <data name="SettingFontSizeNormal" xml:space="preserve">
     <value>normal</value>
+  </data>
+  <data name="SettingInternetExplorer" xml:space="preserve">
+    <value>internet explorer</value>
   </data>
   <data name="SettingLiveTile" xml:space="preserve">
     <value>Live tile</value>
@@ -260,6 +272,24 @@
   </data>
   <data name="SettingSortOrder" xml:space="preserve">
     <value>Order of events</value>
+  </data>
+  <data name="SettingTileDoNotFlip" xml:space="preserve">
+    <value>do not show</value>
+  </data>
+  <data name="SettingTileOption" xml:space="preserve">
+    <value>Back of the tile</value>
+  </data>
+  <data name="SettingTileShowLogo" xml:space="preserve">
+    <value>show logo</value>
+  </data>
+  <data name="ShareEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ShareSocialNetwork" xml:space="preserve">
+    <value>Social networks</value>
+  </data>
+  <data name="ShareTextMessaging" xml:space="preserve">
+    <value>Text message</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version:</value>

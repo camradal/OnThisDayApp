@@ -26,6 +26,9 @@ namespace OnThisDayApp
         {
             base.OnNavigatedTo(e);
 
+            if (webBrowser1.Source != null)
+                return;
+
             string uri;
             if (NavigationContext.QueryString.TryGetValue("uri", out uri))
             {
@@ -34,11 +37,6 @@ namespace OnThisDayApp
                 sourceUrl = new Uri(sourceString, UriKind.Absolute);
                 webBrowser1.Source = sourceUrl;
             }
-            //else if (isNewPage && State.ContainsKey("SourceUrl"))
-            //{
-            //    sourceUrl = new Uri(State["SourceUrl"].ToString());
-            //    webBrowser1.Source = sourceUrl;
-            //}
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -50,11 +48,6 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.IsLoading = false;
                 GlobalLoading.Instance.LoadingText = null;
                 navigating = false;
-            }
-
-            if (e.NavigationMode != NavigationMode.Back)
-            {
-                //State["SourceUrl"] = sourceUrl;
             }
         }
 

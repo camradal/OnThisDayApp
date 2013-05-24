@@ -114,7 +114,7 @@ namespace Utilities
                 StandardTileData tileData = new StandardTileData()
                 {
                     Title = "On This Day...",
-                    BackgroundImage = new Uri("/icons/Application_Icon_173.png", UriKind.Relative),
+                    BackgroundImage = new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
                     BackBackgroundImage = new Uri("NONESUCH.png", UriKind.Relative),
                     BackTitle = string.Empty,
                     BackContent = string.Empty
