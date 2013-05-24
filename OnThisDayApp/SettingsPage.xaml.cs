@@ -36,14 +36,20 @@ namespace OnThisDayApp
 
         public int DisplayFontSize
         {
-            get
-            {
-                return AppSettings.DisplayFontSize;
-            }
-            set
-            {
-                AppSettings.DisplayFontSize = value;
-            }
+            get { return AppSettings.DisplayFontSize; }
+            set { AppSettings.DisplayFontSize = value; }
+        }
+
+        public bool ShowBackTile
+        {
+            get { return AppSettings.ShowTileBack; }
+            set { AppSettings.ShowTileBack = value; }
+        }
+
+        public bool BrowserSelection
+        {
+            get { return AppSettings.BrowserSelection; }
+            set { AppSettings.BrowserSelection = value; }
         }
 
         public SettingsPage()

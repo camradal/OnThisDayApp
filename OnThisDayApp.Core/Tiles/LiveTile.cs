@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Shell;
+using Utilities;
 
 namespace OnThisDayApp
 {
@@ -40,17 +41,28 @@ namespace OnThisDayApp
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
+                var backBackgroundImage = new Uri("", UriKind.Relative);
+                var wideBackBackgroundImage = new Uri("", UriKind.Relative);
+                string backTitle = "";
+
+                if (AppSettings.ShowTileBack)
+                {
+                    backBackgroundImage = new Uri("/icons/Application_Icon_336.png", UriKind.Relative);
+                    wideBackBackgroundImage = new Uri("/icons/Application_Icon_691.png", UriKind.Relative);
+                    backTitle = "On This Day...";
+                }
+
                 UpdateFlipTile(
                     title,
-                    "On This Day...",
+                    backTitle,
                     string.Empty,
                     string.Empty,
                     0,
                     new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
                     new Uri("isostore:" + fileNameMed),
-                    new Uri("/icons/Application_Icon_336.png", UriKind.Relative),
+                    backBackgroundImage,
                     new Uri("isostore:" + fileNameBig),
-                    new Uri("/icons/Application_Icon_691.png", UriKind.Relative));
+                    wideBackBackgroundImage);
             }
         }
 
@@ -58,12 +70,19 @@ namespace OnThisDayApp
         {
             string fontSize = Application.Current.Resources["PhoneFontSizeSmall"].ToString();
             string fileName = WriteTileToDisk(title, content, 173, 173, fontSize, new Thickness(12, 6, 6, 32));
+            Uri backBackgroundImage = new Uri("", UriKind.Relative);
+            string backTitle = "";
+            if (AppSettings.ShowTileBack)
+            {
+                backBackgroundImage = new Uri("/icons/Application_Icon_336.png", UriKind.Relative);
+                backTitle = "On This Day...";
+            }
             var data = new StandardTileData()
             {
                 Title = title,
-                BackTitle = "On This Day...",
+                BackTitle = backTitle,
                 BackgroundImage = new Uri("isostore:" + fileName),
-                BackBackgroundImage = new Uri("/icons/Application_Icon_336.png", UriKind.Relative)
+                BackBackgroundImage = backBackgroundImage
             };
             return data;
         }

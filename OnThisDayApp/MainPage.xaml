@@ -8,6 +8,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:pubcenter="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
     xmlns:utilities="clr-namespace:Utilities" xmlns:AdDuplex="clr-namespace:AdDuplex;assembly=AdDuplex.WindowsPhone"
+    xmlns:utilities2="clr-namespace:Utilities;assembly=OnThisDayApp.Core"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -17,7 +18,7 @@
     toolkit:TiltEffect.IsTiltEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <utilities:AppSettings x:Key="appSettings" />
+        <utilities2:AppSettings x:Key="appSettings" />
         <utilities:FontSizeConverter x:Key="fontSizeConverter" />
         <DataTemplate x:Key="HightlightsTemplate">
             <Grid Margin="0,0,6,9">

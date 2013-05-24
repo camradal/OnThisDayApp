@@ -29,6 +29,15 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.7",
+                        Description =
+                            "- Sharing improvements: text, e-mail and social networks\n" +
+                            "- Option to show only the front of the live tile\n" +
+                            "- Option to open articles in Internet Explorer\n" +
+                            "- Live tile improvements"
+                    },
+                    new NewItem
+                    {
                         Version = "2.6",
                         Description =
                             "- Fix reported bugs"
@@ -161,7 +170,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.6";
+            versionText.Text = "2.7";
         }
     }
 }
