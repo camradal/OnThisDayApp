@@ -22,6 +22,7 @@ namespace Utilities
         private const string DisplayFontSizeKeyName = "DisplayFontSize";
         private const string ShowTileBackKeyName = "ShowTileBack";
         private const string BrowserSelectionKeyName = "BrowserSelection";
+        private const string OrientationLockKeyName = "OrientationLock";
 
         private const bool DataStoreUpdate21Default = false;
         private const int NumberOfStartsDefault = 0;
@@ -33,6 +34,7 @@ namespace Utilities
         private const int DisplayFontSizeDefault = 0;
         private const bool ShowTileBackDefault = false;
         private const bool BrowserSelectionDefault = false;
+        private const bool OrientationLockDefault = false;
 
         #endregion
 
@@ -202,6 +204,21 @@ namespace Utilities
             set
             {
                 if (AddOrUpdateValue(BrowserSelectionKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public static bool OrientationLock
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(OrientationLockKeyName, OrientationLockDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(OrientationLockKeyName, value))
                 {
                     Save();
                 }

@@ -2,6 +2,8 @@
 using System.Net;
 using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using OnThisDayApp.Resources;
 using Utilities;
 
@@ -19,10 +21,6 @@ namespace OnThisDayApp
 
             webBrowser1.Navigated += webBrowser1_Navigated;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
-
-            // ads
-            AdBox.ErrorOccurred += AdBox_ErrorOccurred;
-            AdBox.AdRefreshed += AdBox_AdRefreshed;
         }
 
         #region Navigation
@@ -30,6 +28,9 @@ namespace OnThisDayApp
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            bool locked = AppSettings.OrientationLock;
+            SetOrientation(locked);
 
             if (webBrowser1.Source != null)
                 return;
@@ -58,6 +59,24 @@ namespace OnThisDayApp
 
         #endregion
 
+        #region Menu
+
+        private void ApplicationBarOrientationMenuItem_OnClick(object sender, EventArgs e)
+        {
+            bool locked = !AppSettings.OrientationLock;
+            AppSettings.OrientationLock = locked;
+            SetOrientation(locked);
+        }
+
+        private void SetOrientation(bool locked)
+        {
+            this.SupportedOrientations = locked ? SupportedPageOrientation.Portrait : SupportedPageOrientation.PortraitOrLandscape;
+            string text = locked ? "unlock orientation" : "lock orientation";
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = text;
+        }
+
+        #endregion
+
         #region Web browser
 
         void webBrowser1_Navigated(object sender, NavigationEventArgs e)
@@ -78,28 +97,6 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
             }
             navigating = false;
-        }
-
-        #endregion
-
-        #region Ads
-
-        void AdBox_AdRefreshed(object sender, EventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdDuplexAdControl.Visibility = Visibility.Collapsed;
-                AdBox.Visibility = Visibility.Visible;
-            });
-        }
-
-        void AdBox_ErrorOccurred(object sender, Microsoft.Advertising.AdErrorEventArgs e)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                AdBox.Visibility = Visibility.Collapsed;
-                AdDuplexAdControl.Visibility = Visibility.Visible;
-            });
         }
 
         #endregion
