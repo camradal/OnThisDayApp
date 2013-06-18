@@ -11,7 +11,8 @@ namespace OnThisDayApp
         {
             Strings.ShareEmail,
             Strings.ShareSocialNetwork,
-            Strings.ShareTextMessaging
+            Strings.ShareTextMessaging,
+            Strings.ShareClipboard
         };
 
         public SharePage()
@@ -34,6 +35,10 @@ namespace OnThisDayApp
                 ShareHelper.ShareViaSocial(item);
             else if (selectedItem == Strings.ShareTextMessaging)
                 ShareHelper.ShareViaSms(item);
+            else if (selectedItem == Strings.ShareClipboard)
+                ShareHelper.ShareViaClipBoard(item);
+
+            ShareListBox.SelectedIndex = -1;
         }
     }
 }
