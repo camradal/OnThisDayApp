@@ -178,7 +178,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.7";
+            versionText.Text = "2.8";
         }
     }
 }
