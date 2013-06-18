@@ -47,11 +47,7 @@
     <Reference Include="AgFx">
       <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
     </Reference>
-    <Reference Include="AgFx.Controls">
-      <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Phone" />
-    <Reference Include="System.Net" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
