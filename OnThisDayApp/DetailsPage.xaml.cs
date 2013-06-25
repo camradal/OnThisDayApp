@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using OnThisDayApp.Resources;
 using Utilities;
 
@@ -26,6 +28,9 @@ namespace OnThisDayApp
         {
             base.OnNavigatedTo(e);
 
+            bool locked = AppSettings.OrientationLock;
+            SetOrientation(locked);
+
             if (webBrowser1.Source != null)
                 return;
 
@@ -49,6 +54,24 @@ namespace OnThisDayApp
                 GlobalLoading.Instance.LoadingText = null;
                 navigating = false;
             }
+        }
+
+        #endregion
+
+        #region Menu
+
+        private void ApplicationBarOrientationMenuItem_OnClick(object sender, EventArgs e)
+        {
+            bool locked = !AppSettings.OrientationLock;
+            AppSettings.OrientationLock = locked;
+            SetOrientation(locked);
+        }
+
+        private void SetOrientation(bool locked)
+        {
+            this.SupportedOrientations = locked ? SupportedPageOrientation.Portrait : SupportedPageOrientation.PortraitOrLandscape;
+            string text = locked ? "unlock orientation" : "lock orientation";
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = text;
         }
 
         #endregion

@@ -29,6 +29,14 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.8",
+                        Description =
+                            "- Orientation lock option\n" +
+                            "- Remove ads on details page\n" +
+                            "- Share via clipboard"
+                    },
+                    new NewItem
+                    {
                         Version = "2.7",
                         Description =
                             "- Sharing improvements: text, e-mail and social networks\n" +
@@ -170,7 +178,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.7";
+            versionText.Text = "2.8";
         }
     }
 }

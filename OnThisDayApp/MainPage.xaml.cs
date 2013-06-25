@@ -1,5 +1,6 @@
 ﻿using AgFx;
 using BugSense;
+using BugSense.Models;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -111,7 +112,7 @@ namespace OnThisDayApp
 
                     if (App.IsMemoryLimited)
                     {
-                        ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).IsEnabled = false;
+                        ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).IsEnabled = false;
                     }
                      
                     IndicateStoppedLoading();
@@ -129,7 +130,11 @@ namespace OnThisDayApp
 
                     if (NetworkInterface.GetIsNetworkAvailable())
                     {
-                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki + ex.Message);
+                        var extraData = new Collection<CrashExtraData>
+                        {
+                            new CrashExtraData { Key = "Date", Value = CurrentDateForWiki }
+                        };
+                        BugSenseHandler.Instance.SendExceptionMap(ex, extraData);
                     }
                     else
                     {
@@ -144,22 +149,6 @@ namespace OnThisDayApp
                 });
 
             SetPivotTitle();
-        }
-
-        private void SetApplicationBarLocalizedStrings()
-        {
-            // specify the text explicitly on the app bar using our resource string
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).Text = Strings.ButtonToday;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[1]).Text = Strings.ButtonChooseDate;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).Text = Strings.ButtonPrevDay;
-            ((ApplicationBarIconButton)ApplicationBar.Buttons[3]).Text = Strings.ButtonNextDay;
-
-            // menu bar
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = Strings.MenuItemMyEvents;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[1]).Text = Strings.MenuItemRateThisApp;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[2]).Text = Strings.MenuItemPinLiveTile;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[3]).Text = Strings.MenuItemSettings;
-            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[4]).Text = Strings.MenuItemAbout;
         }
 
         private void IndicateStartedLoading(int numberOfStarts)
@@ -290,6 +279,20 @@ namespace OnThisDayApp
             }
         }
 
+        private void ApplicationBarOrientationMenuItem_OnClick(object sender, EventArgs e)
+        {
+            bool locked = !AppSettings.OrientationLock;
+            AppSettings.OrientationLock = locked;
+            SetOrientation(locked);
+        }
+
+        private void SetOrientation(bool locked)
+        {
+            this.SupportedOrientations = locked ? SupportedPageOrientation.Portrait : SupportedPageOrientation.PortraitOrLandscape;
+            string text = locked ? "unlock orientation" : "lock orientation";
+            ((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).Text = text;
+        }
+
         private void MyEventsMenuItem_Click(object sender, EventArgs e)
         {
             // use dispatcher to prevent jumping elements on the screen
@@ -406,6 +409,9 @@ namespace OnThisDayApp
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            bool locked = AppSettings.OrientationLock;
+            SetOrientation(locked);
 
             if (page != null)
             {

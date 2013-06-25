@@ -20,23 +20,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contains the name of the application and page title-->
         <phone:WebBrowser Grid.Row="0" x:Name="webBrowser1" IsScriptEnabled="True" Margin="0" />
-        <!--<my:AdControl Grid.Row="1" x:Name="AdBox" AdUnitId="81233" ApplicationId="7e8e9f64-87ca-4f3b-ae60-34ee61acb52c" Margin="0" Width="480" Height="80" Style="{StaticResource AdControlStyle1}"/>-->
-        <!--<Image Grid.Row="1" Source="/icons/ad.png" Width="480" Height="80"/>-->
     </Grid>
- 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+            <shell:ApplicationBar.MenuItems >
+                <shell:ApplicationBarMenuItem Text="lock orientation" Click="ApplicationBarOrientationMenuItem_OnClick"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

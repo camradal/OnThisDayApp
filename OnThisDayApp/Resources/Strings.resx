@@ -282,6 +282,9 @@
   <data name="SettingTileShowLogo" xml:space="preserve">
     <value>show logo</value>
   </data>
+  <data name="ShareClipboard" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
   <data name="ShareEmail" xml:space="preserve">
     <value>Email</value>
   </data>

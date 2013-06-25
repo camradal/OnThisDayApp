@@ -165,6 +165,7 @@
             <shell:ApplicationBarIconButton x:Name="AppBarButtonPrevDay" IconUri="/icons/appbar.back.rest.png" Text="previous" Click="AppBarButtonPrevDay_Click" />
             <shell:ApplicationBarIconButton x:Name="AppBarButtonNextDay" IconUri="/icons/appbar.next.rest.png" Text="next day" Click="AppBarButtonNextDay_Click" />
             <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="lock orientation" Click="ApplicationBarOrientationMenuItem_OnClick"/>
                 <shell:ApplicationBarMenuItem x:Name="MyEventsMenuItem" Text="calendar and birthdays" Click="MyEventsMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="RateThisAppMenuItem" Text="rate this app" Click="RateThisAppMenuItem_Click" />
                 <shell:ApplicationBarMenuItem x:Name="PinLiveTileMenuItem" Text="pin live tile" Click="PinLiveTileMenuItem_Click" />

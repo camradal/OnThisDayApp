@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.ViewModels;
 
@@ -54,6 +55,15 @@ namespace OnThisDayApp
             catch (Exception)
             {
                 // fast-clicking can result in exception, so we just handle it
+            }
+        }
+
+        internal static void ShareViaClipBoard(ShareModel model)
+        {
+            string text = model.Description + "\n" + @"http://en.wikipedia.org" + model.Link;
+            if (MessageBox.Show(text, "Copy to Clipboard?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                Clipboard.SetText(text);
             }
         }
     }
