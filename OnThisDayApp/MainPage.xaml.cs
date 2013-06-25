@@ -1,5 +1,6 @@
 ﻿using AgFx;
 using BugSense;
+using BugSense.Models;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -136,7 +137,11 @@ namespace OnThisDayApp
 
                     if (NetworkInterface.GetIsNetworkAvailable())
                     {
-                        BugSenseHandler.Instance.LogError(ex, "Failed to get data for " + CurrentDateForWiki + ex.Message);
+                        var extraData = new Collection<CrashExtraData>
+                        {
+                            new CrashExtraData { Key = "Date", Value = CurrentDateForWiki }
+                        };
+                        BugSenseHandler.Instance.SendExceptionMap(ex, extraData);
                     }
                     else
                     {

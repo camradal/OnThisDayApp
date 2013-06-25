@@ -40,12 +40,7 @@ namespace OnThisDayApp
         /// </summary>
         public App()
         {
-
-            var overridenOptions = BugSenseHandler.Instance.GetDefaultOptions();
-            overridenOptions.Title = "Oops! Something is wrong";
-            overridenOptions.Text = "We've noticed an error has occurred. We've logged it and will fix it in the next update.";
-            overridenOptions.Type = enNotificationType.MessageBox;
-            BugSenseHandler.Instance.Init(this, "52782d56", overridenOptions);
+            BugSenseHandler.Instance.initAndStartSession(this, "52782d56");
 
             // Standard Silverlight initialization
             InitializeComponent();

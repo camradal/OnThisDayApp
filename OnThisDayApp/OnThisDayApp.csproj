@@ -59,8 +59,9 @@
     <Reference Include="AgFx">
       <HintPath>..\packages\AgFx.1.1.0.1101\lib\sl3-wp\AgFx.dll</HintPath>
     </Reference>
-    <Reference Include="BugSense">
-      <HintPath>..\packages\BugSense.WP7.0.9.9.1\lib\sl3-wp\BugSense.dll</HintPath>
+    <Reference Include="BugSense, Version=0.9.9.32861, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BugSense.WP7.3.1\lib\wp71\BugSense.dll</HintPath>
     </Reference>
     <Reference Include="FlurryWP7SDK">
       <HintPath>..\..\libs\flurry\FlurryWP7SDK.dll</HintPath>
