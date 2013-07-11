@@ -31,6 +31,7 @@ namespace OnThisDayApp
                     {
                         Version = "2.9",
                         Description =
+                            "- Implement sharing from wikipedia page\n" +
                             "- Important fix for settings getting reset"
                     },
                     new NewItem
@@ -38,7 +39,7 @@ namespace OnThisDayApp
                         Version = "2.8",
                         Description =
                             "- Orientation lock option\n" +
-                            "- Remove ads on details page\n" +
+                            "- Remove ads on wikipedia page\n" +
                             "- Share via clipboard"
                     },
                     new NewItem
