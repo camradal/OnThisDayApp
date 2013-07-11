@@ -29,6 +29,12 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9",
+                        Description =
+                            "- Important fix for settings getting reset"
+                    },
+                    new NewItem
+                    {
                         Version = "2.8",
                         Description =
                             "- Orientation lock option\n" +
@@ -178,7 +184,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.8";
+            versionText.Text = "2.9";
         }
     }
 }

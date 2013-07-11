@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
+using System.Threading;
 
 namespace Utilities
 {
@@ -10,6 +11,7 @@ namespace Utilities
     {
         #region Variables
 
+        private const string mutextName = "OnThisDayMutex";
         private static readonly IsolatedStorageSettings settings;
 
         private const string DataStoreUpdate21KeyName = "DataStoreUpdate21";
@@ -42,187 +44,79 @@ namespace Utilities
 
         public static bool DataStoreUpdate21
         {
-            get
-            {
-                return GetValueOrDefault<bool>(DataStoreUpdate21KeyName, DataStoreUpdate21Default);
-            }
-            set
-            {
-                if (AddOrUpdateValue(DataStoreUpdate21KeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(DataStoreUpdate21KeyName, DataStoreUpdate21Default); }
+            set { AddOrUpdateValue(DataStoreUpdate21KeyName, value); }
         }
 
         public static int NumberOfStarts
         {
-            get
-            {
-                return GetValueOrDefault<int>(NumberOfStartsKeyName, NumberOfStartsDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(NumberOfStartsKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<int>(NumberOfStartsKeyName, NumberOfStartsDefault); }
+            set { AddOrUpdateValue(NumberOfStartsKeyName, value); }
         }
 
         public static bool FirstStartSetting
         {
-            get
-            {
-                return GetValueOrDefault<bool>(FirstStartKeyName, FirstStartDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(FirstStartKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(FirstStartKeyName, FirstStartDefault); }
+            set { AddOrUpdateValue(FirstStartKeyName, value); }
         }
 
         public static string InterfaceLanguage
         {
-            get
-            {
-                return GetValueOrDefault<string>(InterfaceLanguageKeyName, InterfaceLanguageDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(InterfaceLanguageKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<string>(InterfaceLanguageKeyName, InterfaceLanguageDefault); }
+            set { AddOrUpdateValue(InterfaceLanguageKeyName, value); }
         }
 
         public static string ContentLanguageSetting
         {
-            get
-            {
-                return GetValueOrDefault<string>(ContentLanguageKeyName, ContentLanguageDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(ContentLanguageKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<string>(ContentLanguageKeyName, ContentLanguageDefault); }
+            set { AddOrUpdateValue(ContentLanguageKeyName, value); }
         }
 
         public static bool IsLowMemDevice
         {
-            get
-            {
-                return LowMemoryHelper.IsLowMemDevice;
-            }
+            get { return LowMemoryHelper.IsLowMemDevice; }
         }
 
         public static bool LiveTileEnabled
         {
-            get
-            {
-                return !IsLowMemDevice && !LiveTileDisabled;
-            }
-            set
-            {
-                LiveTileDisabled = !value;
-            }
+            get { return !IsLowMemDevice && !LiveTileDisabled; }
+            set { LiveTileDisabled = !value; }
         }
 
         public static bool LiveTileDisabled
         {
-            get
-            {
-                return GetValueOrDefault<bool>(LiveTileDisabledKeyName, LiveTileDisabledDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(LiveTileDisabledKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(LiveTileDisabledKeyName, LiveTileDisabledDefault); }
+            set { AddOrUpdateValue(LiveTileDisabledKeyName, value); }
         }
 
         public static bool ShowNewestItemsFirst
         {
-            get
-            {
-                return GetValueOrDefault<bool>(ShowNewestItemsFirstKeyName, ShowNewestItemsFirstDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(ShowNewestItemsFirstKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(ShowNewestItemsFirstKeyName, ShowNewestItemsFirstDefault); }
+            set { AddOrUpdateValue(ShowNewestItemsFirstKeyName, value); }
         }
 
         public static int DisplayFontSize
         {
-            get
-            {
-                return GetValueOrDefault<int>(DisplayFontSizeKeyName, DisplayFontSizeDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(DisplayFontSizeKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<int>(DisplayFontSizeKeyName, DisplayFontSizeDefault); }
+            set { AddOrUpdateValue(DisplayFontSizeKeyName, value); }
         }
 
         public static bool ShowTileBack
         {
-            get
-            {
-                return GetValueOrDefault<bool>(ShowTileBackKeyName, ShowTileBackDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(ShowTileBackKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(ShowTileBackKeyName, ShowTileBackDefault); }
+            set { AddOrUpdateValue(ShowTileBackKeyName, value); }
         }
 
         public static bool BrowserSelection
         {
-            get
-            {
-                return GetValueOrDefault<bool>(BrowserSelectionKeyName, BrowserSelectionDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(BrowserSelectionKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(BrowserSelectionKeyName, BrowserSelectionDefault); }
+            set { AddOrUpdateValue(BrowserSelectionKeyName, value); }
         }
 
         public static bool OrientationLock
         {
-            get
-            {
-                return GetValueOrDefault<bool>(OrientationLockKeyName, OrientationLockDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(OrientationLockKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return GetValueOrDefault<bool>(OrientationLockKeyName, OrientationLockDefault); }
+            set { AddOrUpdateValue(OrientationLockKeyName, value); }
         }
 
         #endregion
@@ -246,54 +140,62 @@ namespace Utilities
         /// </summary>
         private static bool AddOrUpdateValue(string key, Object value)
         {
-            bool valueChanged = false;
-
-            if (settings.Contains(key))
+            var mutex = new Mutex(false, mutextName);
+            try
             {
-                if (settings[key] != value)
+                mutex.WaitOne();
+                bool valueChanged = false;
+
+                if (settings.Contains(key))
                 {
-                    settings[key] = value;
+                    if (settings[key] != value)
+                    {
+                        settings[key] = value;
+                        valueChanged = true;
+                    }
+                }
+                else
+                {
+                    settings.Add(key, value);
                     valueChanged = true;
                 }
+                if (valueChanged)
+                {
+                    settings.Save();                    
+                }
+                return valueChanged;
             }
-            else
+            finally
             {
-                settings.Add(key, value);
-                valueChanged = true;
+                mutex.ReleaseMutex();
             }
-            return valueChanged;
         }
 
         /// <summary>
         /// Get the current value of the setting, or if it is not found, set the 
         /// setting to the default setting.
         /// </summary>
-        private static T GetValueOrDefault<T>(string Key, T defaultValue)
+        private static T GetValueOrDefault<T>(string key, T defaultValue)
         {
-            T value;
-
-            if (settings.Contains(Key))
+            var mutex = new Mutex(false, mutextName);
+            try
             {
-                value = (T)settings[Key];
+                mutex.WaitOne();
+                T value;
+
+                if (settings.Contains(key))
+                {
+                    value = (T)settings[key];
+                }
+                else
+                {
+                    value = defaultValue;
+                }
+                return value;
             }
-            else
+            finally
             {
-                value = defaultValue;
-            }
-            return value;
-        }
-
-        private static void Save()
-        {
-            settings.Save();
-        }
-
-        private static void ClearOldSettings()
-        {
-            // FirstStart - not needed anymore
-            if (settings.Contains(FirstStartKeyName))
-            {
-                settings.Remove(FirstStartKeyName);
+                mutex.ReleaseMutex();
             }
         }
 
