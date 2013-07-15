@@ -67,6 +67,24 @@ namespace OnThisDayApp
             SetOrientation(locked);
         }
 
+        private void ApplicationBarOrientationShareMenuItem_OnClick(object sender, EventArgs e)
+        {
+            if (App.ShareViewModel == null) return;
+
+            var uri = new Uri("/SharePage.xaml", UriKind.Relative);
+            Dispatcher.BeginInvoke(() =>
+            {
+                try
+                {
+                    NavigationService.Navigate(uri);
+                }
+                catch (Exception)
+                {
+                    // prevent double-click errors
+                }
+            });
+        }
+
         private void SetOrientation(bool locked)
         {
             this.SupportedOrientations = locked ? SupportedPageOrientation.Portrait : SupportedPageOrientation.PortraitOrLandscape;

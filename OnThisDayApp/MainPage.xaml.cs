@@ -230,8 +230,19 @@ namespace OnThisDayApp
             }
 
             // navigate to the new page
-            FrameworkElement root = Application.Current.RootVisual as FrameworkElement;
+            var root = (FrameworkElement)Application.Current.RootVisual;
             root.DataContext = selectedItem;
+
+            var item = (PivotItem)this.MainPivot.SelectedItem;
+            switch ((string)item.Header)
+            {
+                case "holidays":
+                    SetHolidayShareItem(selectedItem);
+                    break;
+                default:
+                    SetEventShareItem(selectedItem);
+                    break;
+            }
 
             OpenDetailsPage(selectedItem.Link);
 
@@ -500,10 +511,9 @@ namespace OnThisDayApp
             if (menu == null || menu.ItemContainerGenerator == null)
                 return;
 
-            string suffix = string.IsNullOrEmpty(menu.Tag as string) ? string.Empty : " " + menu.Tag;
-
             Entry model = (Entry)menu.DataContext;
             Dictionary<string, string> links = model.Links;
+            SetEventShareItem(model);
 
             foreach (KeyValuePair<string, string> link in links)
             {
@@ -513,14 +523,6 @@ namespace OnThisDayApp
                 {
                     container.Click += (obj, args) =>
                     {
-                        string title = "On this day in " + model.Year;
-                        string description = title + ": " + model.Description + suffix;
-                        App.ShareViewModel = new ShareModel
-                        {
-                            Title = title,
-                            Description = description,
-                            Link = model.Link
-                        };
                         Dispatcher.BeginInvoke(() =>
                         {
                             try
@@ -545,6 +547,18 @@ namespace OnThisDayApp
             }
         }
 
+        private static void SetEventShareItem(Entry model)
+        {
+            string title = "On this day in " + model.Year;
+            string description = title + ": " + model.Description;
+            App.ShareViewModel = new ShareModel
+            {
+                Title = title,
+                Description = description,
+                Link = model.Link
+            };
+        }
+
         private void mainMenuHolidays_Loaded(object sender, RoutedEventArgs e)
         {
             var menu = sender as ContextMenu;
@@ -553,6 +567,7 @@ namespace OnThisDayApp
 
             Entry model = (Entry)menu.DataContext;
             Dictionary<string, string> links = model.Links;
+            SetHolidayShareItem(model);
 
             foreach (KeyValuePair<string, string> link in links)
             {
@@ -562,14 +577,6 @@ namespace OnThisDayApp
                 {
                     container.Click += (obj, args) =>
                     {
-                        string title = "Today is " + model.Year;
-                        string description = title + ReformatDescriptionForHolidays(model.Description);
-                        App.ShareViewModel = new ShareModel
-                        {
-                            Title = title,
-                            Description = description,
-                            Link = model.Link
-                        };
                         Dispatcher.BeginInvoke(() =>
                         {
                             try
@@ -592,6 +599,18 @@ namespace OnThisDayApp
                     };
                 }
             }
+        }
+
+        private static void SetHolidayShareItem(Entry model)
+        {
+            string title = "Today is " + model.Year;
+            string description = title + ReformatDescriptionForHolidays(model.Description);
+            App.ShareViewModel = new ShareModel
+            {
+                Title = title,
+                Description = description,
+                Link = model.Link
+            };
         }
 
         private static string ReformatDescriptionForHolidays(string description)

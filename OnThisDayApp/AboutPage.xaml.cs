@@ -29,10 +29,17 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9",
+                        Description =
+                            "- Implement sharing from wikipedia page\n" +
+                            "- Important fix for settings getting reset"
+                    },
+                    new NewItem
+                    {
                         Version = "2.8",
                         Description =
                             "- Orientation lock option\n" +
-                            "- Remove ads on details page\n" +
+                            "- Remove ads on wikipedia page\n" +
                             "- Share via clipboard"
                     },
                     new NewItem
@@ -178,7 +185,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.8";
+            versionText.Text = "2.9";
         }
     }
 }
