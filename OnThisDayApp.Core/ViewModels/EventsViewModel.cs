@@ -9,8 +9,7 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof(EventsPageLoader))]
     public sealed class EventsViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<GroupedEntries> events =
-            new BatchObservableCollection<GroupedEntries>(7);
+        private readonly ObservableCollection<GroupedEntries> events = new ObservableCollection<GroupedEntries>();
 
         public ObservableCollection<GroupedEntries> Events
         {
@@ -53,7 +52,7 @@ namespace OnThisDayApp.ViewModels
             RaisePropertyChanged("Events");
         }
 
-        private  void UpdateLayout(BatchObservableCollection<GroupedEntries> collection)
+        private  void UpdateLayout(ObservableCollection<GroupedEntries> collection)
         {
             for (int i = 0; i < collection.Count; i++)
             {
