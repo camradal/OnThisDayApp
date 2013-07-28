@@ -12,7 +12,6 @@ namespace Utilities
         #region Variables
 
         private const string mutextName = "OnThisDayMutex";
-        private static readonly IsolatedStorageSettings settings;
 
         private const string DataStoreUpdate21KeyName = "DataStoreUpdate21";
         private const string NumberOfStartsKeyName = "NumberOfStarts";
@@ -121,18 +120,6 @@ namespace Utilities
 
         #endregion
 
-        #region Constructor
-
-        static AppSettings()
-        {
-            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
-            {
-                settings = IsolatedStorageSettings.ApplicationSettings;
-            }
-        }
-
-        #endregion
-
         #region Helper Methods
 
         /// <summary>
@@ -146,6 +133,7 @@ namespace Utilities
                 mutex.WaitOne();
                 bool valueChanged = false;
 
+                var settings = IsolatedStorageSettings.ApplicationSettings;
                 if (settings.Contains(key))
                 {
                     if (settings[key] != value)
@@ -183,6 +171,7 @@ namespace Utilities
                 mutex.WaitOne();
                 T value;
 
+                var settings = IsolatedStorageSettings.ApplicationSettings;
                 if (settings.Contains(key))
                 {
                     value = (T)settings[key];
