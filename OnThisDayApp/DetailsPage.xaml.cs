@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -12,7 +11,7 @@ namespace OnThisDayApp
     public partial class DetailsPage
     {
         private volatile bool navigating;
-        private const string sourceUriFormat = @"http://en.wikipedia.org{0}";
+        private const string sourceUriFormat = @"http://en.m.wikipedia.org{0}";
         private Uri sourceUrl;
 
         public DetailsPage()
