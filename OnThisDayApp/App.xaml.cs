@@ -78,14 +78,14 @@ namespace OnThisDayApp
         {
             FirstLoad = true;
             IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
-            FlurryWP7SDK.Api.StartSession(ApiKeyValue);
+            FlurryWP8SDK.Api.StartSession(ApiKeyValue);
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            FlurryWP7SDK.Api.StartSession(ApiKeyValue);
+            FlurryWP8SDK.Api.StartSession(ApiKeyValue);
             IsMemoryLimited = LowMemoryHelper.IsLowMemDevice;
         }
 
