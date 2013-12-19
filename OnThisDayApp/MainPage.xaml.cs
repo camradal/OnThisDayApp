@@ -154,18 +154,11 @@ namespace OnThisDayApp
         private void IndicateStartedLoading(int numberOfStarts)
         {
             GlobalLoading.Instance.IsLoading = true;
-            if (App.FirstLoad)
+            if (App.FirstLoad && numberOfStarts == 0)
             {
-                if (numberOfStarts == 0)
-                {
-                    GlobalLoading.Instance.LoadingText = App.IsMemoryLimited ?
-                        Strings.InitialLoadLowMemoryDevice :
-                        Strings.InitialLoadRegularDevice;
-                }
-                else
-                {
-                    GlobalLoading.Instance.LoadingText = RandomLoader.GetRandomString();
-                }
+                GlobalLoading.Instance.LoadingText = App.IsMemoryLimited
+                    ? Strings.InitialLoadLowMemoryDevice
+                    : Strings.InitialLoadRegularDevice;
             }
         }
 

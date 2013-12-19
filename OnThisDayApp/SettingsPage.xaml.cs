@@ -6,7 +6,6 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using OnThisDayApp.ViewModels;
 using Utilities;
-using System.Windows;
 
 namespace OnThisDayApp
 {
@@ -38,12 +37,6 @@ namespace OnThisDayApp
         {
             get { return AppSettings.DisplayFontSize; }
             set { AppSettings.DisplayFontSize = value; }
-        }
-
-        public bool ShowBackTile
-        {
-            get { return AppSettings.ShowTileBack; }
-            set { AppSettings.ShowTileBack = value; }
         }
 
         public bool BrowserSelection

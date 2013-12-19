@@ -9,8 +9,7 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof(HolidaysPageLoader))]
     public sealed class HolidaysViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<Entry> holidays =
-            new BatchObservableCollection<Entry>(7);
+        private readonly ObservableCollection<Entry> holidays = new ObservableCollection<Entry>();
 
         public ObservableCollection<Entry> Holidays
         {
@@ -53,7 +52,7 @@ namespace OnThisDayApp.ViewModels
             RaisePropertyChanged("Holidays");
         }
 
-        private void UpdateLayout(BatchObservableCollection<Entry> collection)
+        private void UpdateLayout(ObservableCollection<Entry> collection)
         {
             for (int i = 0; i < collection.Count; i++)
             {

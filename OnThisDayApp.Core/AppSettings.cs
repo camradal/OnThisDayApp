@@ -12,7 +12,6 @@ namespace Utilities
         #region Variables
 
         private const string mutextName = "OnThisDayMutex";
-        private static readonly IsolatedStorageSettings settings;
 
         private const string DataStoreUpdate21KeyName = "DataStoreUpdate21";
         private const string NumberOfStartsKeyName = "NumberOfStarts";
@@ -22,7 +21,6 @@ namespace Utilities
         private const string LiveTileDisabledKeyName = "LiveTileDisabled";
         private const string ShowNewestItemsFirstKeyName = "ShowNewestItemsFirst";
         private const string DisplayFontSizeKeyName = "DisplayFontSize";
-        private const string ShowTileBackKeyName = "ShowTileBack";
         private const string BrowserSelectionKeyName = "BrowserSelection";
         private const string OrientationLockKeyName = "OrientationLock";
 
@@ -34,7 +32,6 @@ namespace Utilities
         private const bool LiveTileDisabledDefault = false;
         private const bool ShowNewestItemsFirstDefault = false;
         private const int DisplayFontSizeDefault = 0;
-        private const bool ShowTileBackDefault = false;
         private const bool BrowserSelectionDefault = false;
         private const bool OrientationLockDefault = false;
 
@@ -101,12 +98,6 @@ namespace Utilities
             set { AddOrUpdateValue(DisplayFontSizeKeyName, value); }
         }
 
-        public static bool ShowTileBack
-        {
-            get { return GetValueOrDefault<bool>(ShowTileBackKeyName, ShowTileBackDefault); }
-            set { AddOrUpdateValue(ShowTileBackKeyName, value); }
-        }
-
         public static bool BrowserSelection
         {
             get { return GetValueOrDefault<bool>(BrowserSelectionKeyName, BrowserSelectionDefault); }
@@ -121,18 +112,6 @@ namespace Utilities
 
         #endregion
 
-        #region Constructor
-
-        static AppSettings()
-        {
-            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
-            {
-                settings = IsolatedStorageSettings.ApplicationSettings;
-            }
-        }
-
-        #endregion
-
         #region Helper Methods
 
         /// <summary>
@@ -140,12 +119,13 @@ namespace Utilities
         /// </summary>
         private static bool AddOrUpdateValue(string key, Object value)
         {
-            var mutex = new Mutex(false, mutextName);
+            var mutex = new Mutex(true, mutextName);
             try
             {
                 mutex.WaitOne();
                 bool valueChanged = false;
 
+                var settings = IsolatedStorageSettings.ApplicationSettings;
                 if (settings.Contains(key))
                 {
                     if (settings[key] != value)
@@ -177,12 +157,13 @@ namespace Utilities
         /// </summary>
         private static T GetValueOrDefault<T>(string key, T defaultValue)
         {
-            var mutex = new Mutex(false, mutextName);
+            var mutex = new Mutex(true, mutextName);
             try
             {
                 mutex.WaitOne();
                 T value;
 
+                var settings = IsolatedStorageSettings.ApplicationSettings;
                 if (settings.Contains(key))
                 {
                     value = (T)settings[key];

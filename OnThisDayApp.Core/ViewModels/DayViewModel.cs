@@ -11,8 +11,7 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof (HighlightsPageLoader))]
     public sealed class DayViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<Entry> highlights =
-            new BatchObservableCollection<Entry>(7);
+        private readonly ObservableCollection<Entry> highlights = new ObservableCollection<Entry>();
 
         public DayViewModel()
         {

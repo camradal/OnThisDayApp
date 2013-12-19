@@ -9,8 +9,7 @@ namespace OnThisDayApp.ViewModels
     [DataLoader(typeof(DeathsPageLoader))]
     public sealed class DeathsViewModel : ModelItemBase<DayLoadContext>
     {
-        private readonly BatchObservableCollection<GroupedEntries> deaths =
-            new BatchObservableCollection<GroupedEntries>(7);
+        private readonly ObservableCollection<GroupedEntries> deaths = new ObservableCollection<GroupedEntries>();
 
         public ObservableCollection<GroupedEntries> Deaths
         {
@@ -53,7 +52,7 @@ namespace OnThisDayApp.ViewModels
             RaisePropertyChanged("Deaths");
         }
 
-        private  void UpdateLayout(BatchObservableCollection<GroupedEntries> collection)
+        private  void UpdateLayout(ObservableCollection<GroupedEntries> collection)
         {
             for (int i = 0; i < collection.Count; i++)
             {
