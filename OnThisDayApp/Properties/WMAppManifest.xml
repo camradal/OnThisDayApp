@@ -3,7 +3,7 @@
   <AppExtra xmlns="" AppPlatformVersion="8.0">
     <Extra Name="Tiles"/>
   </AppExtra>
-  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day..." RuntimeType="Silverlight" Version="2.9.0.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
+  <App xmlns="" ProductID="{fdf86779-b9b0-48e0-81db-f93c8faea550}" Title="On This Day..." RuntimeType="Silverlight" Version="2.9.1.0" Genre="apps.normal" Author="Dapper Panda" Description="" Publisher="Dapper Panda">
     <IconPath IsRelative="true" IsResource="false">icons\Application_Icon_159.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />

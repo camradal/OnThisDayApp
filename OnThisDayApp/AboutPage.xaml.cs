@@ -29,6 +29,13 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9.1",
+                        Description =
+                            "- Performance improvements\n" +
+                            "- Bug fixes"
+                    },
+                    new NewItem
+                    {
                         Version = "2.9",
                         Description =
                             "- Implement sharing from wikipedia page\n" +
@@ -185,7 +192,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.9";
+            versionText.Text = "2.9.1";
         }
     }
 }
