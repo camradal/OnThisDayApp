@@ -104,8 +104,6 @@
     <Compile Include="Tiles\LiveTileCreator.cs" />
     <Compile Include="Utilities\BackgroundAgent.cs" />
     <Compile Include="Converters\InverseConverter.cs" />
-    <Compile Include="Utilities\RandomLoader.cs" />
-    <Compile Include="Utilities\BuyThisAppTask.cs" />
     <Compile Include="Utilities\MetroGridHelper.cs" />
     <Compile Include="Utilities\ReviewThisAppTask.cs" />
     <Compile Include="MainPage.xaml.cs">
