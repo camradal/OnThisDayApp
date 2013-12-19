@@ -21,7 +21,6 @@ namespace Utilities
         private const string LiveTileDisabledKeyName = "LiveTileDisabled";
         private const string ShowNewestItemsFirstKeyName = "ShowNewestItemsFirst";
         private const string DisplayFontSizeKeyName = "DisplayFontSize";
-        private const string ShowTileBackKeyName = "ShowTileBack";
         private const string BrowserSelectionKeyName = "BrowserSelection";
         private const string OrientationLockKeyName = "OrientationLock";
 
@@ -33,7 +32,6 @@ namespace Utilities
         private const bool LiveTileDisabledDefault = false;
         private const bool ShowNewestItemsFirstDefault = false;
         private const int DisplayFontSizeDefault = 0;
-        private const bool ShowTileBackDefault = false;
         private const bool BrowserSelectionDefault = false;
         private const bool OrientationLockDefault = false;
 
@@ -98,12 +96,6 @@ namespace Utilities
         {
             get { return GetValueOrDefault<int>(DisplayFontSizeKeyName, DisplayFontSizeDefault); }
             set { AddOrUpdateValue(DisplayFontSizeKeyName, value); }
-        }
-
-        public static bool ShowTileBack
-        {
-            get { return GetValueOrDefault<bool>(ShowTileBackKeyName, ShowTileBackDefault); }
-            set { AddOrUpdateValue(ShowTileBackKeyName, value); }
         }
 
         public static bool BrowserSelection
