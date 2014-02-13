@@ -18,7 +18,7 @@ namespace OnThisDayApp
         {
             InitializeComponent();
 
-            webBrowser1.Navigated += webBrowser1_Navigated;
+            webBrowser1.Navigating += webBrowser1_Navigating;
             webBrowser1.LoadCompleted += webBrowser1_LoadCompleted;
         }
 
@@ -96,7 +96,7 @@ namespace OnThisDayApp
 
         #region Web browser
 
-        void webBrowser1_Navigated(object sender, NavigationEventArgs e)
+        private void webBrowser1_Navigating(object sender, NavigatingEventArgs e)
         {
             if (!navigating)
             {
