@@ -553,6 +553,15 @@ namespace OnThisDayApp
             }
         }
 
+        private void contextMenu_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var menu = sender as ContextMenu;
+            if (menu != null)
+            {
+                menu.ClearValue(FrameworkElement.DataContextProperty);
+            }
+        }
+
         private static void SetEventShareItem(Entry model)
         {
             string title = "On this day in " + model.Year;
