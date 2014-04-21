@@ -7,12 +7,12 @@ namespace Utilities
     public sealed class ReviewThisAppTask
     {
         private const int numberOfStartsThreshold = 5;
-        private const int numberOfStartsModulo = 50;
+        private const int numberOfStartsThreshold2 = 50;
 
         public void ShowAfterThreshold()
         {
             int starts = AppSettings.NumberOfStarts;
-            if ((starts == numberOfStartsThreshold || starts % numberOfStartsModulo == 0) &&
+            if ((starts == numberOfStartsThreshold || starts == numberOfStartsThreshold2) &&
                 GetMessageBoxResult() == MessageBoxResult.OK)
             {
                 try
