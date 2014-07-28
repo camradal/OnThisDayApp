@@ -72,6 +72,9 @@
     <Compile Include="Tiles\LiveTile.cs" />
     <Compile Include="Parsers\PageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolStackCRCLib.cs" />
+    <Compile Include="ToolStackPNGWriterLib.cs" />
+    <Compile Include="ToolStackPNGWriterWBext.cs" />
     <Compile Include="ViewModels\BirthsViewModel.cs" />
     <Compile Include="ViewModels\DeathsViewModel.cs" />
     <Compile Include="ViewModels\EventsViewModel.cs" />

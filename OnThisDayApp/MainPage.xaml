@@ -31,7 +31,7 @@
                 </StackPanel>
                 <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
-                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" />
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Opened="mainMenu_Loaded" Unloaded="contextMenu_Unloaded"/>
                 </toolkit:ContextMenuService.ContextMenu>
             </Grid>
         </DataTemplate>
@@ -40,7 +40,7 @@
                 <TextBlock Text="{Binding Year}" Style="{StaticResource TextBlockStyleHolidays}"/>
                 <TextBlock Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
-                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" />
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenuHolidays_Loaded" Unloaded="contextMenu_Unloaded"/>
                 </toolkit:ContextMenuService.ContextMenu>
             </StackPanel>
         </DataTemplate>
@@ -53,7 +53,7 @@
                 <TextBlock Grid.Column="0" Text="{Binding Year}" Style="{StaticResource YearTextBlockStyle}"/>
                 <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{Binding Source={StaticResource appSettings}, Path=DisplayFontSize, Converter={StaticResource fontSizeConverter}}"/>
                 <toolkit:ContextMenuService.ContextMenu>
-                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" />
+                    <toolkit:ContextMenu Name="mainMenu" ItemsSource="{Binding Links.Keys}" Loaded="mainMenu_Loaded" Unloaded="contextMenu_Unloaded"/>
                 </toolkit:ContextMenuService.ContextMenu>
             </Grid>
         </DataTemplate>

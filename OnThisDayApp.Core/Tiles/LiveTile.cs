@@ -138,12 +138,10 @@ namespace OnThisDayApp
         protected static string WriteTileToDisk(string year, string description, int width, int height, string fontSize, Thickness margins)
         {
             Grid container = new Grid()
-            //Grid container = new Grid()
             {
                 Width = width,
                 Height = height,
-                Background = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"],
-                //Background = (Brush)Application.Current.Resources["TransparentBrush"]
+                Background = (Brush)Application.Current.Resources["TransparentBrush"]
             };
 
             container.Children.Add(GetTextBlockToRender(description, fontSize, margins));
@@ -154,14 +152,14 @@ namespace OnThisDayApp
 
             var writeableBitmap = new WriteableBitmap(container, null);
 
-            string fileName = SharedImagePath + "tile" + height + width + ".jpg";
+            string fileName = SharedImagePath + "tile" + height + width + ".png";
             using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
                 {
                     if (writeableBitmap.PixelHeight > 0)
                     {
-                        writeableBitmap.SaveJpeg(stream, width, height, 0, 100);
+                        writeableBitmap.WritePNG(stream);
                     }
                 }
             }

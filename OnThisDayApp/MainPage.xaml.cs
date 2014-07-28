@@ -68,17 +68,19 @@ namespace OnThisDayApp
         public MainPage()
         {
             InitializeComponent();
-            LoadData();
-            AppSettings.NumberOfStarts++;
-            ShowReviewPane();
+            int numberOfStarts = AppSettings.NumberOfStarts;
+            
+            LoadData(numberOfStarts);
+            ShowReviewPane(numberOfStarts);
+
+            AppSettings.NumberOfStarts = numberOfStarts + 1;
         }
 
         /// <summary>
         /// Load either from the cache on internet
         /// </summary>
-        private void LoadData(ITransition transition = null)
+        private void LoadData(int numberOfStarts, ITransition transition = null)
         {
-            int numberOfStarts =  AppSettings.NumberOfStarts;
             IndicateStartedLoading(numberOfStarts);
 
             var loadContext = new DayLoadContext(CurrentDateForWiki, AppSettings.ShowNewestItemsFirst);
@@ -195,10 +197,10 @@ namespace OnThisDayApp
             }
         }
 
-        private void ShowReviewPane()
+        private void ShowReviewPane(int numberOfStarts)
         {
             var rate = new ReviewThisAppTask();
-            rate.ShowAfterThreshold();
+            rate.ShowAfterThreshold(numberOfStarts);
         }
 
         private void SetPivotTitle()
@@ -332,7 +334,7 @@ namespace OnThisDayApp
 
             if (currentDate.DayOfYear == DateTime.Now.DayOfYear)
             {
-                LoadData();
+                LoadData(AppSettings.NumberOfStarts);
                 return;
             }
             
@@ -352,7 +354,7 @@ namespace OnThisDayApp
             tran.Completed += (o, args) =>
             {
                 currentDate = DateTime.Now;
-                LoadData(transitionIn.GetTransition(pivotItem));
+                LoadData(AppSettings.NumberOfStarts, transitionIn.GetTransition(pivotItem));
             };
             tran.Begin();
         }
@@ -386,7 +388,7 @@ namespace OnThisDayApp
             tran.Completed += (o, args) =>
             {
                 currentDate = currentDate.AddDays(-1);
-                LoadData(transitionIn.GetTransition(pivotItem));
+                LoadData(AppSettings.NumberOfStarts, transitionIn.GetTransition(pivotItem));
             };
             tran.Begin();
         }
@@ -401,7 +403,7 @@ namespace OnThisDayApp
             tran.Completed += (o, args) =>
             {
                 currentDate = currentDate.AddDays(1);
-                LoadData(transitionIn.GetTransition(pivotItem));
+                LoadData(AppSettings.NumberOfStarts, transitionIn.GetTransition(pivotItem));
             };
             tran.Begin();
         }
@@ -432,21 +434,21 @@ namespace OnThisDayApp
             {
                 currentDate = page.Value.Value;
                 page = null;
-                LoadData();
+                LoadData(AppSettings.NumberOfStarts);
             }
             else if (App.MyDateTimeSet)
             {
                 currentDate = App.MyDateTime;
                 App.MyDateTimeSet = false;
-                LoadData();
+                LoadData(AppSettings.NumberOfStarts);
             }
             else if (App.FontSizeChanged)
             {
-                LoadData();
+                LoadData(AppSettings.NumberOfStarts);
             }
             else if (App.ReverseRequired || App.ReloadRequired)
             {
-                LoadData();
+                LoadData(AppSettings.NumberOfStarts);
             }
         }
 
@@ -537,6 +539,15 @@ namespace OnThisDayApp
                         OpenDetailsPage(url);
                     };
                 }
+            }
+        }
+
+        private void contextMenu_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var menu = sender as ContextMenu;
+            if (menu != null)
+            {
+                menu.ClearValue(FrameworkElement.DataContextProperty);
             }
         }
 

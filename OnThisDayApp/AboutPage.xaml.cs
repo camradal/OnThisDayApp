@@ -29,6 +29,12 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9.2",
+                        Description =
+                            "- Transparent live tile"
+                    },
+                    new NewItem
+                    {
                         Version = "2.9.1",
                         Description =
                             "- Performance improvements\n" +
@@ -192,7 +198,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.9.1";
+            versionText.Text = "2.9.2";
         }
     }
 }

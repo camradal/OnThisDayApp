@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
-using System.Threading;
 
 namespace Utilities
 {
@@ -11,7 +10,8 @@ namespace Utilities
     {
         #region Variables
 
-        private const string mutextName = "OnThisDayMutex";
+        private static readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private static readonly object locker = new object();
 
         private const string DataStoreUpdate21KeyName = "DataStoreUpdate21";
         private const string NumberOfStartsKeyName = "NumberOfStarts";
@@ -119,13 +119,10 @@ namespace Utilities
         /// </summary>
         private static bool AddOrUpdateValue(string key, Object value)
         {
-            var mutex = new Mutex(true, mutextName);
-            try
+            lock (locker)
             {
-                mutex.WaitOne();
                 bool valueChanged = false;
 
-                var settings = IsolatedStorageSettings.ApplicationSettings;
                 if (settings.Contains(key))
                 {
                     if (settings[key] != value)
@@ -141,13 +138,9 @@ namespace Utilities
                 }
                 if (valueChanged)
                 {
-                    settings.Save();                    
+                    settings.Save();
                 }
                 return valueChanged;
-            }
-            finally
-            {
-                mutex.ReleaseMutex();
             }
         }
 
@@ -157,26 +150,10 @@ namespace Utilities
         /// </summary>
         private static T GetValueOrDefault<T>(string key, T defaultValue)
         {
-            var mutex = new Mutex(true, mutextName);
-            try
+            lock (locker)
             {
-                mutex.WaitOne();
-                T value;
-
-                var settings = IsolatedStorageSettings.ApplicationSettings;
-                if (settings.Contains(key))
-                {
-                    value = (T)settings[key];
-                }
-                else
-                {
-                    value = defaultValue;
-                }
+                T value = settings.Contains(key) ? (T)settings[key] : defaultValue;
                 return value;
-            }
-            finally
-            {
-                mutex.ReleaseMutex();
             }
         }
 
