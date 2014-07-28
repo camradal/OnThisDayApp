@@ -8,9 +8,8 @@ namespace Utilities
     {
         private const int numberOfStartsThreshold = 9;
 
-        public void ShowAfterThreshold()
+        public void ShowAfterThreshold(int starts)
         {
-            int starts = AppSettings.NumberOfStarts;
             if ((starts == numberOfStartsThreshold) && GetMessageBoxResult() == MessageBoxResult.OK)
             {
                 try
