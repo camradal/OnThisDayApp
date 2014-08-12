@@ -29,6 +29,12 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9.3",
+                        Description =
+                            "- Bug fixes for Windows Phone 7"
+                    },
+                    new NewItem
+                    {
                         Version = "2.9.2",
                         Description =
                             "- Transparent live tile"
@@ -198,7 +204,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.9.2";
+            versionText.Text = "2.9.3";
         }
     }
 }
