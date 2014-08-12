@@ -78,10 +78,16 @@ namespace OnThisDayApp
         #region Windows Phone 8 Tile
 
         private static readonly Version TargetedVersion = new Version(7, 10, 8858);
+        private static readonly Version WP8Version = new Version(8, 0);
 
         public static bool IsTargetedVersion
         {
             get { return Environment.OSVersion.Version >= TargetedVersion; }
+        }
+
+        public static bool IsWP8Version
+        {
+            get { return Environment.OSVersion.Version >= WP8Version; }
         }
 
         protected static void UpdateFlipTile(
@@ -137,11 +143,15 @@ namespace OnThisDayApp
 
         protected static string WriteTileToDisk(string year, string description, int width, int height, string fontSize, Thickness margins)
         {
+            var background = IsWP8Version
+                ? (Brush) Application.Current.Resources["TransparentBrush"]
+                : (SolidColorBrush) Application.Current.Resources["PhoneAccentBrush"];
+
             Grid container = new Grid()
             {
                 Width = width,
                 Height = height,
-                Background = (Brush)Application.Current.Resources["TransparentBrush"]
+                Background = background
             };
 
             container.Children.Add(GetTextBlockToRender(description, fontSize, margins));
@@ -152,14 +162,22 @@ namespace OnThisDayApp
 
             var writeableBitmap = new WriteableBitmap(container, null);
 
-            string fileName = SharedImagePath + "tile" + height + width + ".png";
+            string ext = IsWP8Version ? ".png" : ".jpg";
+            string fileName = SharedImagePath + "tile" + height + width + ext;
             using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Create, storage))
                 {
                     if (writeableBitmap.PixelHeight > 0)
                     {
-                        writeableBitmap.WritePNG(stream);
+                        if (IsWP8Version)
+                        {
+                            writeableBitmap.WritePNG(stream);
+                        }
+                        else
+                        {
+                            writeableBitmap.SaveJpeg(stream, width, height, 0, 100);                            
+                        }
                     }
                 }
             }
