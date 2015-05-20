@@ -41,7 +41,7 @@ namespace OnThisDayApp.Parsers
             htmlDoc.LoadHtml(html);
 
             IEnumerable<HtmlNode> nodes = selectLastListOnly ?
-                htmlDoc.DocumentNode.Descendants("ul").Last().Descendants("li") :
+                htmlDoc.DocumentNode.ChildNodes.First(c => c.Name == "ul").Descendants("li") :
                 htmlDoc.DocumentNode.Descendants("ul").SelectMany(u => u.Descendants("li"));
             List<Entry> entries = nodes.Select(ExtractEntryFromNode).Where(e => e != null).ToList();
             AttachPictureToNode(htmlDoc, entries);
