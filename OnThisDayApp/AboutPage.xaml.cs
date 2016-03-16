@@ -29,6 +29,13 @@ namespace OnThisDayApp
                     },
                     new NewItem
                     {
+                        Version = "2.9.5",
+                        Description =
+                            "- Bug fixes\n" +
+                            "- Privacy policy"
+                    },
+                    new NewItem
+                    {
                         Version = "2.9.4",
                         Description =
                             "- Bug fixes for Windows Phone 7"
@@ -166,6 +173,41 @@ namespace OnThisDayApp
             }
         }
 
+        public List<NewItem> PrivacyPolicyItems
+        {
+            get
+            {
+                return new List<NewItem>()
+                {
+                    new NewItem
+                    {
+                        Version = "",
+                        Description = "We try to keep it simple, drop us a line if anything is unclear."
+                    },
+                    new NewItem
+                    {
+                        Version = "Personal Information",
+                        Description = "We do not collect, transmit or store any personal information.\nWe physically can't.\nWe have no servers to store it."
+                    },
+                    new NewItem
+                    {
+                        Version = "Information Sharing",
+                        Description = "Since we do not collect any personal information, we have no way of sharing or disclosing it."
+                    },
+                    new NewItem
+                    {
+                        Version = "Third Party",
+                        Description = "We rely on a third party service to collect anonymous crash information. The information includes phone model, OS version, application version and error detail. It helps us to make the app better."
+                    },
+                    new NewItem
+                    {
+                        Version = "Changes to Policy",
+                        Description = "We may revise the policy from time to time, but you can always access the latest version within the app."
+                    },
+                };
+            }
+        }
+
         public AboutPage()
         {
             InitializeComponent();
@@ -204,7 +246,7 @@ namespace OnThisDayApp
 
         private void ReadVersionFromManifest()
         {
-            versionText.Text = "2.9.4";
+            versionText.Text = "2.9.5";
         }
     }
 }
